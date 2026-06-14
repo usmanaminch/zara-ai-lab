@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zara's AI & Med Studio</title>
+    <style>
+        :root {
+            --bg-color: #23272F;       /* Soft dark slate */
+            --card-bg: #303540;        /* Slightly lighter for cards */
+            --text-main: #E2E8F0;      /* Soft white for reading */
+            --text-muted: #94A3B8;     /* Light gray for descriptions */
+            --accent-1: #B4A8EA;       /* Calming lavender */
+            --accent-2: #FFBFA9;       /* Warm peach */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2A2F3A, #23272F);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom: 3px solid var(--accent-1);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-2);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .about {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 16px;
+            margin-bottom: 3rem;
+            border-left: 6px solid var(--accent-2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .about h2 {
+            color: var(--accent-1);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .about p {
+            font-size: 1.1rem;
+        }
+
+        h2.section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            color: var(--text-main);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: transform 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #3A414E;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-1);
+        }
+
+        .project-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-2);
+        }
+
+        .project-desc {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(180, 168, 234, 0.15);
+            color: var(--accent-1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status {
+            font-size: 0.9rem;
+            color: var(--text-main);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Zara's Studio</h1>
+        <p>Where dermatology, art, and AI meet.</p>
+    </header>
+
+    <div class="container">
+        <section class="about">
+            <h2>Hey, I'm Zara.</h2>
+            <p>I'm an aspiring dermatologist with a love for drawing. This summer, I'm exploring how artificial intelligence can connect with medicine and art. I'm building everything you see here—welcome to my digital workspace.</p>
+        </section>
+
+        <h2 class="section-title">Summer Projects</h2>
+        
+        <div class="projects-grid">
+            <!-- Project 1 -->
+            <div class="project-card">
+                <div class="project-icon">🎨</div>
+                <h3 class="project-title">AI Anatomy Assistant</h3>
+                <div class="tags">
+                    <span class="tag">Vision AI</span>
+                    <span class="tag">Drawing</span>
+                </div>
+                <p class="project-desc">I upload my hand-drawn skin layers, and my custom AI gives me feedback, labels structures, and lets me know if I missed any details.</p>
+                <div class="status">🚧 Up Next</div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card">
+                <div class="project-icon">🧴</div>
+                <h3 class="project-title">Skincare Decoder</h3>
+                <div class="tags">
+                    <span class="tag">LLM Prompts</span>
+                    <span class="tag">Data</span>
+                </div>
+                <p class="project-desc">Ever read the back of a face wash? I'm building a tool that translates those complex chemical names into plain, simple English.</p>
+                <div class="status">⏳ Planned</div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card">
+                <div class="project-icon">💬</div>
+                <h3 class="project-title">Virtual Patient</h3>
+                <div class="tags">
+                    <span class="tag">AI Agent</span>
+                    <span class="tag">Logic</span>
+                </div>
+                <p class="project-desc">A conversational agent acting as a patient with a secret skin condition. I have to figure out the diagnosis by asking the right intake questions.</p>
+                <div class="status">⏳ Planned</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Zara. Built by hand and AI.</p>
+    </footer>
+
+</body>
+</html>
