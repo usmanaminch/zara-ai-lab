@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Art Critic — Zara's Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --teal:#3AAFA9;--teal-light:#6ECBC6;--teal-faint:#E0F5F4;
+      --lavender:#8B7FD4;--lav-faint:#EEEAFF;
+      --ink:#1C1C2E;--ink-60:#5A5A7A;--ink-30:#B0B0C8;
+      --surface:#F0F0F0;--border:#D0D0D0;--card-bg:#FFFFFF;
+      --font-display:'Space Grotesk',sans-serif;
+      --font-body:'Inter',sans-serif;
+      --radius:14px;--radius-sm:9px;--transition:0.22s ease;
+    }
+    [data-theme="dark"]{
+      --ink:#EEF0FF;--ink-60:#9090B0;--ink-30:#4A4A6A;
+      --surface:#0F1020;--border:#2C2D45;--card-bg:#181928;
+      --teal-faint:#0C2422;--lav-faint:#14122A;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--font-body);background:var(--surface);color:var(--ink);line-height:1.6;transition:background var(--transition),color var(--transition);-webkit-font-smoothing:antialiased;}
+    a{color:inherit;text-decoration:none;}
+
+    /* Nav */
+    nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;background:var(--surface);border-bottom:1px solid var(--border);transition:background var(--transition);}
+    .nav-logo{font-family:var(--font-display);font-weight:700;font-size:1rem;letter-spacing:-0.02em;display:flex;align-items:center;gap:0.45rem;}
+    .nav-logo .pip{width:8px;height:8px;background:linear-gradient(135deg,var(--teal),var(--lavender));border-radius:50%;}
+    .nav-back{font-size:0.8rem;font-weight:500;color:var(--ink-60);transition:color var(--transition);display:flex;align-items:center;gap:0.3rem;}
+    .nav-back:hover{color:var(--teal);}
+    .theme-btn{background:var(--card-bg);border:1px solid var(--border);color:var(--ink-60);border-radius:20px;padding:0.28rem 0.7rem;font-size:0.75rem;cursor:pointer;transition:all var(--transition);font-family:var(--font-body);}
+    .theme-btn:hover{border-color:var(--teal);color:var(--teal);}
+
+    /* Page layout */
+    .page{max-width:720px;margin:0 auto;padding:2.5rem 2rem 4rem;}
+
+    /* Header */
+    .page-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);background:var(--teal-faint);border:1px solid rgba(58,175,169,0.25);padding:0.28rem 0.75rem;border-radius:20px;margin-bottom:1rem;}
+    .page-title{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.5rem;}
+    .page-title .grad{background:linear-gradient(135deg,var(--teal),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .page-sub{color:var(--ink-60);font-size:0.9rem;line-height:1.7;margin-bottom:2rem;max-width:520px;}
+
+    /* Upload card */
+    .upload-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-bottom:1.25rem;}
+
+    .drop-zone{
+      border:2px dashed var(--border);
+      border-radius:var(--radius-sm);
+      padding:2.5rem 1.5rem;
+      text-align:center;
+      cursor:pointer;
+      transition:border-color var(--transition),background var(--transition);
+      position:relative;
+      margin-bottom:1.25rem;
+    }
+    .drop-zone:hover,.drop-zone.drag-over{border-color:var(--teal);background:var(--teal-faint);}
+    .drop-zone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+    .drop-icon{font-size:2.2rem;margin-bottom:0.6rem;}
+    .drop-label{font-family:var(--font-display);font-weight:600;font-size:0.95rem;margin-bottom:0.25rem;}
+    .drop-hint{font-size:0.78rem;color:var(--ink-60);}
+
+    /* Preview */
+    .preview-wrap{display:none;position:relative;margin-bottom:1.25rem;}
+    .preview-wrap.visible{display:block;}
+    .preview-img{width:100%;max-height:400px;object-fit:contain;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);}
+    .remove-btn{position:absolute;top:0.5rem;right:0.5rem;background:var(--ink);color:white;border:none;border-radius:20px;padding:0.25rem 0.65rem;font-size:0.72rem;cursor:pointer;font-family:var(--font-body);opacity:0.7;transition:opacity var(--transition);}
+    .remove-btn:hover{opacity:1;}
+
+    /* Submit */
+    .submit-btn{
+      width:100%;
+      padding:0.75rem;
+      background:linear-gradient(135deg,var(--teal),var(--lavender));
+      color:white;
+      border:none;
+      border-radius:var(--radius-sm);
+      font-family:var(--font-display);
+      font-weight:600;
+      font-size:0.95rem;
+      cursor:pointer;
+      transition:opacity var(--transition),transform var(--transition);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:0.5rem;
+    }
+    .submit-btn:hover:not(:disabled){opacity:0.88;transform:translateY(-1px);}
+    .submit-btn:disabled{opacity:0.45;cursor:not-allowed;transform:none;}
+
+    /* Loading */
+    .loading{display:none;text-align:center;padding:2rem;color:var(--ink-60);font-size:0.9rem;}
+    .loading.visible{display:block;}
+    .spinner{display:inline-block;width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:0.75rem;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .loading-text{font-style:italic;}
+
+    /* Feedback card */
+    .feedback-card{display:none;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-top:1.25rem;}
+    .feedback-card.visible{display:block;}
+    .feedback-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+    .feedback-icon{font-size:1.5rem;}
+    .feedback-title{font-family:var(--font-display);font-weight:700;font-size:1.05rem;}
+    .feedback-title span{font-size:0.75rem;font-weight:400;color:var(--ink-60);display:block;margin-top:0.1rem;}
+    .feedback-body{font-size:0.9rem;color:var(--ink-60);line-height:1.85;white-space:pre-wrap;}
+    .feedback-body strong{color:var(--ink);font-weight:600;}
+
+    /* Try again */
+    .try-again{display:none;width:100%;margin-top:1rem;padding:0.65rem;background:var(--card-bg);color:var(--ink-60);border:1px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:500;font-size:0.85rem;cursor:pointer;transition:border-color var(--transition),color var(--transition);}
+    .try-again:hover{border-color:var(--teal);color:var(--teal);}
+    .try-again.visible{display:block;}
+
+    /* Error */
+    .error-msg{display:none;background:#FFF0F0;border:1px solid #FFCCCC;border-radius:var(--radius-sm);padding:1rem 1.25rem;font-size:0.85rem;color:#CC4444;margin-top:1rem;}
+    .error-msg.visible{display:block;}
+    [data-theme="dark"] .error-msg{background:#2A1010;border-color:#552222;color:#FF9999;}
+
+    /* How it works */
+    .how-it-works{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-top:1.25rem;}
+    .how-title{font-family:var(--font-display);font-weight:600;font-size:0.85rem;margin-bottom:1rem;color:var(--ink-60);text-transform:uppercase;letter-spacing:0.06em;font-size:0.7rem;}
+    .steps{display:flex;flex-direction:column;gap:0.65rem;}
+    .step{display:flex;align-items:flex-start;gap:0.85rem;}
+    .step-num{width:22px;height:22px;background:linear-gradient(135deg,var(--teal),var(--lavender));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;color:white;flex-shrink:0;margin-top:0.1rem;}
+    .step-text{font-size:0.82rem;color:var(--ink-60);line-height:1.5;}
+    .step-text strong{color:var(--ink);font-weight:500;}
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo"><span class="pip"></span>Zara</div>
+    <a href="index.html" class="nav-back">← Back to portfolio</a>
+    <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">🌙 Dark</button>
+  </nav>
+
+  <div class="page">
+
+    <div class="page-eyebrow">✦ Project 02 · AI Art Critic</div>
+    <h1 class="page-title">Get feedback on<br>your <span class="grad">sketches.</span></h1>
+    <p class="page-sub">Upload one of your drawings and your personal AI art critic will give you kind, clear, and specific feedback — exactly what to tweak and how to do it.</p>
+
+    <div class="upload-card">
+
+      <!-- Drop zone -->
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" accept="image/*" />
+        <div class="drop-icon">🖊️</div>
+        <p class="drop-label">Drop your sketch here</p>
+        <p class="drop-hint">or click to browse · JPG, PNG, HEIC · any size</p>
+      </div>
+
+      <!-- Preview -->
+      <div class="preview-wrap" id="previewWrap">
+        <img id="previewImg" class="preview-img" src="" alt="Your sketch" />
+        <button class="remove-btn" onclick="removeImage()">✕ Remove</button>
+      </div>
+
+      <!-- Submit -->
+      <button class="submit-btn" id="submitBtn" disabled onclick="submitSketch()">
+        <span>✦</span> Get Feedback
+      </button>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <p class="loading-text">Your AI art critic is looking at your sketch…</p>
+    </div>
+
+    <!-- Error -->
+    <div class="error-msg" id="errorMsg"></div>
+
+    <!-- Feedback -->
+    <div class="feedback-card" id="feedbackCard">
+      <div class="feedback-header">
+        <div class="feedback-icon">🎨</div>
+        <div class="feedback-title">
+          Feedback on your sketch
+          <span>From your personal AI art critic</span>
+        </div>
+      </div>
+      <div class="feedback-body" id="feedbackBody"></div>
+    </div>
+
+    <!-- Try again -->
+    <button class="try-again" id="tryAgain" onclick="resetAll()">Upload a different sketch →</button>
+
+    <!-- How it works -->
+    <div class="how-it-works">
+      <p class="how-title">How this works</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <p class="step-text"><strong>You upload a sketch.</strong> Any pencil drawing, photo of your sketchbook, or digital art.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <p class="step-text"><strong>AI reads your system prompt.</strong> The instructions you wrote tell the AI exactly how to behave — kind, specific, sketch-focused.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <p class="step-text"><strong>You get real feedback.</strong> Not generic compliments — specific things to erase, adjust, and redraw.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // ── Theme ──────────────────────────────────────────────
+    function toggleTheme(){
+      const html=document.documentElement;
+      const btn=document.getElementById('theme-btn');
+      const isDark=html.getAttribute('data-theme')==='dark';
+      html.setAttribute('data-theme',isDark?'light':'dark');
+      btn.textContent=isDark?'🌙 Dark':'☀️ Light';
+      localStorage.setItem('zara-theme',isDark?'light':'dark');
+    }
+    const saved=localStorage.getItem('zara-theme');
+    if(saved){
+      document.documentElement.setAttribute('data-theme',saved);
+      document.getElementById('theme-btn').textContent=saved==='dark'?'☀️ Light':'🌙 Dark';
+    }
+
+    // ── File handling ──────────────────────────────────────
+    let currentBase64 = null;
+    let currentMimeType = null;
+
+    const fileInput   = document.getElementById('fileInput');
+    const dropZone    = document.getElementById('dropZone');
+    const previewWrap = document.getElementById('previewWrap');
+    const previewImg  = document.getElementById('previewImg');
+    const submitBtn   = document.getElementById('submitBtn');
+
+    fileInput.addEventListener('change', e => {
+      if(e.target.files[0]) handleFile(e.target.files[0]);
+    });
+
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropZone.classList.remove('drag-over');
+      if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+    });
+
+    function handleFile(file){
+      if(!file.type.startsWith('image/')){
+        showError('Please upload an image file (JPG, PNG, HEIC, etc.)');
+        return;
+      }
+      currentMimeType = file.type === 'image/heic' ? 'image/jpeg' : file.type;
+      const reader = new FileReader();
+      reader.onload = e => {
+        currentBase64 = e.target.result.split(',')[1];
+        previewImg.src = e.target.result;
+        dropZone.style.display = 'none';
+        previewWrap.classList.add('visible');
+        submitBtn.disabled = false;
+        hideError();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removeImage(){
+      currentBase64 = null;
+      currentMimeType = null;
+      previewImg.src = '';
+      previewWrap.classList.remove('visible');
+      dropZone.style.display = 'block';
+      submitBtn.disabled = true;
+      fileInput.value = '';
+      resetFeedback();
+    }
+
+    // ── Submit ─────────────────────────────────────────────
+    async function submitSketch(){
+      if(!currentBase64) return;
+
+      submitBtn.disabled = true;
+      document.getElementById('loading').classList.add('visible');
+      resetFeedback();
+      hideError();
+
+      const SYSTEM_PROMPT = `You are an art feedback assistant for a student who draws people in their own style. Your job is to kindly critique their art, and give feedback on things they should fix. Your tone should be kind, but not over glorifying the art. Always start your feedback with what exactly needs to be done, straight to the point. When pointing out something to fix, explain it by painting a picture with your words and helping the student get an idea of the tweaks they need to make. Never judge their art cruelly, but like a kind teacher ready to help. The student draws in their own personal style, so never compare their work to realistic anatomy or say things like "this doesn't look like a real nose." Focus on the style's own internal consistency and composition. Keep feedback to 3-4 specific points maximum. Use clear, simple language.`;
+
+      try {
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-api-key': 'YOUR_API_KEY_HERE', 'anthropic-version': '2023-06-01' },
+          body: JSON.stringify({
+            model: 'claude-sonnet-4-6',
+            max_tokens: 1000,
+            system: SYSTEM_PROMPT,
+            messages: [{
+              role: 'user',
+              content: [
+                {
+                  type: 'image',
+                  source: {
+                    type: 'base64',
+                    media_type: currentMimeType || 'image/jpeg',
+                    data: currentBase64
+                  }
+                },
+                {
+                  type: 'text',
+                  text: 'Please give me feedback on this sketch.'
+                }
+              ]
+            }]
+          })
+        });
+
+        const data = await response.json();
+
+        if(!response.ok){
+          throw new Error(data.error?.message || 'Something went wrong');
+        }
+
+        const text = data.content?.find(b => b.type === 'text')?.text || '';
+        showFeedback(text);
+
+      } catch(err) {
+        showError('Hmm, something went wrong. Make sure the API key is set up and try again. (' + err.message + ')');
+        submitBtn.disabled = false;
+      } finally {
+        document.getElementById('loading').classList.remove('visible');
+      }
+    }
+
+    // ── Feedback display ───────────────────────────────────
+    function showFeedback(text){
+      const card = document.getElementById('feedbackCard');
+      const body = document.getElementById('feedbackBody');
+      // Bold any text between ** markers
+      body.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      card.classList.add('visible');
+      document.getElementById('tryAgain').classList.add('visible');
+      card.scrollIntoView({behavior:'smooth', block:'nearest'});
+    }
+
+    function resetFeedback(){
+      document.getElementById('feedbackCard').classList.remove('visible');
+      document.getElementById('tryAgain').classList.remove('visible');
+      document.getElementById('feedbackBody').innerHTML = '';
+    }
+
+    function resetAll(){
+      removeImage();
+      resetFeedback();
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    function showError(msg){
+      const el = document.getElementById('errorMsg');
+      el.textContent = msg;
+      el.classList.add('visible');
+    }
+
+    function hideError(){
+      document.getElementById('errorMsg').classList.remove('visible');
+    }
+  </script>
+</body>
+</html>
