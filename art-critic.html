@@ -290,42 +290,22 @@
       const SYSTEM_PROMPT = `You are an art feedback assistant for a student who draws people in their own style. Your job is to kindly critique their art, and give feedback on things they should fix. Your tone should be kind, but not over glorifying the art. Always start your feedback with what exactly needs to be done, straight to the point. When pointing out something to fix, explain it by painting a picture with your words and helping the student get an idea of the tweaks they need to make. Never judge their art cruelly, but like a kind teacher ready to help. The student draws in their own personal style, so never compare their work to realistic anatomy or say things like "this doesn't look like a real nose." Focus on the style's own internal consistency and composition. Keep feedback to 3-4 specific points maximum. Use clear, simple language.`;
 
       try {
-        const response = await fetch('https://api.anthropic.com/v1/messages', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'x-api-key': 'YOUR_API_KEY_HERE', 'anthropic-version': '2023-06-01' },
-          body: JSON.stringify({
-            model: 'claude-sonnet-4-6',
-            max_tokens: 1000,
-            system: SYSTEM_PROMPT,
-            messages: [{
-              role: 'user',
-              content: [
-                {
-                  type: 'image',
-                  source: {
-                    type: 'base64',
-                    media_type: currentMimeType || 'image/jpeg',
-                    data: currentBase64
-                  }
-                },
-                {
-                  type: 'text',
-                  text: 'Please give me feedback on this sketch.'
-                }
-              ]
-            }]
-          })
-        });
+        const response = await fetch('/api/critique', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    image: currentBase64,
+    mimeType: currentMimeType || 'image/jpeg'
+  })
+});
 
-        const data = await response.json();
+const data = await response.json();
 
-        if(!response.ok){
-          throw new Error(data.error?.message || 'Something went wrong');
-        }
+if(!response.ok){
+  throw new Error(data.error || 'Something went wrong');
+}
 
-        const text = data.content?.find(b => b.type === 'text')?.text || '';
-        showFeedback(text);
-
+const text = data.feedback || '';
       } catch(err) {
         showError('Hmm, something went wrong. Make sure the API key is set up and try again. (' + err.message + ')');
         submitBtn.disabled = false;
