@@ -159,14 +159,14 @@
         const response = await fetch('/api/climaskin', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages: conversationHistory })
+          body: JSON.stringify({ messages: conversationHistory }, null, 0)
         });
         const data = await response.json();
         if(!response.ok) throw new Error(data.error || 'Something went wrong');
         conversationHistory.push({ role: 'assistant', content: data.reply });
         addMessage('assistant', data.reply);
       } catch(err){
-        addMessage('assistant', 'Something went wrong. Please try again.');
+        addMessage('assistant', 'Something went wrong: ' + err.message);
       } finally {
         document.getElementById('typing').classList.remove('visible');
         document.getElementById('sendBtn').disabled = false;
