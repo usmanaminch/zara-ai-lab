@@ -299,9 +299,15 @@
 
       // Attach popup events
       document.querySelectorAll('.key-term').forEach(el => {
-        el.addEventListener('mouseenter', showPopup);
-        el.addEventListener('mouseleave', hidePopup);
-        el.addEventListener('touchstart', e => { e.preventDefault(); showPopup.call(el, e); });
+        el.addEventListener('click', function(e){
+          e.stopPropagation();
+          const isVisible = popup.classList.contains('visible');
+          hidePopup();
+          if(!isVisible || popup._lastTerm !== this){
+            showPopup.call(this, e);
+            popup._lastTerm = this;
+          }
+        });
       });
     }
 
@@ -787,9 +793,15 @@ HTMLEOFcat > ~/Documents/zara-ai-lab/studylab.html << 'HTMLEOF'
 
       // Attach popup events
       document.querySelectorAll('.key-term').forEach(el => {
-        el.addEventListener('mouseenter', showPopup);
-        el.addEventListener('mouseleave', hidePopup);
-        el.addEventListener('touchstart', e => { e.preventDefault(); showPopup.call(el, e); });
+        el.addEventListener('click', function(e){
+          e.stopPropagation();
+          const isVisible = popup.classList.contains('visible');
+          hidePopup();
+          if(!isVisible || popup._lastTerm !== this){
+            showPopup.call(this, e);
+            popup._lastTerm = this;
+          }
+        });
       });
     }
 
