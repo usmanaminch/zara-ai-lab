@@ -75,12 +75,9 @@
     /* Key term highlighting */
     .key-term{color:var(--teal);font-weight:600;cursor:pointer;border-bottom:1.5px dashed var(--teal);position:relative;transition:color var(--transition);}
     .key-term:hover{color:var(--lavender);}
-
-    /* Definition popup */
-    .def-popup{position:fixed;z-index:500;background:var(--ink);color:white;padding:0.65rem 0.9rem;border-radius:var(--radius-sm);font-size:0.78rem;line-height:1.5;max-width:240px;pointer-events:none;opacity:0;transition:opacity 0.15s ease;box-shadow:0 4px 20px rgba(0,0,0,0.2);}
-    .def-popup.visible{opacity:1;}
-    .def-popup-arrow{position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);width:10px;height:5px;overflow:hidden;}
-    .def-popup-arrow::after{content:'';position:absolute;width:8px;height:8px;background:var(--ink);transform:rotate(45deg);top:-4px;left:1px;}
+    .key-term .inline-def{display:none;position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--ink);color:white;padding:0.5rem 0.75rem;border-radius:var(--radius-sm);font-size:0.75rem;line-height:1.5;width:220px;z-index:500;font-weight:400;box-shadow:0 4px 16px rgba(0,0,0,0.2);}
+    .key-term.open .inline-def{display:block;}
+    .def-popup{display:none;}
 
     .quiz-btn{width:100%;margin-top:1.25rem;padding:0.75rem;background:linear-gradient(135deg,var(--teal),var(--lavender));color:white;border:none;border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:600;font-size:0.95rem;cursor:pointer;transition:opacity var(--transition),transform var(--transition);display:flex;align-items:center;justify-content:center;gap:0.5rem;}
     .quiz-btn:hover{opacity:0.88;transform:translateY(-1px);}
@@ -214,11 +211,7 @@
     </div>
   </div>
 
-  <!-- Definition popup -->
-  <div class="def-popup" id="defPopup">
-    <span id="defText"></span>
-    <div class="def-popup-arrow"></div>
-  </div>
+
 
   <script>
     // Theme
@@ -287,8 +280,8 @@
         if(!para.trim()) return;
         // Replace [term](definition) with clickable span
         const parsed = para.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, term, def) => {
-          const safeDef = def.replace(/"/g, '&quot;');
-          return `<span class="key-term" data-def="${safeDef}">${term}</span>`;
+          const safeDef = def.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+          return `<span class="key-term" data-def="${safeDef}">${term}<span class="inline-def">${def}</span></span>`;
         });
         html += `<p>${parsed}</p>`;
       });
@@ -301,43 +294,17 @@
       document.querySelectorAll('.key-term').forEach(el => {
         el.addEventListener('click', function(e){
           e.stopPropagation();
-          const isVisible = popup.classList.contains('visible');
-          hidePopup();
-          if(!isVisible || popup._lastTerm !== this){
-            showPopup.call(this, e);
-            popup._lastTerm = this;
-          }
+          const isOpen = this.classList.contains('open');
+          document.querySelectorAll('.key-term.open').forEach(t => t.classList.remove('open'));
+          if(!isOpen) this.classList.add('open');
         });
       });
     }
 
-    // Definition popup
-    const popup = document.getElementById('defPopup');
-    const defText = document.getElementById('defText');
-
-    function showPopup(e){
-      const term = e.currentTarget || this;
-      defText.textContent = term.getAttribute('data-def');
-      popup.classList.add('visible');
-      positionPopup(term);
-    }
-
-    function hidePopup(){
-      popup.classList.remove('visible');
-    }
-
-    function positionPopup(el){
-      const rect = el.getBoundingClientRect();
-      const popupW = 240;
-      let left = rect.left + rect.width/2 - popupW/2;
-      left = Math.max(8, Math.min(left, window.innerWidth - popupW - 8));
-      popup.style.left = left + 'px';
-      popup.style.top = (rect.top - popup.offsetHeight - 12 + window.scrollY) + 'px';
-      popup.style.width = popupW + 'px';
-    }
-
     document.addEventListener('click', e => {
-      if(!e.target.classList.contains('key-term')) hidePopup();
+      if(!e.target.closest('.key-term')) {
+        document.querySelectorAll('.key-term.open').forEach(t => t.classList.remove('open'));
+      }
     });
 
     // ── QUIZ ──────────────────────────────────────────
@@ -569,12 +536,9 @@ HTMLEOFcat > ~/Documents/zara-ai-lab/studylab.html << 'HTMLEOF'
     /* Key term highlighting */
     .key-term{color:var(--teal);font-weight:600;cursor:pointer;border-bottom:1.5px dashed var(--teal);position:relative;transition:color var(--transition);}
     .key-term:hover{color:var(--lavender);}
-
-    /* Definition popup */
-    .def-popup{position:fixed;z-index:500;background:var(--ink);color:white;padding:0.65rem 0.9rem;border-radius:var(--radius-sm);font-size:0.78rem;line-height:1.5;max-width:240px;pointer-events:none;opacity:0;transition:opacity 0.15s ease;box-shadow:0 4px 20px rgba(0,0,0,0.2);}
-    .def-popup.visible{opacity:1;}
-    .def-popup-arrow{position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);width:10px;height:5px;overflow:hidden;}
-    .def-popup-arrow::after{content:'';position:absolute;width:8px;height:8px;background:var(--ink);transform:rotate(45deg);top:-4px;left:1px;}
+    .key-term .inline-def{display:none;position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--ink);color:white;padding:0.5rem 0.75rem;border-radius:var(--radius-sm);font-size:0.75rem;line-height:1.5;width:220px;z-index:500;font-weight:400;box-shadow:0 4px 16px rgba(0,0,0,0.2);}
+    .key-term.open .inline-def{display:block;}
+    .def-popup{display:none;}
 
     .quiz-btn{width:100%;margin-top:1.25rem;padding:0.75rem;background:linear-gradient(135deg,var(--teal),var(--lavender));color:white;border:none;border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:600;font-size:0.95rem;cursor:pointer;transition:opacity var(--transition),transform var(--transition);display:flex;align-items:center;justify-content:center;gap:0.5rem;}
     .quiz-btn:hover{opacity:0.88;transform:translateY(-1px);}
@@ -708,11 +672,7 @@ HTMLEOFcat > ~/Documents/zara-ai-lab/studylab.html << 'HTMLEOF'
     </div>
   </div>
 
-  <!-- Definition popup -->
-  <div class="def-popup" id="defPopup">
-    <span id="defText"></span>
-    <div class="def-popup-arrow"></div>
-  </div>
+
 
   <script>
     // Theme
@@ -781,8 +741,8 @@ HTMLEOFcat > ~/Documents/zara-ai-lab/studylab.html << 'HTMLEOF'
         if(!para.trim()) return;
         // Replace [term](definition) with clickable span
         const parsed = para.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, term, def) => {
-          const safeDef = def.replace(/"/g, '&quot;');
-          return `<span class="key-term" data-def="${safeDef}">${term}</span>`;
+          const safeDef = def.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+          return `<span class="key-term" data-def="${safeDef}">${term}<span class="inline-def">${def}</span></span>`;
         });
         html += `<p>${parsed}</p>`;
       });
@@ -795,43 +755,17 @@ HTMLEOFcat > ~/Documents/zara-ai-lab/studylab.html << 'HTMLEOF'
       document.querySelectorAll('.key-term').forEach(el => {
         el.addEventListener('click', function(e){
           e.stopPropagation();
-          const isVisible = popup.classList.contains('visible');
-          hidePopup();
-          if(!isVisible || popup._lastTerm !== this){
-            showPopup.call(this, e);
-            popup._lastTerm = this;
-          }
+          const isOpen = this.classList.contains('open');
+          document.querySelectorAll('.key-term.open').forEach(t => t.classList.remove('open'));
+          if(!isOpen) this.classList.add('open');
         });
       });
     }
 
-    // Definition popup
-    const popup = document.getElementById('defPopup');
-    const defText = document.getElementById('defText');
-
-    function showPopup(e){
-      const term = e.currentTarget || this;
-      defText.textContent = term.getAttribute('data-def');
-      popup.classList.add('visible');
-      positionPopup(term);
-    }
-
-    function hidePopup(){
-      popup.classList.remove('visible');
-    }
-
-    function positionPopup(el){
-      const rect = el.getBoundingClientRect();
-      const popupW = 240;
-      let left = rect.left + rect.width/2 - popupW/2;
-      left = Math.max(8, Math.min(left, window.innerWidth - popupW - 8));
-      popup.style.left = left + 'px';
-      popup.style.top = (rect.top - popup.offsetHeight - 12 + window.scrollY) + 'px';
-      popup.style.width = popupW + 'px';
-    }
-
     document.addEventListener('click', e => {
-      if(!e.target.classList.contains('key-term')) hidePopup();
+      if(!e.target.closest('.key-term')) {
+        document.querySelectorAll('.key-term.open').forEach(t => t.classList.remove('open'));
+      }
     });
 
     // ── QUIZ ──────────────────────────────────────────
