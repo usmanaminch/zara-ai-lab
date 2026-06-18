@@ -296,6 +296,8 @@
       let html = '';
       paragraphs.forEach(para => {
         if(!para.trim()) return;
+        // Strip markdown headings
+        para = para.replace(/^#+\s+/gm, '');
         // Replace [term](definition) with clickable span
         const parsed = para.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, term, def) => {
           const safeDef = def.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
@@ -340,9 +342,10 @@
         const data = await res.json();
         if(!res.ok) return; // Silently fail — diagram is optional
         const svg = data.result.trim();
-        if(svg === 'NO_DIAGRAM' || !svg.startsWith('<svg') || !svg.endsWith('</svg>')) return;
+        const cleanSvg = svg.trim();
+        if(cleanSvg === 'NO_DIAGRAM' || !cleanSvg.startsWith('<svg') || !cleanSvg.includes('</svg>')) return;
         document.getElementById('diagramTitle').textContent = `Visual: ${topic}`;
-        document.getElementById('diagramBody').innerHTML = svg;
+        document.getElementById('diagramBody').innerHTML = cleanSvg;
         document.getElementById('diagramCard').classList.add('visible');
       } catch(err){
         // Silently fail — diagram is a bonus feature
