@@ -340,7 +340,7 @@
         const data = await res.json();
         if(!res.ok) return; // Silently fail — diagram is optional
         const svg = data.result.trim();
-        if(svg === 'NO_DIAGRAM' || !svg.startsWith('<svg')) return;
+        if(svg === 'NO_DIAGRAM' || !svg.startsWith('<svg') || !svg.endsWith('</svg>')) return;
         document.getElementById('diagramTitle').textContent = `Visual: ${topic}`;
         document.getElementById('diagramBody').innerHTML = svg;
         document.getElementById('diagramCard').classList.add('visible');
