@@ -79,6 +79,15 @@
     .key-term.open .inline-def{display:block;}
     .def-popup{display:none;}
 
+    /* Diagram */
+    .diagram-card{display:none;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-bottom:1.25rem;}
+    .diagram-card.visible{display:block;}
+    .diagram-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+    .diagram-title{font-family:var(--font-display);font-weight:700;font-size:1rem;}
+    .diagram-badge{font-size:0.65rem;font-weight:600;padding:0.2rem 0.6rem;border-radius:12px;background:var(--lav-faint);color:var(--lavender);letter-spacing:0.05em;text-transform:uppercase;}
+    .diagram-body{width:100%;overflow:hidden;border-radius:var(--radius-sm);}
+    .diagram-body svg{display:block;width:100%;height:auto;}
+
     .quiz-btn{width:100%;margin-top:1.25rem;padding:0.75rem;background:linear-gradient(135deg,var(--teal),var(--lavender));color:white;border:none;border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:600;font-size:0.95rem;cursor:pointer;transition:opacity var(--transition),transform var(--transition);display:flex;align-items:center;justify-content:center;gap:0.5rem;}
     .quiz-btn:hover{opacity:0.88;transform:translateY(-1px);}
 
@@ -186,6 +195,15 @@
       </button>
     </div>
 
+    <!-- Diagram -->
+    <div class="diagram-card" id="diagramCard">
+      <div class="diagram-header">
+        <p class="diagram-title" id="diagramTitle"></p>
+        <span class="diagram-badge">Diagram</span>
+      </div>
+      <div class="diagram-body" id="diagramBody"></div>
+    </div>
+
     <!-- Quiz -->
     <div class="quiz-card" id="quizCard">
       <div class="quiz-header">
@@ -290,6 +308,9 @@
       document.getElementById('lessonCard').classList.add('visible');
       document.getElementById('lessonCard').scrollIntoView({behavior:'smooth', block:'start'});
 
+      // Fire diagram call in background
+      fetchDiagram(topic);
+
       // Attach popup events
       document.querySelectorAll('.key-term').forEach(el => {
         el.addEventListener('click', function(e){
@@ -306,6 +327,27 @@
         document.querySelectorAll('.key-term.open').forEach(t => t.classList.remove('open'));
       }
     });
+
+    // ── DIAGRAM ──────────────────────────────────────
+    async function fetchDiagram(topic){
+      document.getElementById('diagramCard').classList.remove('visible');
+      try {
+        const res = await fetch('/api/studylab', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ topic, mode: 'diagram' })
+        });
+        const data = await res.json();
+        if(!res.ok) return; // Silently fail — diagram is optional
+        const svg = data.result.trim();
+        if(svg === 'NO_DIAGRAM' || !svg.startsWith('<svg')) return;
+        document.getElementById('diagramTitle').textContent = `Visual: ${topic}`;
+        document.getElementById('diagramBody').innerHTML = svg;
+        document.getElementById('diagramCard').classList.add('visible');
+      } catch(err){
+        // Silently fail — diagram is a bonus feature
+      }
+    }
 
     // ── QUIZ ──────────────────────────────────────────
     async function startQuiz(){
@@ -439,6 +481,7 @@
       document.getElementById('topicInput').value = '';
       document.getElementById('submitBtn').disabled = false;
       document.getElementById('lessonCard').classList.remove('visible');
+      document.getElementById('diagramCard').classList.remove('visible');
       document.getElementById('quizCard').classList.remove('visible');
       document.getElementById('resultsCard').classList.remove('visible');
       window.scrollTo({top:0,behavior:'smooth'});
@@ -540,6 +583,15 @@ HTMLEOFcat > ~/Documents/zara-ai-lab/studylab.html << 'HTMLEOF'
     .key-term.open .inline-def{display:block;}
     .def-popup{display:none;}
 
+    /* Diagram */
+    .diagram-card{display:none;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-bottom:1.25rem;}
+    .diagram-card.visible{display:block;}
+    .diagram-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+    .diagram-title{font-family:var(--font-display);font-weight:700;font-size:1rem;}
+    .diagram-badge{font-size:0.65rem;font-weight:600;padding:0.2rem 0.6rem;border-radius:12px;background:var(--lav-faint);color:var(--lavender);letter-spacing:0.05em;text-transform:uppercase;}
+    .diagram-body{width:100%;overflow:hidden;border-radius:var(--radius-sm);}
+    .diagram-body svg{display:block;width:100%;height:auto;}
+
     .quiz-btn{width:100%;margin-top:1.25rem;padding:0.75rem;background:linear-gradient(135deg,var(--teal),var(--lavender));color:white;border:none;border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:600;font-size:0.95rem;cursor:pointer;transition:opacity var(--transition),transform var(--transition);display:flex;align-items:center;justify-content:center;gap:0.5rem;}
     .quiz-btn:hover{opacity:0.88;transform:translateY(-1px);}
 
@@ -647,6 +699,15 @@ HTMLEOFcat > ~/Documents/zara-ai-lab/studylab.html << 'HTMLEOF'
       </button>
     </div>
 
+    <!-- Diagram -->
+    <div class="diagram-card" id="diagramCard">
+      <div class="diagram-header">
+        <p class="diagram-title" id="diagramTitle"></p>
+        <span class="diagram-badge">Diagram</span>
+      </div>
+      <div class="diagram-body" id="diagramBody"></div>
+    </div>
+
     <!-- Quiz -->
     <div class="quiz-card" id="quizCard">
       <div class="quiz-header">
@@ -751,6 +812,9 @@ HTMLEOFcat > ~/Documents/zara-ai-lab/studylab.html << 'HTMLEOF'
       document.getElementById('lessonCard').classList.add('visible');
       document.getElementById('lessonCard').scrollIntoView({behavior:'smooth', block:'start'});
 
+      // Fire diagram call in background
+      fetchDiagram(topic);
+
       // Attach popup events
       document.querySelectorAll('.key-term').forEach(el => {
         el.addEventListener('click', function(e){
@@ -767,6 +831,27 @@ HTMLEOFcat > ~/Documents/zara-ai-lab/studylab.html << 'HTMLEOF'
         document.querySelectorAll('.key-term.open').forEach(t => t.classList.remove('open'));
       }
     });
+
+    // ── DIAGRAM ──────────────────────────────────────
+    async function fetchDiagram(topic){
+      document.getElementById('diagramCard').classList.remove('visible');
+      try {
+        const res = await fetch('/api/studylab', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ topic, mode: 'diagram' })
+        });
+        const data = await res.json();
+        if(!res.ok) return; // Silently fail — diagram is optional
+        const svg = data.result.trim();
+        if(svg === 'NO_DIAGRAM' || !svg.startsWith('<svg')) return;
+        document.getElementById('diagramTitle').textContent = `Visual: ${topic}`;
+        document.getElementById('diagramBody').innerHTML = svg;
+        document.getElementById('diagramCard').classList.add('visible');
+      } catch(err){
+        // Silently fail — diagram is a bonus feature
+      }
+    }
 
     // ── QUIZ ──────────────────────────────────────────
     async function startQuiz(){
@@ -900,6 +985,7 @@ HTMLEOFcat > ~/Documents/zara-ai-lab/studylab.html << 'HTMLEOF'
       document.getElementById('topicInput').value = '';
       document.getElementById('submitBtn').disabled = false;
       document.getElementById('lessonCard').classList.remove('visible');
+      document.getElementById('diagramCard').classList.remove('visible');
       document.getElementById('quizCard').classList.remove('visible');
       document.getElementById('resultsCard').classList.remove('visible');
       window.scrollTo({top:0,behavior:'smooth'});

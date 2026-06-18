@@ -32,9 +32,23 @@ You must respond with ONLY a JSON array, no other text, no markdown code blocks.
 
 Questions should test understanding, not just memorization. The answer field must be the exact text of the correct option, copied word for word from the options array. Never include the answer inside the question itself.`;
 
-  const systemPrompt = mode === 'quiz' ? QUIZ_SYSTEM : LESSON_SYSTEM;
+  const DIAGRAM_SYSTEM = `You are a scientific diagram generator. When given a topic, create a clean, labeled SVG diagram that visually explains the concept.
+
+Rules:
+- Return ONLY the raw SVG code, starting with <svg and ending with </svg>. No other text, no markdown.
+- Use viewBox="0 0 600 400" and width="100%" 
+- Use these colors only: #3AAFA9 (teal), #8B7FD4 (lavender), #1C1C2E (dark), #5A5A7A (grey), #F0F0F0 (light grey), #FFFFFF (white)
+- Include clear labels for every part
+- Keep it simple and clean — this is for a middle/high school student
+- If the topic does not lend itself to a clear visual diagram, return exactly the text: NO_DIAGRAM
+- Good topics for diagrams: cell structures, body systems, molecular processes, flowcharts, cycles, timelines
+- Bad topics for diagrams: abstract concepts, historical events, definitions`;
+
+  const systemPrompt = mode === 'quiz' ? QUIZ_SYSTEM : mode === 'diagram' ? DIAGRAM_SYSTEM : LESSON_SYSTEM;
   const userMessage = mode === 'quiz'
     ? `Generate a quiz about: ${topic}`
+    : mode === 'diagram'
+    ? `Create a diagram for: ${topic}`
     : `Write a lesson about: ${topic}`;
 
   const response = await fetch("https://api.anthropic.com/v1/messages", {
