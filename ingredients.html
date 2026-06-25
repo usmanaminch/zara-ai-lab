@@ -39,13 +39,20 @@
     .theme-btn:hover{border-color:var(--teal);color:var(--teal);}
 
     .page{max-width:720px;margin:0 auto;padding:2.5rem 2rem 4rem;}
-
     .page-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);background:var(--teal-faint);border:1px solid rgba(58,175,169,0.25);padding:0.28rem 0.75rem;border-radius:20px;margin-bottom:1rem;}
     .page-title{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.5rem;}
     .page-title .grad{background:linear-gradient(135deg,var(--teal),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
     .page-sub{color:var(--ink-60);font-size:0.9rem;line-height:1.7;margin-bottom:2rem;}
 
+    /* Tabs */
+    .tabs{display:flex;gap:0.5rem;margin-bottom:1.25rem;}
+    .tab{flex:1;padding:0.6rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);font-family:var(--font-display);font-weight:600;font-size:0.82rem;color:var(--ink-60);cursor:pointer;transition:all var(--transition);text-align:center;}
+    .tab.active{border-color:var(--teal);color:var(--teal);background:var(--teal-faint);}
+
     .input-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-bottom:1.25rem;}
+    .tab-panel{display:none;}
+    .tab-panel.active{display:block;}
+
     .input-label{font-family:var(--font-display);font-weight:600;font-size:0.85rem;margin-bottom:0.5rem;display:block;}
     .input-hint{font-size:0.78rem;color:var(--ink-60);margin-bottom:1rem;line-height:1.5;}
 
@@ -56,6 +63,20 @@
     textarea{width:100%;min-height:130px;padding:0.85rem 1rem;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:0.88rem;color:var(--ink);background:var(--surface);resize:vertical;transition:border-color var(--transition);margin-bottom:1rem;line-height:1.6;}
     textarea:focus{outline:none;border-color:var(--teal);}
     textarea::placeholder{color:var(--ink-30);}
+
+    /* Photo upload */
+    .drop-zone{border:2px dashed var(--border);border-radius:var(--radius-sm);padding:2rem 1.5rem;text-align:center;cursor:pointer;transition:border-color var(--transition),background var(--transition);position:relative;margin-bottom:1rem;}
+    .drop-zone:hover,.drop-zone.drag-over{border-color:var(--teal);background:var(--teal-faint);}
+    .drop-zone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+    .drop-icon{font-size:2rem;margin-bottom:0.5rem;}
+    .drop-label{font-family:var(--font-display);font-weight:600;font-size:0.9rem;margin-bottom:0.25rem;}
+    .drop-hint{font-size:0.75rem;color:var(--ink-60);}
+
+    .preview-wrap{display:none;position:relative;margin-bottom:1rem;}
+    .preview-wrap.visible{display:block;}
+    .preview-img{width:100%;max-height:300px;object-fit:contain;border-radius:var(--radius-sm);border:1px solid var(--border);}
+    .remove-btn{position:absolute;top:0.5rem;right:0.5rem;background:var(--ink);color:white;border:none;border-radius:20px;padding:0.25rem 0.65rem;font-size:0.72rem;cursor:pointer;opacity:0.7;transition:opacity var(--transition);}
+    .remove-btn:hover{opacity:1;}
 
     .submit-btn{width:100%;padding:0.75rem;background:linear-gradient(135deg,var(--teal),var(--lavender));color:white;border:none;border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:600;font-size:0.95rem;cursor:pointer;transition:opacity var(--transition),transform var(--transition);display:flex;align-items:center;justify-content:center;gap:0.5rem;}
     .submit-btn:hover:not(:disabled){opacity:0.88;transform:translateY(-1px);}
@@ -68,24 +89,19 @@
 
     .result-card{display:none;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-top:1.25rem;}
     .result-card.visible{display:block;}
-
     .result-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
     .result-icon{font-size:1.5rem;}
     .result-title{font-family:var(--font-display);font-weight:700;font-size:1rem;}
     .result-subtitle{font-size:0.75rem;color:var(--ink-60);}
-
     .result-sections{display:flex;flex-direction:column;gap:1rem;}
-
     .result-section{border-radius:var(--radius-sm);padding:1.1rem 1.25rem;border:1px solid var(--border);}
     .result-section.good{background:var(--green-faint);border-color:rgba(82,194,124,0.3);}
     .result-section.watch{background:var(--yellow-faint);border-color:rgba(240,165,0,0.3);}
     .result-section.verdict{background:var(--teal-faint);border-color:rgba(58,175,169,0.3);}
-
     .section-title{font-family:var(--font-display);font-weight:700;font-size:0.82rem;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:0.6rem;display:flex;align-items:center;gap:0.4rem;}
     .result-section.good .section-title{color:var(--green);}
     .result-section.watch .section-title{color:var(--yellow);}
     .result-section.verdict .section-title{color:var(--teal);}
-
     .section-body{font-size:0.88rem;color:var(--ink-60);line-height:1.8;white-space:pre-wrap;}
     .section-body strong{color:var(--ink);font-weight:600;}
 
@@ -98,7 +114,6 @@
 
     .error-msg{display:none;background:#FFF0F0;border:1px solid #FFCCCC;border-radius:var(--radius-sm);padding:1rem 1.25rem;font-size:0.85rem;color:#CC4444;margin-top:1rem;}
     .error-msg.visible{display:block;}
-    [data-theme="dark"] .error-msg{background:#2A1010;border-color:#552222;color:#FF9999;}
   </style>
 </head>
 <body>
@@ -111,21 +126,45 @@
   <div class="page">
     <div class="page-eyebrow">✦ Project 06 · Ingredient Checker</div>
     <h1 class="page-title">Know what's in your<br><span class="grad">skincare.</span></h1>
-    <p class="page-sub">Paste the ingredient list from any skincare product and get a clear, calm breakdown of what's good, what to be aware of, and whether it's worth using.</p>
+    <p class="page-sub">Paste the ingredient list or take a photo of your product — get a clear, calm breakdown of what's good, what to watch out for, and whether it's worth using.</p>
+
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('text')">📋 Paste Ingredients</button>
+      <button class="tab" onclick="switchTab('photo')">📷 Upload Photo</button>
+    </div>
 
     <div class="input-card">
-      <label class="input-label" for="ingredientInput">Paste your ingredient list here</label>
-      <p class="input-hint">Copy the full ingredients list from the back of your product or from the brand's website. The more complete, the better.</p>
-
-      <div class="example-chips">
-        <span class="example-chip" onclick="fillExample('Water, Niacinamide, Zinc PCA, Glycerin, Pentylene Glycol, Arginine, Dimethyl Isosorbide')">Niacinamide serum</span>
-        <span class="example-chip" onclick="fillExample('Avobenzone, Homosalate, Octisalate, Octocrylene, Glycerin, Dimethicone, Phenoxyethanol, Fragrance')">SPF moisturizer</span>
-        <span class="example-chip" onclick="fillExample('Water, Cetearyl Alcohol, Glycerin, Niacinamide, Ceramide NP, Ceramide AP, Ceramide EOP, Cholesterol, Phenoxyethanol')">Ceramide cream</span>
+      <!-- Text tab -->
+      <div class="tab-panel active" id="panel-text">
+        <label class="input-label">Paste your ingredient list</label>
+        <p class="input-hint">Copy the full ingredients from the back of your product or the brand's website.</p>
+        <div class="example-chips">
+          <span class="example-chip" onclick="fillExample('Water, Niacinamide, Zinc PCA, Glycerin, Pentylene Glycol, Arginine, Dimethyl Isosorbide')">Niacinamide serum</span>
+          <span class="example-chip" onclick="fillExample('Avobenzone, Homosalate, Octisalate, Octocrylene, Glycerin, Dimethicone, Phenoxyethanol, Fragrance')">SPF moisturizer</span>
+          <span class="example-chip" onclick="fillExample('Water, Cetearyl Alcohol, Glycerin, Niacinamide, Ceramide NP, Ceramide AP, Ceramide EOP, Cholesterol, Phenoxyethanol')">Ceramide cream</span>
+        </div>
+        <textarea id="ingredientInput" placeholder="e.g. Water, Niacinamide, Zinc PCA, Glycerin, Hyaluronic Acid..."></textarea>
       </div>
 
-      <textarea id="ingredientInput" placeholder="e.g. Water, Niacinamide, Zinc PCA, Glycerin, Hyaluronic Acid, Panthenol..."></textarea>
+      <!-- Photo tab -->
+      <div class="tab-panel" id="panel-photo">
+        <label class="input-label">Upload a photo of your ingredient list</label>
+        <p class="input-hint">Take a clear photo of the back of your product where the ingredients are listed.</p>
 
-      <button class="submit-btn" id="submitBtn" onclick="analyzeIngredients()">
+        <div class="drop-zone" id="dropZone">
+          <input type="file" id="fileInput" accept="image/*" />
+          <div class="drop-icon">📷</div>
+          <p class="drop-label">Drop your photo here</p>
+          <p class="drop-hint">or click to browse · JPG, PNG, HEIC</p>
+        </div>
+
+        <div class="preview-wrap" id="previewWrap">
+          <img id="previewImg" class="preview-img" src="" alt="Product photo" />
+          <button class="remove-btn" onclick="removeImage()">✕ Remove</button>
+        </div>
+      </div>
+
+      <button class="submit-btn" id="submitBtn" onclick="analyze()">
         <span>✦</span> Analyze Ingredients
       </button>
     </div>
@@ -169,13 +208,69 @@
       document.getElementById('theme-btn').textContent=saved==='dark'?'☀️ Light':'🌙 Dark';
     }
 
-    function fillExample(text){
-      document.getElementById('ingredientInput').value = text;
+    let activeTab = 'text';
+    let currentBase64 = null;
+    let currentMimeType = null;
+
+    function switchTab(tab){
+      activeTab = tab;
+      document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', (i===0&&tab==='text')||(i===1&&tab==='photo')));
+      document.getElementById('panel-text').classList.toggle('active', tab==='text');
+      document.getElementById('panel-photo').classList.toggle('active', tab==='photo');
     }
 
-    async function analyzeIngredients(){
+    function fillExample(text){
+      document.getElementById('ingredientInput').value = text;
+      switchTab('text');
+    }
+
+    // Photo handling
+    const fileInput = document.getElementById('fileInput');
+    const dropZone = document.getElementById('dropZone');
+    const previewWrap = document.getElementById('previewWrap');
+    const previewImg = document.getElementById('previewImg');
+
+    fileInput.addEventListener('change', e => { if(e.target.files[0]) handleFile(e.target.files[0]); });
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+    dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+
+    function handleFile(file){
+      if(!file.type.startsWith('image/')){ showError('Please upload an image file.'); return; }
+      currentMimeType = 'image/jpeg';
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          canvas.getContext('2d').drawImage(img, 0, 0);
+          const jpeg = canvas.toDataURL('image/jpeg', 0.92);
+          currentBase64 = jpeg.split(',')[1];
+          previewImg.src = jpeg;
+          dropZone.style.display = 'none';
+          previewWrap.classList.add('visible');
+          hideError();
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removeImage(){
+      currentBase64 = null;
+      previewImg.src = '';
+      previewWrap.classList.remove('visible');
+      dropZone.style.display = 'block';
+      fileInput.value = '';
+    }
+
+    async function analyze(){
       const ingredients = document.getElementById('ingredientInput').value.trim();
-      if(!ingredients){ showError('Please paste some ingredients first.'); return; }
+
+      if(activeTab === 'text' && !ingredients){ showError('Please paste some ingredients first.'); return; }
+      if(activeTab === 'photo' && !currentBase64){ showError('Please upload a photo first.'); return; }
 
       document.getElementById('submitBtn').disabled = true;
       document.getElementById('resultCard').classList.remove('visible');
@@ -184,10 +279,14 @@
       hideError();
 
       try {
+        const body = activeTab === 'photo'
+          ? { image: currentBase64, mimeType: currentMimeType }
+          : { ingredients };
+
         const res = await fetch('/api/ingredients', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ingredients })
+          body: JSON.stringify(body)
         });
         const data = await res.json();
         if(!res.ok) throw new Error(data.error || 'Something went wrong');
@@ -206,7 +305,6 @@
         { key: 'Watch Out For', icon: '⚠️', cls: 'watch' },
         { key: 'Overall Verdict', icon: '🧴', cls: 'verdict' },
       ];
-
       let html = '';
       sections.forEach((sec, i) => {
         const next = sections[i+1]?.key;
@@ -221,11 +319,9 @@
           <div class="section-body">${content}</div>
         </div>`;
       });
-
       if(!html){
         html = `<div class="result-section verdict"><div class="section-body">${text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div></div>`;
       }
-
       document.getElementById('resultSections').innerHTML = html;
       document.getElementById('resultCard').classList.add('visible');
       document.getElementById('tryAgain').classList.add('visible');
@@ -237,6 +333,7 @@
       document.getElementById('submitBtn').disabled = false;
       document.getElementById('resultCard').classList.remove('visible');
       document.getElementById('tryAgain').classList.remove('visible');
+      removeImage();
       window.scrollTo({top:0,behavior:'smooth'});
     }
 

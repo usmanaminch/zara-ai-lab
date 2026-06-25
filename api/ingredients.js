@@ -3,11 +3,18 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { ingredients } = req.body;
+  const { ingredients, image, mimeType } = req.body;
 
-  if (!ingredients || ingredients.trim().length < 5) {
-    return res.status(400).json({ error: 'Please paste some ingredients first' });
+  if (!ingredients && !image) {
+    return res.status(400).json({ error: 'Please paste ingredients or upload a photo' });
   }
+
+  const userContent = image
+    ? [
+        { type: 'image', source: { type: 'base64', media_type: mimeType || 'image/jpeg', data: image } },
+        { type: 'text', text: 'Please read the ingredient list from this image and analyze the skincare ingredients.' }
+      ]
+    : `Please analyze these skincare ingredients:\n\n${ingredients}`;
 
   const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
@@ -35,7 +42,7 @@ If any ingredients are worth avoiding, suggest specific better skincare products
 Never exaggerate or alarm the user — keep everything calm and practical.
 
 Always end with a brief disclaimer that this is for educational purposes only and not medical advice.`,
-      messages: [{ role: 'user', content: `Please analyze these skincare ingredients:\n\n${ingredients}` }]
+      messages: [{ role: 'user', content: userContent }]
     }),
   });
 
