@@ -65,7 +65,7 @@
     .section-heading{font-family:var(--font-display);font-size:clamp(1.4rem,3vw,2rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.5rem;}
     .section-subhead{color:var(--ink-60);font-size:0.85rem;max-width:500px;line-height:1.7;margin-bottom:1.5rem;}
 
-    .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;}
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;align-items:start;} .projects-grid .project-card{max-width:100%;}
     .project-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;transition:border-color var(--transition),transform var(--transition),box-shadow var(--transition);}
     .project-card:hover{border-color:var(--teal-light);transform:translateY(-3px);box-shadow:0 8px 28px rgba(58,175,169,0.1);}
     .project-card.coming-soon{opacity:0.42;pointer-events:none;}
