@@ -40,11 +40,11 @@
     .theme-btn{background:var(--surface-2);border:1px solid var(--border);color:var(--ink-60);border-radius:20px;padding:0.28rem 0.7rem;font-size:0.75rem;cursor:pointer;transition:all var(--transition);font-family:var(--font-body);}
     .theme-btn:hover{border-color:var(--teal);color:var(--teal);}
 
-    .hero{min-height:70vh;display:flex;align-items:center;justify-content:center;padding:2.5rem 2.5rem 2rem;position:relative;overflow:hidden;text-align:center;}
+    .hero{min-height:70vh;display:flex;align-items:center;justify-content:center;padding:2.5rem 2.5rem 2rem;position:relative;overflow:hidden;text-align:center;width:100%;}
     .hero::before,.hero::after{content:'';position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;}
     .hero::before{width:360px;height:360px;background:radial-gradient(circle,rgba(58,175,169,0.1) 0%,transparent 70%);top:-80px;right:0;}
     .hero::after{width:300px;height:300px;background:radial-gradient(circle,rgba(139,127,212,0.08) 0%,transparent 70%);bottom:-60px;left:35%;}
-    .hero-inner{max-width:640px;position:relative;z-index:1;margin:0 auto;text-align:center;}
+    .hero-inner{max-width:640px;width:100%;position:relative;z-index:1;margin:0 auto;text-align:center;}
     .hero-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);background:var(--teal-faint);border:1px solid rgba(58,175,169,0.25);padding:0.28rem 0.75rem;border-radius:20px;margin-bottom:1.25rem;}
     .hero-name{font-family:var(--font-display);font-size:clamp(2.8rem,7vw,4.8rem);font-weight:700;line-height:0.95;letter-spacing:-0.04em;margin-bottom:0.65rem;}
     .hero-name .grad{background:linear-gradient(135deg,var(--teal) 0%,var(--lavender) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
@@ -136,7 +136,7 @@
       <div class="hero-eyebrow fade-in">✦ Builder · Artist · Explorer</div>
       <h1 class="hero-name fade-in">Hi, I'm<br><span class="grad">Zara.</span></h1>
       <p class="hero-tagline fade-in">I build with AI. I explore science. I make things.</p>
-      <p class="hero-bio fade-in">This is my living portfolio — where <strong>AI projects, creative work, and achievements</strong> live side by side. Everything here is something I actually built, earned, or made. It grows as I do.</p>
+      <p class="hero-bio fade-in">This is my living portfolio — where <strong>AI projects, research, and creative work</strong> live side by side. Everything here is something I actually built, wrote, or made. It grows as I do.</p>
       <div class="hero-badges fade-in">
         <span class="badge">🤖 AI & Technology</span>
         <span class="badge">🔬 Science</span>
