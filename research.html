@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research — Zara's Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --teal:#3AAFA9;--teal-light:#6ECBC6;--teal-faint:#E0F5F4;
+      --lavender:#8B7FD4;--lav-faint:#EEEAFF;
+      --ink:#1C1C2E;--ink-60:#5A5A7A;--ink-30:#B0B0C8;
+      --surface:#F0F0F0;--border:#D0D0D0;--card-bg:#FFFFFF;
+      --font-display:'Space Grotesk',sans-serif;
+      --font-body:'Inter',sans-serif;
+      --radius:14px;--radius-sm:9px;--transition:0.22s ease;
+    }
+    [data-theme="dark"]{
+      --ink:#EEF0FF;--ink-60:#9090B0;--ink-30:#4A4A6A;
+      --surface:#0F1020;--border:#2C2D45;--card-bg:#181928;
+      --teal-faint:#0C2422;--lav-faint:#14122A;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--font-body);background:var(--surface);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition);}
+    a{color:inherit;text-decoration:none;}
+
+    nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;background:var(--surface);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:var(--font-display);font-weight:700;font-size:1rem;letter-spacing:-0.02em;display:flex;align-items:center;gap:0.45rem;}
+    .nav-logo .pip{width:8px;height:8px;background:linear-gradient(135deg,var(--teal),var(--lavender));border-radius:50%;}
+    .nav-back{font-size:0.8rem;font-weight:500;color:var(--ink-60);transition:color var(--transition);}
+    .nav-back:hover{color:var(--teal);}
+    .theme-btn{background:var(--card-bg);border:1px solid var(--border);color:var(--ink-60);border-radius:20px;padding:0.28rem 0.7rem;font-size:0.75rem;cursor:pointer;font-family:var(--font-body);transition:all var(--transition);}
+    .theme-btn:hover{border-color:var(--teal);color:var(--teal);}
+
+    .page{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
+
+    /* Research index */
+    .page-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);background:var(--teal-faint);border:1px solid rgba(58,175,169,0.25);padding:0.28rem 0.75rem;border-radius:20px;margin-bottom:1rem;}
+    .page-title{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.5rem;}
+    .page-title .grad{background:linear-gradient(135deg,var(--teal),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .page-sub{color:var(--ink-60);font-size:0.9rem;line-height:1.7;margin-bottom:2.5rem;}
+
+    /* Paper cards index */
+    .papers-list{display:flex;flex-direction:column;gap:1rem;margin-bottom:3rem;}
+    .paper-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;cursor:pointer;transition:border-color var(--transition),transform var(--transition),box-shadow var(--transition);}
+    .paper-card:hover{border-color:var(--teal-light);transform:translateY(-2px);box-shadow:0 6px 24px rgba(58,175,169,0.1);}
+    .paper-card.active{border-color:var(--teal);}
+    .paper-meta{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.6rem;}
+    .paper-date{font-size:0.7rem;font-weight:600;color:var(--ink-30);font-family:var(--font-display);letter-spacing:0.05em;}
+    .paper-tag{font-size:0.65rem;font-weight:600;padding:0.15rem 0.55rem;border-radius:12px;background:var(--teal-faint);color:var(--teal);}
+    .paper-title{font-family:var(--font-display);font-weight:700;font-size:1.05rem;letter-spacing:-0.02em;margin-bottom:0.35rem;}
+    .paper-abstract{font-size:0.82rem;color:var(--ink-60);line-height:1.65;}
+    .read-link{display:inline-flex;align-items:center;gap:0.3rem;margin-top:0.75rem;font-size:0.78rem;font-weight:600;color:var(--teal);}
+
+    /* Divider */
+    .section-divider{border:none;border-top:1px solid var(--border);margin:0 0 3rem;}
+
+    /* Full paper */
+    .paper-full{display:none;}
+    .paper-full.visible{display:block;}
+
+    .paper-back{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.8rem;font-weight:500;color:var(--ink-60);cursor:pointer;margin-bottom:2rem;transition:color var(--transition);}
+    .paper-back:hover{color:var(--teal);}
+
+    .paper-header{margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);}
+    .paper-header .paper-tag{margin-bottom:1rem;display:inline-block;}
+    .paper-header h1{font-family:var(--font-display);font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:700;letter-spacing:-0.03em;line-height:1.2;margin-bottom:0.75rem;}
+    .paper-byline{font-size:0.82rem;color:var(--ink-60);}
+    .paper-byline strong{color:var(--ink);font-weight:500;}
+
+    /* Paper body typography */
+    .paper-body{font-size:0.95rem;color:var(--ink-60);line-height:1.9;}
+    .paper-body p{margin-bottom:1.25rem;}
+    .paper-body p:last-child{margin-bottom:0;}
+    .paper-body h2{font-family:var(--font-display);font-weight:700;font-size:1.1rem;color:var(--ink);letter-spacing:-0.02em;margin:2rem 0 0.75rem;}
+    .paper-body strong{color:var(--ink);font-weight:600;}
+    .paper-body em{color:var(--teal);font-style:normal;font-weight:500;}
+
+    /* Pull quote */
+    .pull-quote{border-left:3px solid var(--teal);padding:0.75rem 1.25rem;margin:1.75rem 0;background:var(--teal-faint);border-radius:0 var(--radius-sm) var(--radius-sm) 0;}
+    .pull-quote p{font-family:var(--font-display);font-size:1rem;font-weight:500;color:var(--ink);line-height:1.5;margin:0;}
+
+    /* References */
+    .references{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);}
+    .references h2{font-family:var(--font-display);font-weight:700;font-size:0.85rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-60);margin-bottom:1rem;}
+    .ref-list{list-style:none;display:flex;flex-direction:column;gap:0.5rem;}
+    .ref-list li{font-size:0.75rem;color:var(--ink-60);line-height:1.6;padding-left:1.5rem;position:relative;}
+    .ref-list li::before{content:attr(data-num);position:absolute;left:0;color:var(--teal);font-weight:700;}
+    .ref-list a{color:var(--teal);text-decoration:underline;word-break:break-all;}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo"><span class="pip"></span>Zara</div>
+    <a href="index.html" class="nav-back">← Back to portfolio</a>
+    <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">🌙 Dark</button>
+  </nav>
+
+  <div class="page">
+
+    <!-- ── Research Index ── -->
+    <div id="researchIndex">
+      <div class="page-eyebrow">✦ Research</div>
+      <h1 class="page-title">Papers &<br><span class="grad">writing.</span></h1>
+      <p class="page-sub">A collection of research papers and essays I've written on topics I care about — where technology meets medicine, and science meets society.</p>
+
+      <div class="papers-list">
+        <div class="paper-card" onclick="openPaper('paper1')">
+          <div class="paper-meta">
+            <span class="paper-date">JUNE 2026</span>
+            <span class="paper-tag">AI · Dermatology · Health Equity</span>
+          </div>
+          <h3 class="paper-title">Seeing Every Skin: AI in Dermatology and the Health Equity Gap</h3>
+          <p class="paper-abstract">Artificial intelligence is transforming how skin conditions are diagnosed — but the same systems that promise better care may be deepening inequalities for patients with darker skin tones. This paper examines both the promise and the blind spots of AI in dermatology.</p>
+          <span class="read-link">Read paper →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Full Paper ── -->
+    <div class="paper-full" id="paper1">
+      <div class="paper-back" onclick="closePaper()">← Back to research</div>
+
+      <div class="paper-header">
+        <span class="paper-tag">AI · Dermatology · Health Equity</span>
+        <h1>Seeing Every Skin: AI in Dermatology and the Health Equity Gap</h1>
+        <p class="paper-byline"><strong>Zara</strong> &nbsp;·&nbsp; June 2026 &nbsp;·&nbsp; Independent research</p>
+      </div>
+
+      <div class="paper-body">
+
+        <p>Imagine visiting a doctor and being told your diagnosis is less accurate simply because of the color of your skin. For millions of patients with darker skin tones around the world, this is not hypothetical — it is an emerging reality in the age of artificial intelligence. As AI tools become increasingly embedded in medical practice, the field of dermatology stands at a critical crossroads: these systems hold enormous promise, yet they risk encoding and amplifying the very inequalities medicine has long struggled to address.</p>
+
+        <h2>The Promise of AI in Dermatology</h2>
+
+        <p>Dermatology has become one of medicine's most data-rich fields, making it a natural fit for AI. Deep learning algorithms trained on thousands of skin images can now identify conditions — from melanoma to eczema — with accuracy that rivals experienced dermatologists. A systematic review published in 2025 found that AI-based dermatology systems achieve a pooled diagnostic accuracy of 0.88 on the AUROC scale, comparable to specialist-level performance.</p>
+
+        <p>This matters especially because dermatology is one of the most inaccessible specialties in medicine. There is a national shortage of dermatologists, with providers concentrated in urban centers while rural and underserved communities wait months for an appointment. Studies show that <strong>Black and Hispanic patients are significantly less likely to receive outpatient dermatology care than white patients</strong>, and per capita spending on dermatology visits for Black patients is roughly one-third that of white patients. AI diagnostic tools, accessible through smartphones and primary care clinics, could theoretically extend specialist-level care to anyone with a camera and a skin concern.</p>
+
+        <div class="pull-quote">
+          <p>"AI diagnostic tools could extend specialist-level care to anyone with a camera and a skin concern — but only if they work equally well for everyone."</p>
+        </div>
+
+        <h2>The Problem Hidden in the Data</h2>
+
+        <p>The challenge lies in how these AI systems are built. Every AI model learns from training data — in this case, images of skin conditions. And the most widely used dermatology datasets, including the International Skin Imaging Collaboration (ISIC) dataset, are heavily skewed toward lighter skin tones, with Fitzpatrick skin types V and VI — the darkest tones — dramatically underrepresented. In some benchmarks, lighter skin tones account for over 70 percent of images. When a model learns primarily from lighter skin, it learns to recognize disease as it appears on lighter skin. The result is predictable: <strong>AI systems consistently underperform on patients with darker skin tones.</strong></p>
+
+        <p>The numbers are striking. A 2025 meta-analysis found that AI diagnostic performance dropped from an AUROC of 0.89 for lighter skin tones to 0.82 for darker ones — a gap that could translate into thousands of missed or delayed diagnoses at scale. A study assessing GPT-4's diagnostic accuracy found similar disparities in how AI language models handle skin conditions across skin tones. Research from Northwestern University confirmed that while AI assistance improves overall diagnostic accuracy for physicians, <em>the gap between light and dark skin tone accuracy actually widens</em> when AI is introduced — because doctors tend to trust AI suggestions more readily for patients whose skin resembles the training data.</p>
+
+        <h2>A Double Burden</h2>
+
+        <p>What makes this particularly troubling is that patients with darker skin tones already face compounding barriers to dermatology care. Dermatology is one of the least diverse specialties in medicine, and this lack of representation in the workforce means less clinical familiarity with how conditions present across the full range of human skin tones. Fitzpatrick skin types IV through VI — which represent a significant portion of the global population — remain the least studied and most underserved in both clinical training and AI model development. This is a gap that AI, as currently designed, does not close. It deepens it.</p>
+
+        <p>The consequences reach beyond inconvenience. Delayed diagnosis of melanoma is associated with significantly worse outcomes and higher mortality. Untreated psoriasis carries serious cardiovascular and mental health risks. When diagnostic tools — whether human or algorithmic — perform worse on specific populations, the downstream effects on health outcomes are real and serious.</p>
+
+        <h2>What Can Be Done</h2>
+
+        <p>The good news is that the problem, once identified, has tractable solutions. Research shows that when AI models are trained on more diverse datasets — including images with artificially augmented skin tones — their accuracy on darker skin tones improves meaningfully. Several institutions are now building more representative dermatology databases as a direct response to these findings. Regulatory bodies including the FDA are beginning to explore how skin tone criteria should factor into medical device approval.</p>
+
+        <p>But technical fixes alone are insufficient. The deeper issue is representation: in training data, in clinical trials, in medical textbooks, and in the dermatology workforce itself. The American Academy of Dermatology launched a diversity, equity, and inclusion initiative in 2021, recognizing that building a more representative workforce is inseparable from building more equitable care. When dermatologists with diverse backgrounds enter the field, they bring clinical knowledge that improves diagnosis for patients who look like them — and they bring perspectives that shape how AI tools are designed and validated.</p>
+
+        <h2>A Personal Note</h2>
+
+        <p>I began thinking about this topic while building AI tools for skincare and skin health education. As I worked on projects like an ingredient analyzer and a skin concern advisor, I kept returning to the same question: who are these tools for? The most enthusiastic users of skincare AI are often young people with a wide range of skin tones — yet the AI systems underlying these tools, and the dermatology datasets they draw from, were built with a much narrower patient in mind.</p>
+
+        <p>The promise of AI in medicine is that it can democratize access to expertise. But a tool that works well for some patients and poorly for others is not democratization — it is the automation of existing inequality. Getting this right matters not just for dermatology, but as a test case for how medicine integrates AI responsibly across every specialty.</p>
+
+        <p><strong>The technology to close this gap exists. The question is whether the field will prioritize building it for everyone.</strong></p>
+
+      </div>
+
+      <div class="references">
+        <h2>References</h2>
+        <ol class="ref-list">
+          <li data-num="1.">Equity and Generalizability of AI for Skin-Lesion Diagnosis: A Systematic Review and Meta-Analysis. PMC, 2025. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12735087/" target="_blank">ncbi.nlm.nih.gov</a></li>
+          <li data-num="2.">Groh et al. Racial bias in photo-based medical diagnosis despite AI help. Northwestern University / MIT News, February 2024. <a href="https://news.mit.edu/2024/doctors-more-difficulty-diagnosing-diseases-images-darker-skin-0205" target="_blank">mit.edu</a></li>
+          <li data-num="3.">A Generative AI Approach for Reducing Skin Tone Bias in Skin Cancer Classification. arXiv, 2026. <a href="https://arxiv.org/abs/2602.14356" target="_blank">arxiv.org</a></li>
+          <li data-num="4.">Exploring the Diagnostic Capability of AI in Dermatology for Darker Skin Tones: A Narrative Review. PMC, 2025. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12624499/" target="_blank">ncbi.nlm.nih.gov</a></li>
+          <li data-num="5.">Dermatologic Concerns and Disparities Among Members of the Hispanic Community. Dermatology Times, 2026. <a href="https://www.dermatologytimes.com/view/dermatologic-concerns-and-disparities-among-members-of-the-hispanic-community" target="_blank">dermatologytimes.com</a></li>
+          <li data-num="6.">Racial Disparities in Dermatology. PMC / NIH. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9743121/" target="_blank">pmc.ncbi.nlm.nih.gov</a></li>
+          <li data-num="7.">Racial, Ethnic Disparities Persist in Dermatology Research and Workforce. AJMC, 2026. <a href="https://www.ajmc.com/view/racial-ethnic-disparities-persist-in-dermatology-research-and-in-workforce" target="_blank">ajmc.com</a></li>
+          <li data-num="8.">Ending the Pandemic of Inaccessibility in Dermatology. ScienceDirect, 2023. <a href="https://www.sciencedirect.com/science/article/abs/pii/S0738081X23000470" target="_blank">sciencedirect.com</a></li>
+        </ol>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function toggleTheme(){
+      const html=document.documentElement;
+      const btn=document.getElementById('theme-btn');
+      const isDark=html.getAttribute('data-theme')==='dark';
+      html.setAttribute('data-theme',isDark?'light':'dark');
+      btn.textContent=isDark?'🌙 Dark':'☀️ Light';
+      localStorage.setItem('zara-theme',isDark?'light':'dark');
+    }
+    const saved=localStorage.getItem('zara-theme');
+    if(saved){
+      document.documentElement.setAttribute('data-theme',saved);
+      document.getElementById('theme-btn').textContent=saved==='dark'?'☀️ Light':'🌙 Dark';
+    }
+
+    function openPaper(id){
+      document.getElementById('researchIndex').style.display = 'none';
+      document.getElementById(id).classList.add('visible');
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+
+    function closePaper(){
+      document.querySelectorAll('.paper-full').forEach(p => p.classList.remove('visible'));
+      document.getElementById('researchIndex').style.display = 'block';
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+  </script>
+</body>
+</html>
