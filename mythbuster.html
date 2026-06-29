@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Myth Buster — Zara's Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --teal:#3AAFA9;--teal-light:#6ECBC6;--teal-faint:#E0F5F4;
+      --lavender:#8B7FD4;--lav-faint:#EEEAFF;
+      --green:#52C27C;--green-faint:#EBF9F0;
+      --red:#E24B4A;--red-faint:#FFF0F0;
+      --yellow:#F0A500;--yellow-faint:#FEF5E0;
+      --ink:#1C1C2E;--ink-60:#5A5A7A;--ink-30:#B0B0C8;
+      --surface:#F0F0F0;--border:#D0D0D0;--card-bg:#FFFFFF;
+      --font-display:'Space Grotesk',sans-serif;
+      --font-body:'Inter',sans-serif;
+      --radius:14px;--radius-sm:9px;--transition:0.22s ease;
+    }
+    [data-theme="dark"]{
+      --ink:#EEF0FF;--ink-60:#9090B0;--ink-30:#4A4A6A;
+      --surface:#0F1020;--border:#2C2D45;--card-bg:#181928;
+      --teal-faint:#0C2422;--lav-faint:#14122A;
+      --green-faint:#0A1F12;--red-faint:#2A1010;--yellow-faint:#1F1600;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--font-body);background:var(--surface);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition);}
+    a{color:inherit;text-decoration:none;}
+
+    nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;background:var(--surface);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:var(--font-display);font-weight:700;font-size:1rem;letter-spacing:-0.02em;display:flex;align-items:center;gap:0.45rem;}
+    .nav-logo .pip{width:8px;height:8px;background:linear-gradient(135deg,var(--teal),var(--lavender));border-radius:50%;}
+    .nav-back{font-size:0.8rem;font-weight:500;color:var(--ink-60);transition:color var(--transition);}
+    .nav-back:hover{color:var(--teal);}
+    .theme-btn{background:var(--card-bg);border:1px solid var(--border);color:var(--ink-60);border-radius:20px;padding:0.28rem 0.7rem;font-size:0.75rem;cursor:pointer;font-family:var(--font-body);transition:all var(--transition);}
+    .theme-btn:hover{border-color:var(--teal);color:var(--teal);}
+
+    .page{max-width:720px;margin:0 auto;padding:2.5rem 2rem 4rem;}
+    .page-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);background:var(--teal-faint);border:1px solid rgba(58,175,169,0.25);padding:0.28rem 0.75rem;border-radius:20px;margin-bottom:1rem;}
+    .page-title{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.5rem;}
+    .page-title .grad{background:linear-gradient(135deg,var(--teal),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .page-sub{color:var(--ink-60);font-size:0.9rem;line-height:1.7;margin-bottom:2rem;}
+
+    .input-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-bottom:1.25rem;}
+    .input-label{font-family:var(--font-display);font-weight:600;font-size:0.85rem;margin-bottom:0.5rem;display:block;}
+    .input-hint{font-size:0.78rem;color:var(--ink-60);margin-bottom:1rem;}
+
+    .example-chips{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1.1rem;}
+    .example-chip{font-size:0.72rem;padding:0.25rem 0.7rem;border-radius:20px;border:1px solid var(--border);color:var(--ink-60);background:var(--surface);cursor:pointer;transition:border-color var(--transition),color var(--transition);}
+    .example-chip:hover{border-color:var(--teal);color:var(--teal);}
+
+    textarea{width:100%;min-height:90px;padding:0.85rem 1rem;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:0.9rem;color:var(--ink);background:var(--surface);resize:vertical;transition:border-color var(--transition);margin-bottom:1rem;line-height:1.6;}
+    textarea:focus{outline:none;border-color:var(--teal);}
+    textarea::placeholder{color:var(--ink-30);}
+
+    .submit-btn{width:100%;padding:0.75rem;background:linear-gradient(135deg,var(--teal),var(--lavender));color:white;border:none;border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:600;font-size:0.95rem;cursor:pointer;transition:opacity var(--transition),transform var(--transition);display:flex;align-items:center;justify-content:center;gap:0.5rem;}
+    .submit-btn:hover:not(:disabled){opacity:0.88;transform:translateY(-1px);}
+    .submit-btn:disabled{opacity:0.45;cursor:not-allowed;transform:none;}
+
+    .loading{display:none;text-align:center;padding:2rem;color:var(--ink-60);}
+    .loading.visible{display:block;}
+    .spinner{display:inline-block;width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:0.75rem;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+
+    /* Verdict badge */
+    .verdict-badge{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--font-display);font-weight:700;font-size:1rem;padding:0.5rem 1rem;border-radius:var(--radius-sm);margin-bottom:1.25rem;}
+    .verdict-badge.true{background:var(--green-faint);color:var(--green);border:1px solid rgba(82,194,124,0.3);}
+    .verdict-badge.false{background:var(--red-faint);color:var(--red);border:1px solid rgba(226,75,74,0.3);}
+    .verdict-badge.partial{background:var(--yellow-faint);color:var(--yellow);border:1px solid rgba(240,165,0,0.3);}
+    .verdict-badge.complicated{background:var(--lav-faint);color:var(--lavender);border:1px solid rgba(139,127,212,0.3);}
+    [data-theme="dark"] .verdict-badge.false{background:var(--red-faint);color:#FF9999;}
+
+    .result-card{display:none;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-top:1.25rem;}
+    .result-card.visible{display:block;}
+    .result-header{margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+    .result-claim{font-size:0.78rem;color:var(--ink-30);margin-bottom:0.75rem;font-style:italic;}
+    .result-sections{display:flex;flex-direction:column;gap:1rem;}
+    .result-section{border-radius:var(--radius-sm);padding:1.1rem 1.25rem;background:var(--surface);border:1px solid var(--border);}
+    .section-title{font-family:var(--font-display);font-weight:700;font-size:0.82rem;letter-spacing:0.04em;text-transform:uppercase;color:var(--teal);margin-bottom:0.6rem;}
+    .section-body{font-size:0.88rem;color:var(--ink-60);line-height:1.8;}
+    .section-body strong{color:var(--ink);font-weight:600;}
+
+    /* Clickable key terms — same as Study Lab */
+    .key-term{color:var(--teal);font-weight:600;cursor:pointer;border-bottom:1.5px dashed var(--teal);position:relative;transition:color var(--transition);}
+    .key-term:hover{color:var(--lavender);}
+    .key-term .inline-def{display:none;position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--ink);color:white;padding:0.5rem 0.75rem;border-radius:var(--radius-sm);font-size:0.75rem;line-height:1.5;width:220px;z-index:500;font-weight:400;box-shadow:0 4px 16px rgba(0,0,0,0.2);}
+    .key-term.open .inline-def{display:block;}
+
+    .disclaimer{background:var(--lav-faint);border:1px solid rgba(139,127,212,0.3);border-radius:var(--radius-sm);padding:0.85rem 1.1rem;margin-top:1rem;font-size:0.75rem;color:var(--ink-60);line-height:1.5;}
+    .disclaimer strong{color:var(--lavender);font-weight:600;}
+
+    .try-again{display:none;width:100%;margin-top:1rem;padding:0.65rem;background:var(--card-bg);color:var(--ink-60);border:1px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:500;font-size:0.85rem;cursor:pointer;transition:border-color var(--transition),color var(--transition);}
+    .try-again:hover{border-color:var(--teal);color:var(--teal);}
+    .try-again.visible{display:block;}
+
+    .error-msg{display:none;background:#FFF0F0;border:1px solid #FFCCCC;border-radius:var(--radius-sm);padding:1rem 1.25rem;font-size:0.85rem;color:#CC4444;margin-top:1rem;}
+    .error-msg.visible{display:block;}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo"><span class="pip"></span>Zara</div>
+    <a href="index.html" class="nav-back">← Back to portfolio</a>
+    <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">🌙 Dark</button>
+  </nav>
+
+  <div class="page">
+    <div class="page-eyebrow">✦ Project 07 · Myth Buster</div>
+    <h1 class="page-title">Fact-check any<br><span class="grad">health claim.</span></h1>
+    <p class="page-sub">Seen something on social media about health or skincare? Paste it here and get the real science — no jargon, no fear, just facts.</p>
+
+    <div class="input-card">
+      <label class="input-label">What's the claim?</label>
+      <p class="input-hint">Paste any health tip, skincare advice, or thing you've heard — real or suspicious.</p>
+
+      <div class="example-chips">
+        <span class="example-chip" onclick="fillClaim(this)">Drinking water clears acne</span>
+        <span class="example-chip" onclick="fillClaim(this)">You need to drink 8 glasses of water a day</span>
+        <span class="example-chip" onclick="fillClaim(this)">Toothpaste helps pimples heal faster</span>
+        <span class="example-chip" onclick="fillClaim(this)">Eating chocolate causes breakouts</span>
+        <span class="example-chip" onclick="fillClaim(this)">You only use 10% of your brain</span>
+        <span class="example-chip" onclick="fillClaim(this)">Cold showers are good for your skin</span>
+      </div>
+
+      <textarea id="claimInput" placeholder="e.g. Drinking lemon water detoxifies your liver..."></textarea>
+
+      <button class="submit-btn" id="submitBtn" onclick="checkMyth()">
+        <span>🔍</span> Check This Claim
+      </button>
+    </div>
+
+    <div class="error-msg" id="errorMsg"></div>
+
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <p style="font-style:italic;font-size:0.9rem;">Checking the science…</p>
+    </div>
+
+    <div class="result-card" id="resultCard">
+      <div class="result-header">
+        <p class="result-claim" id="resultClaim"></p>
+        <div class="verdict-badge" id="verdictBadge"></div>
+      </div>
+      <div class="result-sections" id="resultSections"></div>
+      <div class="disclaimer">
+        <strong>⚕️ Note:</strong> This is for educational purposes only and is not medical advice. Always consult a healthcare professional for personal health concerns.
+      </div>
+    </div>
+
+    <button class="try-again" id="tryAgain" onclick="resetAll()">Check another claim →</button>
+  </div>
+
+  <script>
+    function toggleTheme(){
+      const html=document.documentElement;
+      const btn=document.getElementById('theme-btn');
+      const isDark=html.getAttribute('data-theme')==='dark';
+      html.setAttribute('data-theme',isDark?'light':'dark');
+      btn.textContent=isDark?'🌙 Dark':'☀️ Light';
+      localStorage.setItem('zara-theme',isDark?'light':'dark');
+    }
+    const saved=localStorage.getItem('zara-theme');
+    if(saved){
+      document.documentElement.setAttribute('data-theme',saved);
+      document.getElementById('theme-btn').textContent=saved==='dark'?'☀️ Light':'🌙 Dark';
+    }
+
+    function fillClaim(el){
+      document.getElementById('claimInput').value = el.textContent;
+    }
+
+    async function checkMyth(){
+      const claim = document.getElementById('claimInput').value.trim();
+      if(!claim){ showError('Please enter a claim to check.'); return; }
+
+      document.getElementById('submitBtn').disabled = true;
+      document.getElementById('resultCard').classList.remove('visible');
+      document.getElementById('tryAgain').classList.remove('visible');
+      document.getElementById('loading').classList.add('visible');
+      hideError();
+
+      try {
+        const res = await fetch('/api/mythbuster', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ claim })
+        });
+        const data = await res.json();
+        if(!res.ok) throw new Error(data.error || 'Something went wrong');
+        renderResult(claim, data.result);
+      } catch(err){
+        showError('Something went wrong: ' + err.message);
+        document.getElementById('submitBtn').disabled = false;
+      } finally {
+        document.getElementById('loading').classList.remove('visible');
+      }
+    }
+
+    function parseTerms(text){
+      return text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, term, def) => {
+        const safeDef = def.replace(/"/g, '&quot;');
+        return `<span class="key-term" data-def="${safeDef}">${term}<span class="inline-def">${def}</span></span>`;
+      });
+    }
+
+    function renderResult(claim, text){
+      // Set claim
+      document.getElementById('resultClaim').textContent = '"' + claim + '"';
+
+      // Detect verdict
+      const verdictMatch = text.match(/Verdict:\s*(.+)/i);
+      const verdictText = verdictMatch ? verdictMatch[1].trim() : '';
+      const badge = document.getElementById('verdictBadge');
+      badge.textContent = verdictText;
+      badge.className = 'verdict-badge';
+      const lower = verdictText.toLowerCase();
+      if(lower.includes('false')) { badge.classList.add('false'); badge.textContent = '✗ ' + verdictText; }
+      else if(lower.includes('partially') || lower.includes('it\'s complicated') || lower.includes('complicated')) { badge.classList.add(lower.includes('complicated') ? 'complicated' : 'partial'); badge.textContent = '◑ ' + verdictText; }
+      else if(lower.includes('true')) { badge.classList.add('true'); badge.textContent = '✓ ' + verdictText; }
+      else { badge.classList.add('complicated'); }
+
+      // Parse sections
+      const sections = [
+        { key: 'The Science', label: 'The Science' },
+        { key: 'The Bottom Line', label: 'The Bottom Line' },
+      ];
+
+      let html = '';
+      sections.forEach((sec, i) => {
+        const next = sections[i+1]?.key;
+        const startIdx = text.indexOf(sec.key);
+        if(startIdx === -1) return;
+        const endIdx = next ? text.indexOf(next) : text.length;
+        let content = text.slice(startIdx + sec.key.length, endIdx !== -1 ? endIdx : text.length).trim();
+        content = content.replace(/^[\s:—\-]+/, '');
+        content = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        content = parseTerms(content);
+        html += `<div class="result-section">
+          <p class="section-title">${sec.label}</p>
+          <div class="section-body">${content}</div>
+        </div>`;
+      });
+
+      if(!html){
+        const cleaned = text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+        html = `<div class="result-section"><div class="section-body">${parseTerms(cleaned)}</div></div>`;
+      }
+
+      document.getElementById('resultSections').innerHTML = html;
+      document.getElementById('resultCard').classList.add('visible');
+      document.getElementById('tryAgain').classList.add('visible');
+
+      // Attach click events for key terms
+      document.querySelectorAll('.key-term').forEach(el => {
+        el.addEventListener('click', function(e){
+          e.stopPropagation();
+          const isOpen = this.classList.contains('open');
+          document.querySelectorAll('.key-term.open').forEach(t => t.classList.remove('open'));
+          if(!isOpen) this.classList.add('open');
+        });
+      });
+
+      document.getElementById('resultCard').scrollIntoView({behavior:'smooth',block:'nearest'});
+    }
+
+    function resetAll(){
+      document.getElementById('claimInput').value = '';
+      document.getElementById('submitBtn').disabled = false;
+      document.getElementById('resultCard').classList.remove('visible');
+      document.getElementById('tryAgain').classList.remove('visible');
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+
+    document.addEventListener('click', e => {
+      if(!e.target.closest('.key-term')) document.querySelectorAll('.key-term.open').forEach(t => t.classList.remove('open'));
+    });
+
+    function showError(msg){ const el=document.getElementById('errorMsg'); el.textContent=msg; el.classList.add('visible'); }
+    function hideError(){ document.getElementById('errorMsg').classList.remove('visible'); }
+
+    document.getElementById('claimInput').addEventListener('keydown', e => {
+      if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); checkMyth(); }
+    });
+  </script>
+</body>
+</html>
