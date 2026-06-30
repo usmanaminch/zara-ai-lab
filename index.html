@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Research — Zara's Lab</title>
+  <title>Zara — Builder, Artist, Explorer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet" />
@@ -12,265 +12,273 @@
       --teal:#3AAFA9;--teal-light:#6ECBC6;--teal-faint:#E0F5F4;
       --lavender:#8B7FD4;--lav-faint:#EEEAFF;
       --ink:#1C1C2E;--ink-60:#5A5A7A;--ink-30:#B0B0C8;
-      --surface:#F0F0F0;--border:#D0D0D0;--card-bg:#FFFFFF;
-      --font-display:'Space Grotesk',sans-serif;
-      --font-body:'Inter',sans-serif;
+      --surface:#F0F0F0;
+      --surface-2:#E6E6E6;
+      --surface-3:#DCDCDC;
+      --border:#D0D0D0;
+      --card-bg:#FFFFFF;
+      --font-display:'Space Grotesk',sans-serif;--font-body:'Inter',sans-serif;
       --radius:14px;--radius-sm:9px;--transition:0.22s ease;
     }
     [data-theme="dark"]{
       --ink:#EEF0FF;--ink-60:#9090B0;--ink-30:#4A4A6A;
-      --surface:#0F1020;--border:#2C2D45;--card-bg:#181928;
-      --teal-faint:#0C2422;--lav-faint:#14122A;
+      --surface:#0F1020;--surface-2:#181928;--surface-3:#212235;
+      --border:#2C2D45;--teal-faint:#0C2422;--lav-faint:#14122A;
+      --card-bg:#181928;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;}
-    body{font-family:var(--font-body);background:var(--surface);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition);}
+    body{font-family:var(--font-body);background:var(--surface);color:var(--ink);line-height:1.6;transition:background var(--transition),color var(--transition);-webkit-font-smoothing:antialiased;}
     a{color:inherit;text-decoration:none;}
 
-    nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;background:var(--surface);border-bottom:1px solid var(--border);}
+    nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;background:var(--surface);border-bottom:1px solid var(--border);transition:background var(--transition),border-color var(--transition);}
     .nav-logo{font-family:var(--font-display);font-weight:700;font-size:1rem;letter-spacing:-0.02em;display:flex;align-items:center;gap:0.45rem;}
     .nav-logo .pip{width:8px;height:8px;background:linear-gradient(135deg,var(--teal),var(--lavender));border-radius:50%;}
-    .nav-back{font-size:0.8rem;font-weight:500;color:var(--ink-60);transition:color var(--transition);}
-    .nav-back:hover{color:var(--teal);}
-    .theme-btn{background:var(--card-bg);border:1px solid var(--border);color:var(--ink-60);border-radius:20px;padding:0.28rem 0.7rem;font-size:0.75rem;cursor:pointer;font-family:var(--font-body);transition:all var(--transition);}
+    .nav-links{display:flex;align-items:center;gap:1.5rem;list-style:none;}
+    .nav-links a{font-size:0.8rem;font-weight:500;color:var(--ink-60);transition:color var(--transition);}
+    .nav-links a:hover{color:var(--teal);}
+    .theme-btn{background:var(--surface-2);border:1px solid var(--border);color:var(--ink-60);border-radius:20px;padding:0.28rem 0.7rem;font-size:0.75rem;cursor:pointer;transition:all var(--transition);font-family:var(--font-body);}
     .theme-btn:hover{border-color:var(--teal);color:var(--teal);}
 
-    .page{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
+    .hero{min-height:70vh;display:flex;align-items:center;padding:2.5rem 2.5rem 2rem;position:relative;overflow:hidden;}
+    .hero::before,.hero::after{content:'';position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;}
+    .hero::before{width:360px;height:360px;background:radial-gradient(circle,rgba(58,175,169,0.1) 0%,transparent 70%);top:-80px;right:0;}
+    .hero::after{width:300px;height:300px;background:radial-gradient(circle,rgba(139,127,212,0.08) 0%,transparent 70%);bottom:-60px;left:35%;}
+    .hero-inner{max-width:640px;position:relative;z-index:1;}
+    .hero-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);background:var(--teal-faint);border:1px solid rgba(58,175,169,0.25);padding:0.28rem 0.75rem;border-radius:20px;margin-bottom:1.25rem;}
+    .hero-name{font-family:var(--font-display);font-size:clamp(2.8rem,7vw,4.8rem);font-weight:700;line-height:0.95;letter-spacing:-0.04em;margin-bottom:0.65rem;}
+    .hero-name .grad{background:linear-gradient(135deg,var(--teal) 0%,var(--lavender) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .hero-tagline{font-family:var(--font-display);font-size:clamp(1rem,2vw,1.2rem);font-weight:400;color:var(--ink-60);margin-bottom:1.1rem;line-height:1.5;}
+    .hero-bio{font-size:0.88rem;color:var(--ink-60);max-width:500px;margin-bottom:1.5rem;line-height:1.8;}
+    .hero-bio strong{color:var(--ink);font-weight:500;}
+    .hero-badges{display:flex;flex-wrap:wrap;gap:0.45rem;margin-bottom:1.75rem;}
+    .badge{font-size:0.72rem;padding:0.25rem 0.7rem;border-radius:20px;border:1px solid var(--border);color:var(--ink-60);background:var(--card-bg);transition:border-color var(--transition),color var(--transition);}
+    .badge:hover{border-color:var(--teal);color:var(--teal);}
+    .hero-cta{display:flex;gap:0.75rem;flex-wrap:wrap;}
+    .btn-primary{display:inline-flex;align-items:center;gap:0.4rem;background:linear-gradient(135deg,var(--teal),var(--lavender));color:white;padding:0.6rem 1.3rem;border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:600;font-size:0.85rem;transition:opacity var(--transition),transform var(--transition);}
+    .btn-primary:hover{opacity:0.88;transform:translateY(-2px);}
+    .btn-secondary{display:inline-flex;align-items:center;gap:0.4rem;border:1px solid var(--border);color:var(--ink-60);padding:0.6rem 1.3rem;border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:500;font-size:0.85rem;background:var(--card-bg);transition:border-color var(--transition),color var(--transition),transform var(--transition);}
+    .btn-secondary:hover{border-color:var(--teal);color:var(--teal);transform:translateY(-2px);}
 
-    /* Research index */
-    .page-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);background:var(--teal-faint);border:1px solid rgba(58,175,169,0.25);padding:0.28rem 0.75rem;border-radius:20px;margin-bottom:1rem;}
-    .page-title{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.5rem;}
-    .page-title .grad{background:linear-gradient(135deg,var(--teal),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-    .page-sub{color:var(--ink-60);font-size:0.9rem;line-height:1.7;margin-bottom:2.5rem;}
+    section{padding:2.5rem 2.5rem;border-top:1px solid var(--border);}
+    .section-label{font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:0.4rem;}
+    .section-heading{font-family:var(--font-display);font-size:clamp(1.4rem,3vw,2rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.5rem;}
+    .section-subhead{color:var(--ink-60);font-size:0.85rem;max-width:500px;line-height:1.7;margin-bottom:1.5rem;}
 
-    /* Paper cards index */
-    .papers-list{display:flex;flex-direction:column;gap:1rem;margin-bottom:3rem;}
-    .paper-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;cursor:pointer;transition:border-color var(--transition),transform var(--transition),box-shadow var(--transition);}
-    .paper-card:hover{border-color:var(--teal-light);transform:translateY(-2px);box-shadow:0 6px 24px rgba(58,175,169,0.1);}
-    .paper-card.active{border-color:var(--teal);}
-    .paper-meta{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.6rem;}
-    .paper-date{font-size:0.7rem;font-weight:600;color:var(--ink-30);font-family:var(--font-display);letter-spacing:0.05em;}
-    .paper-tag{font-size:0.65rem;font-weight:600;padding:0.15rem 0.55rem;border-radius:12px;background:var(--teal-faint);color:var(--teal);}
-    .paper-title{font-family:var(--font-display);font-weight:700;font-size:1.05rem;letter-spacing:-0.02em;margin-bottom:0.35rem;}
-    .paper-abstract{font-size:0.82rem;color:var(--ink-60);line-height:1.65;}
-    .read-link{display:inline-flex;align-items:center;gap:0.3rem;margin-top:0.75rem;font-size:0.78rem;font-weight:600;color:var(--teal);}
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;}
+    .project-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;transition:border-color var(--transition),transform var(--transition),box-shadow var(--transition);display:flex;flex-direction:column;}
+    .project-card:hover{border-color:var(--teal-light);transform:translateY(-3px);box-shadow:0 8px 28px rgba(58,175,169,0.1);}
+    .project-card.coming-soon{opacity:0.42;pointer-events:none;}
+    .card-number{font-family:var(--font-display);font-size:0.6rem;font-weight:700;letter-spacing:0.12em;color:var(--teal);margin-bottom:0.5rem;}
+    .card-title{font-family:var(--font-display);font-size:0.96rem;font-weight:600;letter-spacing:-0.02em;margin-bottom:0.38rem;}
+    .card-desc{font-size:0.78rem;color:var(--ink-60);line-height:1.65;margin-bottom:0.85rem;}
+    .card-tags{display:flex;flex-wrap:wrap;gap:0.32rem;margin-bottom:0.85rem;}
+    .card-tag{font-size:0.62rem;font-weight:600;padding:0.18rem 0.55rem;border-radius:12px;background:var(--teal-faint);color:var(--teal);}
+    .card-tag.lav{background:var(--lav-faint);color:var(--lavender);}
+    .card-links{display:flex;gap:0.75rem;margin-top:auto;}
+    .card-link{font-size:0.72rem;font-weight:500;color:var(--ink-60);display:flex;align-items:center;gap:0.3rem;transition:color var(--transition);}
+    .card-link:hover{color:var(--teal);}
 
-    /* Divider */
-    .section-divider{border:none;border-top:1px solid var(--border);margin:0 0 3rem;}
+    .achievements-list{display:flex;flex-direction:column;gap:0.65rem;max-width:660px;}
+    .achievement-item{display:flex;align-items:flex-start;gap:1rem;padding:0.9rem 1.1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-sm);transition:border-color var(--transition);}
+    .achievement-item:hover{border-color:var(--teal-light);}
+    .ach-icon{font-size:1.2rem;flex-shrink:0;margin-top:0.08rem;}
+    .ach-title{font-family:var(--font-display);font-weight:600;font-size:0.87rem;margin-bottom:0.1rem;}
+    .ach-detail{font-size:0.75rem;color:var(--ink-60);}
+    .ach-year{margin-left:auto;flex-shrink:0;font-size:0.68rem;font-weight:600;color:var(--ink-30);font-family:var(--font-display);letter-spacing:0.05em;padding-top:0.12rem;}
+    .ach-placeholder{padding:1.1rem;background:var(--card-bg);border:1px dashed var(--border);border-radius:var(--radius-sm);text-align:center;font-size:0.8rem;color:var(--ink-30);font-style:italic;}
 
-    /* Full paper */
-    .paper-full{display:none;}
-    .paper-full.visible{display:block;}
+    .art-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:1rem;}
+    .art-card{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--card-bg);transition:transform var(--transition),box-shadow var(--transition);}
+    .art-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.07);}
+    .art-placeholder{width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,var(--teal-faint),var(--lav-faint));display:flex;align-items:center;justify-content:center;font-size:2rem;}
+    .art-info{padding:0.7rem 0.9rem;}
+    .art-title{font-family:var(--font-display);font-weight:600;font-size:0.8rem;margin-bottom:0.15rem;}
+    .art-caption{font-size:0.7rem;color:var(--ink-60);font-style:italic;}
 
-    .paper-back{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.8rem;font-weight:500;color:var(--ink-60);cursor:pointer;margin-bottom:2rem;transition:color var(--transition);}
-    .paper-back:hover{color:var(--teal);}
+    .about-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:2.5rem;align-items:start;}
+    @media(max-width:680px){.about-grid{grid-template-columns:1fr;}}
+    .about-text p{color:var(--ink-60);font-size:0.87rem;line-height:1.85;margin-bottom:0.75rem;}
+    .about-text p:last-child{margin-bottom:0;}
+    .about-text strong{color:var(--ink);font-weight:500;}
+    .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.65rem;}
+    .stat-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.9rem;transition:border-color var(--transition);}
+    .stat-card:hover{border-color:var(--teal-light);}
+    .stat-number{font-family:var(--font-display);font-size:1.7rem;font-weight:700;background:linear-gradient(135deg,var(--teal),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.04em;line-height:1;margin-bottom:0.15rem;}
+    .stat-label{font-size:0.7rem;color:var(--ink-60);line-height:1.4;}
 
-    .paper-header{margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);}
-    .paper-header .paper-tag{margin-bottom:1rem;display:inline-block;}
-    .paper-header h1{font-family:var(--font-display);font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:700;letter-spacing:-0.03em;line-height:1.2;margin-bottom:0.75rem;}
-    .paper-byline{font-size:0.82rem;color:var(--ink-60);}
-    .paper-byline strong{color:var(--ink);font-weight:500;}
+    footer{border-top:1px solid var(--border);padding:1.25rem 2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;}
+    .footer-left{font-size:0.78rem;color:var(--ink-60);}
+    .footer-right{display:flex;gap:1.25rem;}
+    .footer-right a{font-size:0.78rem;color:var(--ink-60);transition:color var(--transition);}
+    .footer-right a:hover{color:var(--teal);}
 
-    /* Paper body typography */
-    .paper-body{font-size:0.95rem;color:var(--ink-60);line-height:1.9;}
-    .paper-body p{margin-bottom:1.25rem;}
-    .paper-body p:last-child{margin-bottom:0;}
-    .paper-body h2{font-family:var(--font-display);font-weight:700;font-size:1.1rem;color:var(--ink);letter-spacing:-0.02em;margin:2rem 0 0.75rem;}
-    .paper-body strong{color:var(--ink);font-weight:600;}
-    .paper-body em{color:var(--teal);font-style:normal;font-weight:500;}
-
-    /* Pull quote */
-    .pull-quote{border-left:3px solid var(--teal);padding:0.75rem 1.25rem;margin:1.75rem 0;background:var(--teal-faint);border-radius:0 var(--radius-sm) var(--radius-sm) 0;}
-    .pull-quote p{font-family:var(--font-display);font-size:1rem;font-weight:500;color:var(--ink);line-height:1.5;margin:0;}
-
-    /* References */
-    .references{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);}
-    .references h2{font-family:var(--font-display);font-weight:700;font-size:0.85rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-60);margin-bottom:1rem;}
-    .ref-list{list-style:none;display:flex;flex-direction:column;gap:0.5rem;}
-    .ref-list li{font-size:0.75rem;color:var(--ink-60);line-height:1.6;padding-left:1.5rem;position:relative;}
-    .ref-list li::before{content:attr(data-num);position:absolute;left:0;color:var(--teal);font-weight:700;}
-    .ref-list a{color:var(--teal);text-decoration:underline;word-break:break-all;}
+    .fade-in{opacity:0;transform:translateY(12px);transition:opacity 0.5s ease,transform 0.5s ease;}
+    .fade-in.visible{opacity:1;transform:translateY(0);}
+    @media(max-width:580px){.nav-links{display:none;}}
+    @media(prefers-reduced-motion:reduce){.fade-in{opacity:1;transform:none;}}
   </style>
 </head>
 <body>
   <nav>
     <div class="nav-logo"><span class="pip"></span>Zara</div>
-    <a href="index.html" class="nav-back">← Back to portfolio</a>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#art">Creative</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
     <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">🌙 Dark</button>
   </nav>
 
-  <div class="page">
-
-    <!-- ── Research Index ── -->
-    <div id="researchIndex">
-      <div class="page-eyebrow">✦ Research</div>
-      <h1 class="page-title">Papers &<br><span class="grad">writing.</span></h1>
-      <p class="page-sub">A collection of research papers and essays I've written on topics I care about — where technology meets medicine, and science meets society.</p>
-
-      <div class="papers-list">
-        <div class="paper-card" onclick="openPaper('paper1')">
-          <div class="paper-meta">
-            <span class="paper-date">JUNE 2026</span>
-            <span class="paper-tag">AI · Dermatology · Health Equity</span>
-          </div>
-          <h3 class="paper-title">Seeing Every Skin: AI in Dermatology and the Health Equity Gap</h3>
-          <p class="paper-abstract">Artificial intelligence is transforming how skin conditions are diagnosed — but the same systems that promise better care may be deepening inequalities for patients with darker skin tones. This paper examines both the promise and the blind spots of AI in dermatology.</p>
-          <span class="read-link">Read paper →</span>
-        </div>
+  <section class="hero" id="home" style="border-top:none;">
+    <div class="hero-inner">
+      <div class="hero-eyebrow fade-in">✦ Builder · Artist · Explorer</div>
+      <h1 class="hero-name fade-in">Hi, I'm<br><span class="grad">Zara.</span></h1>
+      <p class="hero-tagline fade-in">I build with AI. I explore science. I make things.</p>
+      <p class="hero-bio fade-in">This is my living portfolio — where <strong>AI projects, research, and creative work</strong> live side by side. Everything here is something I actually built, wrote, or made. It grows as I do.</p>
+      <div class="hero-badges fade-in">
+        <span class="badge">🤖 AI & Technology</span>
+        <span class="badge">🔬 Science</span>
+        <span class="badge">🎨 Art & Design</span>
+        <span class="badge">📚 Lifelong Learner</span>
+        <span class="badge">💻 Vibe Coder</span>
+      </div>
+      <div class="hero-cta fade-in">
+        <a href="#projects" class="btn-primary">See My Work →</a>
+        <a href="https://github.com/usmanaminch/zara-ai-lab" target="_blank" class="btn-secondary">GitHub ↗</a>
       </div>
     </div>
+  </section>
 
-    <!-- ── Full Paper ── -->
-    <div class="paper-full" id="paper1">
-      <div class="paper-back" onclick="closePaper()">← Back to research</div>
+  <section id="projects">
+    <p class="section-label fade-in">What I've built</p>
+    <h2 class="section-heading fade-in">AI Projects</h2>
+    <p class="section-subhead fade-in">Each project started with a question I was curious about. I use AI to explore ideas, build useful things, and learn how technology actually works.</p>
+    <div class="projects-grid">
 
-      <div class="paper-header">
-        <span class="paper-tag">AI · Dermatology · Health Equity</span>
-        <h1>Seeing Every Skin: AI in Dermatology and the Health Equity Gap</h1>
-        <p class="paper-byline"><strong>Zara</strong> &nbsp;·&nbsp; June 2026 &nbsp;·&nbsp; Independent research</p>
+      <div class="project-card fade-in">
+        <p class="card-number">PROJECT 01</p>
+        <h3 class="card-title">This Website</h3>
+        <p class="card-desc">My personal portfolio, built from scratch with plain HTML and CSS. No templates — every line written by hand.</p>
+        <div class="card-tags"><span class="card-tag">HTML</span><span class="card-tag">CSS</span><span class="card-tag">GitHub Pages</span></div>
+        <div class="card-links"><a href="https://github.com/usmanaminch/zara-ai-lab" target="_blank" class="card-link">↗ GitHub</a></div>
       </div>
 
-      <div class="paper-body">
-
-        <p>Imagine visiting a doctor and being told your diagnosis is less accurate simply because of the color of your skin. For millions of patients with darker skin tones around the world, this is not hypothetical — it is an emerging reality in the age of artificial intelligence. As AI tools become increasingly embedded in medical practice, the field of dermatology stands at a critical crossroads: these systems hold enormous promise, yet they risk encoding and amplifying the very inequalities medicine has long struggled to address.</p>
-
-        <h2>The Promise of AI in Dermatology</h2>
-
-        <p>Dermatology has become one of medicine's most data-rich fields, making it a natural fit for AI. Deep learning algorithms trained on thousands of skin images can now identify conditions — from melanoma to eczema — with accuracy that rivals experienced dermatologists. A systematic review published in 2025 found that AI-based dermatology systems achieve a pooled diagnostic accuracy of 0.88 on the AUROC scale, comparable to specialist-level performance.</p>
-
-        <p>This matters especially because dermatology is one of the most inaccessible specialties in medicine. There is a national shortage of dermatologists, with providers concentrated in urban centers while rural and underserved communities wait months for an appointment. Studies show that <strong>Black and Hispanic patients are significantly less likely to receive outpatient dermatology care than white patients</strong>, and per capita spending on dermatology visits for Black patients is roughly one-third that of white patients. AI diagnostic tools, accessible through smartphones and primary care clinics, could theoretically extend specialist-level care to anyone with a camera and a skin concern.</p>
-
-        <div class="pull-quote">
-          <p>"AI diagnostic tools could extend specialist-level care to anyone with a camera and a skin concern — but only if they work equally well for everyone."</p>
-        </div>
-
-        <h2>The Problem Hidden in the Data</h2>
-
-        <p>The challenge lies in how these AI systems are built. Every AI model learns from training data — in this case, images of skin conditions. And the most widely used dermatology datasets, including the International Skin Imaging Collaboration (ISIC) dataset, are heavily skewed toward lighter skin tones, with Fitzpatrick skin types V and VI — the darkest tones — dramatically underrepresented. In some benchmarks, lighter skin tones account for over 70 percent of images. When a model learns primarily from lighter skin, it learns to recognize disease as it appears on lighter skin. The result is predictable: <strong>AI systems consistently underperform on patients with darker skin tones.</strong></p>
-
-        <p>The numbers are striking. A 2025 meta-analysis found that AI diagnostic performance dropped from an AUROC of 0.89 for lighter skin tones to 0.82 for darker ones — a gap that could translate into thousands of missed or delayed diagnoses at scale. A study assessing GPT-4's diagnostic accuracy found similar disparities in how AI language models handle skin conditions across skin tones. Research from Northwestern University confirmed that while AI assistance improves overall diagnostic accuracy for physicians, <em>the gap between light and dark skin tone accuracy actually widens</em> when AI is introduced — because doctors tend to trust AI suggestions more readily for patients whose skin resembles the training data.</p>
-
-        <h2>A Double Burden</h2>
-
-        <p>What makes this particularly troubling is that patients with darker skin tones already face compounding barriers to dermatology care. Dermatology is one of the least diverse specialties in medicine, and this lack of representation in the workforce means less clinical familiarity with how conditions present across the full range of human skin tones. Fitzpatrick skin types IV through VI — which represent a significant portion of the global population — remain the least studied and most underserved in both clinical training and AI model development. This is a gap that AI, as currently designed, does not close. It deepens it.</p>
-
-        <p>The consequences reach beyond inconvenience. Delayed diagnosis of melanoma is associated with significantly worse outcomes and higher mortality. Untreated psoriasis carries serious cardiovascular and mental health risks. When diagnostic tools — whether human or algorithmic — perform worse on specific populations, the downstream effects on health outcomes are real and serious.</p>
-
-        <h2>What Can Be Done</h2>
-
-        <p>The good news is that the problem, once identified, has tractable solutions. Research shows that when AI models are trained on more diverse datasets — including images with artificially augmented skin tones — their accuracy on darker skin tones improves meaningfully. Several institutions are now building more representative dermatology databases as a direct response to these findings. Regulatory bodies including the FDA are beginning to explore how skin tone criteria should factor into medical device approval.</p>
-
-        <p>But technical fixes alone are insufficient. The deeper issue is representation: in training data, in clinical trials, in medical textbooks, and in the dermatology workforce itself. The American Academy of Dermatology launched a diversity, equity, and inclusion initiative in 2021, recognizing that building a more representative workforce is inseparable from building more equitable care. When dermatologists with diverse backgrounds enter the field, they bring clinical knowledge that improves diagnosis for patients who look like them — and they bring perspectives that shape how AI tools are designed and validated.</p>
-
-        <h2>A Personal Note</h2>
-
-        <p>I began thinking about this topic while building AI tools for skincare and skin health education. As I worked on projects like an ingredient analyzer and a skin concern advisor, I kept returning to the same question: who are these tools for? The most enthusiastic users of skincare AI are often young people with a wide range of skin tones — yet the AI systems underlying these tools, and the dermatology datasets they draw from, were built with a much narrower patient in mind.</p>
-
-        <p>The promise of AI in medicine is that it can democratize access to expertise. But a tool that works well for some patients and poorly for others is not democratization — it is the automation of existing inequality. Getting this right matters not just for dermatology, but as a test case for how medicine integrates AI responsibly across every specialty.</p>
-
-        <p><strong>The technology to close this gap exists. The question is whether the field will prioritize building it for everyone.</strong></p>
-
+      <div class="project-card fade-in">
+        <p class="card-number">PROJECT 02</p>
+        <h3 class="card-title">ClearSkin AI</h3>
+        <p class="card-desc">Describe a skin concern and get a clear, judgment-free breakdown — possible causes, how to help it, and lifestyle changes to prevent it.</p>
+        <div class="card-tags"><span class="card-tag">Netlify Functions</span><span class="card-tag lav">Health</span></div>
+        <div class="card-links"><a href="clearskin.html" class="card-link">→ Try it</a></div>
       </div>
 
-      <div class="references">
-        <h2>References</h2>
-        <ol class="ref-list">
-          <li data-num="1.">Equity and Generalizability of AI for Skin-Lesion Diagnosis: A Systematic Review and Meta-Analysis. PMC, 2025. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12735087/" target="_blank">ncbi.nlm.nih.gov</a></li>
-          <li data-num="2.">Groh et al. Racial bias in photo-based medical diagnosis despite AI help. Northwestern University / MIT News, February 2024. <a href="https://news.mit.edu/2024/doctors-more-difficulty-diagnosing-diseases-images-darker-skin-0205" target="_blank">mit.edu</a></li>
-          <li data-num="3.">A Generative AI Approach for Reducing Skin Tone Bias in Skin Cancer Classification. arXiv, 2026. <a href="https://arxiv.org/abs/2602.14356" target="_blank">arxiv.org</a></li>
-          <li data-num="4.">Exploring the Diagnostic Capability of AI in Dermatology for Darker Skin Tones: A Narrative Review. PMC, 2025. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12624499/" target="_blank">ncbi.nlm.nih.gov</a></li>
-          <li data-num="5.">Dermatologic Concerns and Disparities Among Members of the Hispanic Community. Dermatology Times, 2026. <a href="https://www.dermatologytimes.com/view/dermatologic-concerns-and-disparities-among-members-of-the-hispanic-community" target="_blank">dermatologytimes.com</a></li>
-          <li data-num="6.">Racial Disparities in Dermatology. PMC / NIH. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9743121/" target="_blank">pmc.ncbi.nlm.nih.gov</a></li>
-          <li data-num="7.">Racial, Ethnic Disparities Persist in Dermatology Research and Workforce. AJMC, 2026. <a href="https://www.ajmc.com/view/racial-ethnic-disparities-persist-in-dermatology-research-and-in-workforce" target="_blank">ajmc.com</a></li>
-          <li data-num="8.">Ending the Pandemic of Inaccessibility in Dermatology. ScienceDirect, 2023. <a href="https://www.sciencedirect.com/science/article/abs/pii/S0738081X23000470" target="_blank">sciencedirect.com</a></li>
-        </ol>
+      <div class="project-card fade-in">
+        <p class="card-number">PROJECT 03</p>
+        <h3 class="card-title">ClimaSkin</h3>
+        <p class="card-desc">A skincare chatbot that gives climate-specific advice for wherever you are traveling. Tell it where you are going and it builds your routine.</p>
+        <div class="card-tags"><span class="card-tag">Chatbot</span><span class="card-tag lav">Skincare</span></div>
+        <div class="card-links"><a href="climaskin.html" class="card-link">→ Try it</a></div>
       </div>
-        <div class="paper-card" onclick="openPaper('paper2')">
-          <div class="paper-meta">
-            <span class="paper-date">JUNE 2026</span>
-            <span class="paper-tag">Social Media · Dermatology · Teen Health</span>
-          </div>
-          <h3 class="paper-title">Scroll, Buy, Regret? How Social Media is Reshaping Teen Skincare</h3>
-          <p class="paper-abstract">Social media has made dermatology more accessible than ever — but it has also flooded teens with misinformation, unrealistic standards, and products they don't need. This paper examines both sides of the #DermTok era.</p>
-          <span class="read-link">Read paper →</span>
-        </div>
+
+      <div class="project-card fade-in">
+        <p class="card-number">PROJECT 04</p>
+        <h3 class="card-title">AI Art Critic</h3>
+        <p class="card-desc">Upload any drawing and AI gives thoughtful feedback — on composition, style, and how to improve.</p>
+        <div class="card-tags"><span class="card-tag">Multimodal AI</span><span class="card-tag lav">Creative</span></div>
+        <div class="card-links"><a href="art-critic.html" class="card-link">→ Try it</a></div>
+      </div>
+
+      <div class="project-card fade-in">
+        <p class="card-number">PROJECT 05</p>
+        <h3 class="card-title">Study Lab</h3>
+        <p class="card-desc">Type any topic and get a clear lesson with clickable definitions — then take a 5-question quiz to test what you learned.</p>
+        <div class="card-tags"><span class="card-tag">JSON Output</span><span class="card-tag lav">Education</span></div>
+        <div class="card-links"><a href="studylab.html" class="card-link">→ Try it</a></div>
+      </div>
+
+      <div class="project-card fade-in">
+        <p class="card-number">PROJECT 06</p>
+        <h3 class="card-title">Ingredient Checker</h3>
+        <p class="card-desc">Paste or photograph any skincare ingredient list and get a calm, friendly breakdown of what's good, what to watch out for, and better alternatives.</p>
+        <div class="card-tags"><span class="card-tag">Multimodal AI</span><span class="card-tag lav">Skincare</span></div>
+        <div class="card-links"><a href="ingredients.html" class="card-link">→ Try it</a></div>
+      </div>
+
+      <div class="project-card fade-in">
+        <p class="card-number">PROJECT 07</p>
+        <h3 class="card-title">Myth Buster</h3>
+        <p class="card-desc">Seen a health claim on social media? Paste it here and get the real science — verdict, explanation, and the bottom line.</p>
+        <div class="card-tags"><span class="card-tag">Fact Checking</span><span class="card-tag lav">Health</span></div>
+        <div class="card-links"><a href="mythbuster.html" class="card-link">→ Try it</a></div>
+      </div>
+
     </div>
+  </section>
 
-  </div>
-    <div class="paper-full" id="paper2">
-      <div class="paper-back" onclick="closePaper()">← Back to research</div>
-
-      <div class="paper-header">
-        <span class="paper-tag">Social Media · Dermatology · Teen Health</span>
-        <h1>Scroll, Buy, Regret? How Social Media is Reshaping Teen Skincare</h1>
-        <p class="paper-byline"><strong>Zara</strong> &nbsp;·&nbsp; June 2026 &nbsp;·&nbsp; Independent research</p>
-      </div>
-
-      <div class="paper-body">
-
-        <p>Open TikTok on any given day and within minutes you will encounter a teenager applying retinol, a twelve-year-old reviewing a $60 vitamin C serum, or a "get ready with me" video featuring a ten-step routine lifted from a thirty-five-year-old influencer. Welcome to #DermTok — the corner of the internet where skincare has become a spectator sport, a shopping habit, and for a growing number of young people, a source of genuine confusion and harm.</p>
-
-        <p>Social media has done something no dermatology clinic ever could: made skin health a topic of everyday conversation for millions of teenagers. That is, in many ways, a remarkable thing. But it has also created a landscape where misinformation spreads faster than sunscreen, where the line between expert and influencer is almost impossible to see, and where teens are spending hundreds of dollars on products that may be actively hurting their skin. The truth, as with most things, lives somewhere in the middle.</p>
-
-        <h2>The Good: Democratizing Skin Knowledge</h2>
-
-        <p>Before social media, teenagers with skin concerns had limited options: see a dermatologist (expensive, often inaccessible), ask a parent (who may not know), or guess. Social media changed that equation. Platforms like TikTok and Instagram gave millions of young people access to information about ingredients, routines, and skin conditions that previously lived only in medical offices or academic journals.</p>
-
-        <p>The benefits are real. Research published in 2026 found that people who regularly consumed dermatologist-authored content on social media were more than twice as likely to follow a structured skincare routine compared to those relying on influencer material. For teens in rural communities — where access to dermatologists is severely limited — social media has become a primary healthcare resource. <strong>In some cases, it is the only resource.</strong> A 2025 study of rural high school students found that 87 percent cited social media as their primary source of skincare information, underscoring how completely these platforms have replaced traditional pathways to dermatologic guidance.</p>
-
-        <p>There is also a community dimension that should not be dismissed. For teenagers dealing with acne, eczema, or other visible skin conditions, #DermTok offers something dermatology offices rarely provide: the sense that you are not alone. Comment sections under acne videos are filled with teens sharing experiences, tips, and encouragement in ways that can be genuinely supportive — and that no prescription can replicate.</p>
-
-        <h2>The Bad: Misinformation at Scale</h2>
-
-        <p>The problem is that the vast majority of dermatology content on social media is not created by dermatologists. A study published in the Journal of the American Academy of Dermatology found that only 2.5 percent of the most viewed and liked skincare videos on TikTok are created by board-certified dermatologists. On Instagram, the number is similarly dismal: only 4 percent of dermatology-related accounts are managed by medical professionals. The rest — the overwhelming majority — are influencers, enthusiasts, and teenagers sharing what worked for them, with no scientific training and no accountability.</p>
-
-        <div class="pull-quote">
-          <p>Only 2.5 percent of the most viewed skincare videos on TikTok are created by board-certified dermatologists. The rest are influencers with no medical training and no accountability.</p>
+  <section id="research">
+    <p class="section-label fade-in">What I've written</p>
+    <h2 class="section-heading fade-in">Research</h2>
+    <p class="section-subhead fade-in">Papers and essays on topics where technology meets medicine and society.</p>
+    <div class="achievements-list">
+      <div class="achievement-item fade-in">
+        <div class="ach-icon">📄</div>
+        <div class="ach-body">
+          <p class="ach-title">Seeing Every Skin: AI in Dermatology and the Health Equity Gap</p>
+          <p class="ach-detail">How AI diagnostic tools are transforming dermatology — and why they risk deepening inequalities for patients with darker skin tones.</p>
+          <a href="research.html" style="font-size:0.78rem;color:var(--teal);font-weight:600;display:inline-block;margin-top:0.4rem;">Read paper →</a>
         </div>
-
-        <p>This matters because around 40 percent of people use social media for information on dermatological conditions. When the creators driving that information are not experts, the results can be harmful. Dermatology clinics across the country have reported seeing teenagers presenting with compromised skin barriers, acne flares, and chemical irritation — all caused by products they discovered online and applied without guidance. One of the most striking trends: <strong>teenagers and even tweens spending $500 to $1,000 a month on anti-aging products their skin does not need</strong> and, in some cases, cannot tolerate.</p>
-
-        <p>Specific trends illustrate the problem. Slugging — sealing the face with petroleum jelly overnight — went viral as a hydration hack, but can trap bacteria and worsen acne in oily or acne-prone skin. Skin cycling became a popular routine framework, but the rigid schedule promoted online often ignores individual skin needs. Perhaps most concerning: the widespread promotion of retinol and other potent actives to pre-teens and young teenagers, whose skin is not only still developing but also far more sensitive than the adult skin these products were designed for.</p>
-
-        <h2>The Ugly: Standards Nobody Can Meet</h2>
-
-        <p>Beyond the products and the misinformation lies a more insidious problem: what social media is quietly doing to how teenagers feel about their skin. The feeds that teens scroll through are curated, filtered, and often digitally altered. The glass skin trend — poreless, luminous, impossibly smooth — is a beauty standard that does not exist in nature. The tutorials showing before-and-afters often use lighting tricks, filters, and selectively staged photography. The result is an entire generation measuring their real, living skin against images that have been processed to remove every pore, every red spot, every human imperfection.</p>
-
-        <p>Research published in 2025 examined the psychological impact of dermatology-related social media on adolescents and found significant links between heavy consumption of skincare content and negative self-perception, particularly around skin appearance. Teenagers who regularly watched skin-focused content reported higher levels of dissatisfaction with their own skin — not because their skin had changed, but because their frame of reference had. The skin they saw in the mirror was being compared not to other real teenagers, but to a digital ideal.</p>
-
-        <h2>What Would Actually Help</h2>
-
-        <p>The answer is not to ban teenagers from skincare content — that ship has sailed. Social media is too embedded in how young people learn, connect, and form identity to be wished away. The more productive question is how to make the ecosystem healthier.</p>
-
-        <p>Part of the answer lies with platforms. TikTok and Instagram could do significantly more to label content by creator credentials — distinguishing board-certified dermatologists from non-expert creators in the way they already flag news content during elections. A simple verification badge visible on health content would help viewers make informed choices about who to trust.</p>
-
-        <p>Part of the answer lies with dermatologists themselves. The minority of dermatologists who are active on social media reach enormous audiences and their presence meaningfully shifts the quality of information available. More dermatologists on these platforms means more signal in a very noisy space.</p>
-
-        <p>And part of the answer lies with teenagers themselves. The most protective thing a young person can develop is not a ten-step routine — it is <strong>the habit of asking one question before trusting any advice: who is telling me this, and why should I trust them?</strong> In a landscape where anyone can become a skincare authority overnight, critical thinking is the best ingredient of all.</p>
-
-        <h2>A Final Note</h2>
-
-        <p>I am a teenager who uses social media and cares about skincare. I have seen the get ready with me videos, clicked on the trending products, and felt the pull of the glass-skin ideal. I am also someone who has spent time building AI tools around skin health and reading the research behind dermatological claims. What I have come to believe is this: social media is not the enemy of good skincare. Uncritical consumption of it is.</p>
-
-        <p><strong>Used thoughtfully — following verified experts, questioning trends, and understanding that no filter can replicate what honest science can tell you — the internet is an extraordinary resource for skin health. The challenge for this generation is learning to use it that way.</strong></p>
-
+        <span class="ach-year">2026</span>
       </div>
+      <div class="ach-placeholder fade-in">More papers coming — check back soon ✦</div>
+    </div>
+  </section>
 
-      <div class="references">
-        <h2>References</h2>
-        <ol class="ref-list">
-          <li data-num="1.">TikTok Skincare Trends and their Clinical Evidence. Journal of the American Academy of Dermatology, 2024. <a href="https://www.jaad.org/article/S0190-9622(24)02389-2/fulltext" target="_blank">jaad.org</a></li>
-          <li data-num="2.">Tween Skin Care Mishaps via Misinformation on Social Media. Dermatology Times, March 2024. <a href="https://www.dermatologytimes.com/view/tween-skin-care-mishaps-via-misinformation-on-social-media" target="_blank">dermatologytimes.com</a></li>
-          <li data-num="3.">Young Adults Skin Care Habits Shaped by Social Media. Dermatology Times, 2026. <a href="https://www.dermatologytimes.com/view/young-adults-skin-care-habits-shaped-by-social-media-study-finds" target="_blank">dermatologytimes.com</a></li>
-          <li data-num="4.">Impact of Social Media on Skincare Product Choices. Clean Skin Club, 2025. <a href="https://cleanskinclub.com/pages/the-impact-of-social-media-on-skincare-product-choices" target="_blank">cleanskinclub.com</a></li>
-          <li data-num="5.">Unseen Impacts: Rural Adolescents Self-Perception and Mental Health in the Age of Dermatology-Related Social Media. Cureus, 2025. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12534720/" target="_blank">ncbi.nlm.nih.gov</a></li>
-          <li data-num="6.">The Influence of Social Media Dermatology Content on Skincare Behaviors in Rural Adolescents. Indiana University, 2025. <a href="https://scholarworks.indianapolis.iu.edu/items/5411a603-e357-43a8-b00c-0aa7ab742832" target="_blank">scholarworks.indianapolis.iu.edu</a></li>
-          <li data-num="7.">#DermTok: Navigating TikToks Acne Advice Misinformation. Dermatology Times, May 2025. <a href="https://www.dermatologytimes.com/view/dermtok-navigating-tiktok-s-acne-advice-misinformation" target="_blank">dermatologytimes.com</a></li>
-          <li data-num="8.">Glow or No-Go: Ethical considerations of adolescent and teen skincare trends in social media. JAAD, 2024. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11345696/" target="_blank">ncbi.nlm.nih.gov</a></li>
-          <li data-num="9.">Ethics of educating teenage patients about skin care in the social media era. JAAD, 2024. <a href="https://www.jaad.org/article/S0190-9622(24)00656-X/fulltext" target="_blank">jaad.org</a></li>
-        </ol>
+  <section id="art">
+    <p class="section-label fade-in">Where creativity meets technology</p>
+    <h2 class="section-heading fade-in">Creative Work</h2>
+    <p class="section-subhead fade-in">I love to draw and make things. Some of those creations become the starting point for AI experiments — I hand something off to an AI and see what happens next.</p>
+    <div class="art-grid">
+      <div class="art-card fade-in">
+        <div class="art-placeholder">🎨</div>
+        <div class="art-info"><p class="art-title">First Piece — Coming Soon</p><p class="art-caption">Drawing + AI critique</p></div>
+      </div>
+      <div class="art-card fade-in">
+        <div class="art-placeholder">✏️</div>
+        <div class="art-info"><p class="art-title">Second Piece — Coming Soon</p><p class="art-caption">AI as creative collaborator</p></div>
+      </div>
+      <div class="art-card fade-in">
+        <div class="art-placeholder">🖊️</div>
+        <div class="art-info"><p class="art-title">More to come…</p><p class="art-caption">Gallery grows every session</p></div>
       </div>
     </div>
+  </section>
+
+  <section id="about">
+    <p class="section-label fade-in">The person behind it all</p>
+    <h2 class="section-heading fade-in">About Me</h2>
+    <div class="about-grid">
+      <div class="about-text fade-in">
+        <p>I'm Zara. I'm deeply interested in <strong>science, technology, and the arts</strong> — and I believe the most exciting things happen at the intersection of all three.</p>
+        <p>This site is my living resume. It documents what I'm building, what I'm learning, and what I'm proud of. <strong>It's a work in progress, just like me.</strong></p>
+        <p>I started this AI lab to learn by doing — every project is something I actually built, not a tutorial I followed. I also love to draw, and I'm exploring how creative work and AI can talk to each other in interesting ways.</p>
+      </div>
+      <div class="stats-grid fade-in">
+        <div class="stat-card"><div class="stat-number">01</div><div class="stat-label">Projects shipped</div></div>
+        <div class="stat-card"><div class="stat-number">12</div><div class="stat-label">In the pipeline</div></div>
+        <div class="stat-card"><div class="stat-number">1hr</div><div class="stat-label">Daily building time</div></div>
+        <div class="stat-card"><div class="stat-number">∞</div><div class="stat-label">Things left to learn</div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-left">Zara · Built from scratch ✦</div>
+    <div class="footer-right">
+      <a href="https://github.com/usmanaminch/zara-ai-lab" target="_blank">GitHub</a>
+      <a href="#home">Back to top ↑</a>
+    </div>
+  </footer>
 
   <script>
     function toggleTheme(){
@@ -286,18 +294,11 @@
       document.documentElement.setAttribute('data-theme',saved);
       document.getElementById('theme-btn').textContent=saved==='dark'?'☀️ Light':'🌙 Dark';
     }
-
-    function openPaper(id){
-      document.getElementById('researchIndex').style.display = 'none';
-      document.getElementById(id).classList.add('visible');
-      window.scrollTo({top:0,behavior:'smooth'});
-    }
-
-    function closePaper(){
-      document.querySelectorAll('.paper-full').forEach(p => p.classList.remove('visible'));
-      document.getElementById('researchIndex').style.display = 'block';
-      window.scrollTo({top:0,behavior:'smooth'});
-    }
+    const obs=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+    },{threshold:0.07});
+    document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
   </script>
 </body>
 </html>
+
