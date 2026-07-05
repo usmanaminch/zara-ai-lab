@@ -28,7 +28,7 @@ Difficulty levels:
 - Medium: More clinical, requires careful thinking — mono, GERD, hypothyroidism, iron deficiency anemia, eczema, hypertension, type 2 diabetes
 - Hard: Subtler presentation with potentially misleading clues, requires real medical reasoning — still realistic conditions, but presented in ways that require connecting multiple clues carefully
 
-The current difficulty is: ${difficulty || 'Medium'}
+The current difficulty is: ${difficulty || 'Medium'}. Case seed: ${caseId || Math.random()}. Pick a completely different condition and patient from any previous case. Do not repeat conditions.
 
 When the user makes a diagnosis: if correct, congratulate them warmly and give a brief explanation of the condition and the key clues that pointed to it. If wrong, explain why that diagnosis does not fit the clues and reveal the correct diagnosis with a brief explanation.
 

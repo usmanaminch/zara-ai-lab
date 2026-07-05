@@ -250,6 +250,7 @@ cat > ~/Documents/zara-ai-lab/casemystery.html << 'HTMLEOF'
     let conversationHistory = [];
     let questionCount = 0;
     let gameOver = false;
+    let caseId = Math.random();
 
     function selectDiff(diff, btn){
       difficulty = diff;
@@ -281,6 +282,7 @@ cat > ~/Documents/zara-ai-lab/casemystery.html << 'HTMLEOF'
       document.querySelector('.diagnosis-toggle').style.display = '';
 
       // Send opening message
+      caseId = Math.random();
       await sendToAI('Start a new case. Present the mystery patient.');
     }
 
@@ -305,7 +307,7 @@ cat > ~/Documents/zara-ai-lab/casemystery.html << 'HTMLEOF'
         const res = await fetch('/api/casemystery', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages: conversationHistory, difficulty })
+          body: JSON.stringify({ messages: conversationHistory, difficulty, caseId })
         });
         const data = await res.json();
         if(!res.ok) throw new Error(data.error || 'Something went wrong');
