@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medical Case Mystery — Zara's Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --teal:#3AAFA9;--teal-light:#6ECBC6;--teal-faint:#E0F5F4;
+      --lavender:#8B7FD4;--lav-faint:#EEEAFF;
+      --ink:#1C1C2E;--ink-60:#5A5A7A;--ink-30:#B0B0C8;
+      --surface:#F0F0F0;--border:#D0D0D0;--card-bg:#FFFFFF;
+      --font-display:'Space Grotesk',sans-serif;
+      --font-body:'Inter',sans-serif;
+      --radius:14px;--radius-sm:9px;--transition:0.22s ease;
+    }
+    [data-theme="dark"]{
+      --ink:#EEF0FF;--ink-60:#9090B0;--ink-30:#4A4A6A;
+      --surface:#0F1020;--border:#2C2D45;--card-bg:#181928;
+      --teal-faint:#0C2422;--lav-faint:#14122A;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--font-body);background:var(--surface);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition);display:flex;flex-direction:column;height:100vh;}
+    a{color:inherit;text-decoration:none;}
+
+    nav{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;background:var(--surface);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:var(--font-display);font-weight:700;font-size:1rem;letter-spacing:-0.02em;display:flex;align-items:center;gap:0.45rem;}
+    .nav-logo .pip{width:8px;height:8px;background:linear-gradient(135deg,var(--teal),var(--lavender));border-radius:50%;}
+    .nav-back{font-size:0.8rem;font-weight:500;color:var(--ink-60);transition:color var(--transition);}
+    .nav-back:hover{color:var(--teal);}
+    .theme-btn{background:var(--card-bg);border:1px solid var(--border);color:var(--ink-60);border-radius:20px;padding:0.28rem 0.7rem;font-size:0.75rem;cursor:pointer;font-family:var(--font-body);transition:all var(--transition);}
+    .theme-btn:hover{border-color:var(--teal);color:var(--teal);}
+
+    /* Start screen */
+    .start-screen{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem;}
+    .start-screen.hidden{display:none;}
+cat > ~/Documents/zara-ai-lab/casemystery.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medical Case Mystery — Zara's Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --teal:#3AAFA9;--teal-light:#6ECBC6;--teal-faint:#E0F5F4;
+      --lavender:#8B7FD4;--lav-faint:#EEEAFF;
+      --ink:#1C1C2E;--ink-60:#5A5A7A;--ink-30:#B0B0C8;
+      --surface:#F0F0F0;--border:#D0D0D0;--card-bg:#FFFFFF;
+      --font-display:'Space Grotesk',sans-serif;
+      --font-body:'Inter',sans-serif;
+      --radius:14px;--radius-sm:9px;--transition:0.22s ease;
+    }
+    [data-theme="dark"]{
+      --ink:#EEF0FF;--ink-60:#9090B0;--ink-30:#4A4A6A;
+      --surface:#0F1020;--border:#2C2D45;--card-bg:#181928;
+      --teal-faint:#0C2422;--lav-faint:#14122A;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--font-body);background:var(--surface);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition);display:flex;flex-direction:column;height:100vh;}
+    a{color:inherit;text-decoration:none;}
+
+    nav{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;background:var(--surface);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:var(--font-display);font-weight:700;font-size:1rem;letter-spacing:-0.02em;display:flex;align-items:center;gap:0.45rem;}
+    .nav-logo .pip{width:8px;height:8px;background:linear-gradient(135deg,var(--teal),var(--lavender));border-radius:50%;}
+    .nav-back{font-size:0.8rem;font-weight:500;color:var(--ink-60);transition:color var(--transition);}
+    .nav-back:hover{color:var(--teal);}
+    .theme-btn{background:var(--card-bg);border:1px solid var(--border);color:var(--ink-60);border-radius:20px;padding:0.28rem 0.7rem;font-size:0.75rem;cursor:pointer;font-family:var(--font-body);transition:all var(--transition);}
+    .theme-btn:hover{border-color:var(--teal);color:var(--teal);}
+
+    /* Start screen */
+    .start-screen{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem;}
+    .start-screen.hidden{display:none;}
+    .start-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:2.5rem;max-width:520px;width:100%;text-align:center;}
+    .start-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);background:var(--teal-faint);border:1px solid rgba(58,175,169,0.25);padding:0.28rem 0.75rem;border-radius:20px;margin-bottom:1.25rem;}
+    .start-title{font-family:var(--font-display);font-size:clamp(1.6rem,4vw,2.2rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.6rem;}
+    .start-title .grad{background:linear-gradient(135deg,var(--teal),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .start-sub{color:var(--ink-60);font-size:0.88rem;line-height:1.7;margin-bottom:2rem;}
+    .difficulty-label{font-family:var(--font-display);font-weight:600;font-size:0.82rem;margin-bottom:0.75rem;color:var(--ink);}
+    .difficulty-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.65rem;margin-bottom:2rem;}
+    .diff-btn{padding:0.85rem 0.5rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);cursor:pointer;font-family:var(--font-display);font-weight:600;font-size:0.82rem;color:var(--ink-60);transition:all var(--transition);text-align:center;}
+    .diff-btn:hover{border-color:var(--teal);color:var(--teal);}
+    .diff-btn.selected{border-color:var(--teal);background:var(--teal-faint);color:var(--teal);}
+    .diff-btn .diff-desc{font-size:0.65rem;font-weight:400;color:var(--ink-30);display:block;margin-top:0.2rem;}
+    .diff-btn.selected .diff-desc{color:var(--teal);}
+    .start-btn{width:100%;padding:0.8rem;background:linear-gradient(135deg,var(--teal),var(--lavender));color:white;border:none;border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:600;font-size:0.95rem;cursor:pointer;transition:opacity var(--transition),transform var(--transition);}
+    .start-btn:hover{opacity:0.88;transform:translateY(-1px);}
+
+    /* Game screen */
+    .game-screen{flex:1;display:none;flex-direction:column;overflow:hidden;}
+    .game-screen.visible{display:flex;}
+
+    /* Game header */
+    .game-header{flex-shrink:0;padding:0.75rem 2rem;background:var(--card-bg);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+    .game-title{font-family:var(--font-display);font-weight:700;font-size:0.9rem;}
+    .game-meta{display:flex;align-items:center;gap:1rem;}
+    .diff-badge{font-size:0.65rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:12px;text-transform:uppercase;letter-spacing:0.06em;}
+    .diff-badge.easy{background:#EBF9F0;color:#52C27C;}
+    .diff-badge.medium{background:var(--teal-faint);color:var(--teal);}
+    .diff-badge.hard{background:var(--lav-faint);color:var(--lavender);}
+    .question-counter{font-size:0.78rem;color:var(--ink-60);font-family:var(--font-display);font-weight:600;}
+    .question-counter span{color:var(--teal);}
+    .new-case-btn{font-size:0.72rem;font-weight:500;color:var(--ink-60);background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:0.25rem 0.65rem;cursor:pointer;transition:all var(--transition);font-family:var(--font-body);}
+    .new-case-btn:hover{border-color:var(--teal);color:var(--teal);}
+
+    /* Chat */
+    .chat-messages{flex:1;overflow-y:auto;padding:1.25rem 2rem;display:flex;flex-direction:column;gap:1rem;max-width:760px;margin:0 auto;width:100%;}
+    .message{display:flex;gap:0.75rem;max-width:88%;}
+    .message.user{align-self:flex-end;flex-direction:row-reverse;}
+    .message.assistant{align-self:flex-start;}
+    .message-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;flex-shrink:0;margin-top:0.1rem;font-weight:700;font-family:var(--font-display);}
+    .message.assistant .message-avatar{background:linear-gradient(135deg,var(--teal),var(--lavender));color:white;}
+    .message.user .message-avatar{background:#DCDCDC;color:var(--ink-60);font-size:0.85rem;}
+    .message-bubble{padding:0.75rem 1rem;border-radius:var(--radius);font-size:0.88rem;line-height:1.75;}
+    .message.assistant .message-bubble{background:var(--card-bg);border:1px solid var(--border);color:var(--ink-60);border-top-left-radius:4px;}
+    .message.user .message-bubble{background:linear-gradient(135deg,var(--teal),var(--lavender));color:white;border-top-right-radius:4px;}
+    .message.assistant .message-bubble strong{color:var(--ink);font-weight:600;}
+
+    /* Diagnosis input */
+    .diagnosis-row{flex-shrink:0;max-width:760px;margin:0 auto;width:100%;padding:0.5rem 2rem;}
+    .diagnosis-toggle{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;}
+    .diagnosis-toggle button{font-size:0.72rem;font-weight:600;color:var(--lavender);background:var(--lav-faint);border:1px solid rgba(139,127,212,0.3);border-radius:20px;padding:0.22rem 0.65rem;cursor:pointer;font-family:var(--font-body);transition:all var(--transition);}
+    .diagnosis-toggle button:hover{background:var(--lavender);color:white;}
+    .diagnosis-input-wrap{display:none;margin-bottom:0.75rem;}
+    .diagnosis-input-wrap.visible{display:flex;gap:0.5rem;}
+    .diagnosis-input{flex:1;padding:0.65rem 0.9rem;border:1.5px solid var(--lavender);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:0.88rem;color:var(--ink);background:var(--surface);}
+    .diagnosis-input:focus{outline:none;}
+    .diagnosis-submit{padding:0.65rem 1.1rem;background:var(--lavender);color:white;border:none;border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:600;font-size:0.82rem;cursor:pointer;white-space:nowrap;transition:opacity var(--transition);}
+    .diagnosis-submit:hover{opacity:0.85;}
+
+    /* Chat input */
+    .chat-input-wrap{flex-shrink:0;padding:0 2rem 1.25rem;max-width:760px;margin:0 auto;width:100%;}
+    .chat-input-row{display:flex;gap:0.65rem;align-items:flex-end;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:0.55rem 0.55rem 0.55rem 1rem;transition:border-color var(--transition);}
+    .chat-input-row:focus-within{border-color:var(--teal);}
+    .chat-input{flex:1;border:none;background:transparent;font-family:var(--font-body);font-size:0.9rem;color:var(--ink);resize:none;outline:none;max-height:100px;line-height:1.5;}
+    .chat-input::placeholder{color:var(--ink-30);}
+    .send-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--lavender));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity var(--transition);}
+    .send-btn:hover:not(:disabled){opacity:0.85;}
+    .send-btn:disabled{opacity:0.35;cursor:not-allowed;}
+    .send-btn svg{width:15px;height:15px;fill:white;}
+    .chat-hint{font-size:0.68rem;color:var(--ink-30);text-align:center;margin-top:0.4rem;}
+
+    /* Typing */
+    .typing{display:none;align-self:flex-start;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);border-top-left-radius:4px;}
+    .typing.visible{display:flex;gap:0.3rem;align-items:center;}
+    .typing span{width:6px;height:6px;background:var(--ink-30);border-radius:50%;animation:bounce 1.2s infinite;}
+    .typing span:nth-child(2){animation-delay:0.2s;}
+    .typing span:nth-child(3){animation-delay:0.4s;}
+    @keyframes bounce{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-6px);}}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo"><span class="pip"></span>Zara</div>
+    <a href="/" class="nav-back">← Back to portfolio</a>
+    <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">🌙 Dark</button>
+  </nav>
+
+  <!-- Start screen -->
+  <div class="start-screen" id="startScreen">
+    <div class="start-card">
+      <div class="start-eyebrow">✦ Project 08 · Medical Case Mystery</div>
+      <h1 class="start-title">Can you make the<br><span class="grad">diagnosis?</span></h1>
+      <p class="start-sub">A mystery patient walks in. You ask questions, gather clues, and make your diagnosis. You have 25 questions. Think like a doctor.</p>
+
+      <p class="difficulty-label">Choose your difficulty</p>
+      <div class="difficulty-grid">
+        <button class="diff-btn" onclick="selectDiff('easy', this)">
+          Easy
+          <span class="diff-desc">Common conditions</span>
+        </button>
+        <button class="diff-btn selected" onclick="selectDiff('medium', this)">
+          Medium
+          <span class="diff-desc">More clinical</span>
+        </button>
+        <button class="diff-btn" onclick="selectDiff('hard', this)">
+          Hard
+          <span class="diff-desc">Subtle clues</span>
+        </button>
+      </div>
+
+      <button class="start-btn" onclick="startGame()">🩺 Start Case →</button>
+    </div>
+  </div>
+
+  <!-- Game screen -->
+  <div class="game-screen" id="gameScreen">
+    <div class="game-header">
+      <p class="game-title">🩺 Medical Case Mystery</p>
+      <div class="game-meta">
+        <span class="diff-badge medium" id="diffBadge">Medium</span>
+        <span class="question-counter">Questions: <span id="qCount">0</span> / 25</span>
+        <button class="new-case-btn" onclick="newCase()">↺ New case</button>
+      </div>
+    </div>
+
+    <div class="chat-messages" id="chatMessages"></div>
+
+    <div class="typing" id="typing" style="max-width:760px;margin:0 auto;width:100%;padding:0 2rem;">
+      <span></span><span></span><span></span>
+    </div>
+
+    <div class="diagnosis-row">
+      <div class="diagnosis-toggle">
+        <span style="font-size:0.72rem;color:var(--ink-60);">Ready to diagnose?</span>
+        <button onclick="toggleDiagnosis()">Make my diagnosis →</button>
+      </div>
+      <div class="diagnosis-input-wrap" id="diagnosisWrap">
+        <input class="diagnosis-input" id="diagnosisInput" placeholder="Type your diagnosis..." />
+        <button class="diagnosis-submit" onclick="submitDiagnosis()">Submit</button>
+      </div>
+    </div>
+
+    <div class="chat-input-wrap">
+      <div class="chat-input-row">
+        <textarea class="chat-input" id="chatInput" placeholder="Ask a question about the patient…" rows="1"></textarea>
+        <button class="send-btn" id="sendBtn" onclick="sendQuestion()">
+          <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
+        </button>
+      </div>
+      <p class="chat-hint">Press Enter to send · Shift+Enter for new line</p>
+    </div>
+  </div>
+
+  <script>
+    // Theme
+    function toggleTheme(){
+      const html=document.documentElement;
+      const btn=document.getElementById('theme-btn');
+      const isDark=html.getAttribute('data-theme')==='dark';
+      html.setAttribute('data-theme',isDark?'light':'dark');
+      btn.textContent=isDark?'🌙 Dark':'☀️ Light';
+      localStorage.setItem('zara-theme',isDark?'light':'dark');
+    }
+    const saved=localStorage.getItem('zara-theme');
+    if(saved){
+      document.documentElement.setAttribute('data-theme',saved);
+      document.getElementById('theme-btn').textContent=saved==='dark'?'☀️ Light':'🌙 Dark';
+    }
+
+    let difficulty = 'medium';
+    let conversationHistory = [];
+    let questionCount = 0;
+    let gameOver = false;
+
+    function selectDiff(diff, btn){
+      difficulty = diff;
+      document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    }
+
+    async function startGame(){
+      document.getElementById('startScreen').classList.add('hidden');
+      document.getElementById('gameScreen').classList.add('visible');
+
+      // Set badge
+      const badge = document.getElementById('diffBadge');
+      badge.className = 'diff-badge ' + difficulty;
+      badge.textContent = difficulty.charAt(0).toUpperCase() + difficulty.slice(1);
+
+      conversationHistory = [];
+      questionCount = 0;
+      gameOver = false;
+      document.getElementById('qCount').textContent = '0';
+      document.getElementById('chatMessages').innerHTML = '';
+
+      // Send opening message
+      await sendToAI('Start a new case. Present the mystery patient.');
+    }
+
+    function addMessage(role, text){
+      const container = document.getElementById('chatMessages');
+      const div = document.createElement('div');
+      div.className = `message ${role}`;
+      const avatar = role === 'assistant' ? 'DR' : '👤';
+      const formatted = text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+      div.innerHTML = `<div class="message-avatar">${avatar}</div><div class="message-bubble">${formatted}</div>`;
+      container.appendChild(div);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    async function sendToAI(userMessage){
+      conversationHistory.push({ role: 'user', content: userMessage });
+      document.getElementById('sendBtn').disabled = true;
+      document.getElementById('typing').classList.add('visible');
+      document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+
+      try {
+        const res = await fetch('/api/casemystery', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: conversationHistory, difficulty })
+        });
+        const data = await res.json();
+        if(!res.ok) throw new Error(data.error || 'Something went wrong');
+        conversationHistory.push({ role: 'assistant', content: data.reply });
+        addMessage('assistant', data.reply);
+      } catch(err){
+        addMessage('assistant', 'Something went wrong. Please try again.');
+      } finally {
+        document.getElementById('typing').classList.remove('visible');
+        document.getElementById('sendBtn').disabled = false;
+      }
+    }
+
+    async function sendQuestion(){
+      if(gameOver) return;
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if(!text) return;
+      if(questionCount >= 25){
+        addMessage('assistant', "You've used all 25 questions! Make your diagnosis using the button above.");
+        return;
+      }
+      questionCount++;
+      document.getElementById('qCount').textContent = questionCount;
+      addMessage('user', text);
+      input.value = '';
+      input.style.height = 'auto';
+      await sendToAI(text);
+    }
+
+    function toggleDiagnosis(){
+      const wrap = document.getElementById('diagnosisWrap');
+      wrap.classList.toggle('visible');
+      if(wrap.classList.contains('visible')) document.getElementById('diagnosisInput').focus();
+    }
+
+    async function submitDiagnosis(){
+      const input = document.getElementById('diagnosisInput');
+      const diagnosis = input.value.trim();
+      if(!diagnosis) return;
+      gameOver = true;
+      addMessage('user', `My diagnosis: ${diagnosis}`);
+      input.value = '';
+      document.getElementById('diagnosisWrap').classList.remove('visible');
+      await sendToAI(`My diagnosis is: ${diagnosis}`);
+    }
+
+    function newCase(){
+      document.getElementById('startScreen').classList.remove('hidden');
+      document.getElementById('gameScreen').classList.remove('visible');
+      document.getElementById('gameScreen').classList.remove('visible');
+    }
+
+    // Auto-resize textarea
+    const chatInput = document.getElementById('chatInput');
+    chatInput.addEventListener('input', () => {
+      chatInput.style.height = 'auto';
+      chatInput.style.height = chatInput.scrollHeight + 'px';
+    });
+    chatInput.addEventListener('keydown', e => {
+      if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); sendQuestion(); }
+    });
+  </script>
+</body>
+</html>
