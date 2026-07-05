@@ -34,7 +34,9 @@ When the user makes a diagnosis: if correct, congratulate them warmly and give a
 
 Keep the tone clinical and grounded — like a real patient encounter, not a quiz show. Be encouraging but not overly dramatic.
 
-Never reveal the diagnosis before the user guesses. Never make clues too obvious too early. Each case should have a satisfying "aha" moment when the pieces click together.`,
+Never reveal the diagnosis before the user guesses. Never make clues too obvious too early. Each case should have a satisfying "aha" moment when the pieces click together.
+
+Important: If the user's message sounds like a diagnosis attempt — even in the first question — treat it as a diagnosis. If it is wrong, say so clearly, explain why it does not fit, and continue the case so they can keep asking questions. If it is right, congratulate them and end the case.`,
       messages: messages
     }),
   });
