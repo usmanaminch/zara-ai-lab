@@ -362,8 +362,20 @@ cat > ~/Documents/zara-ai-lab/casemystery.html << 'HTMLEOF'
     }
 
     function newCase(){
+      // Reset everything before going back to start screen
+      gameOver = false;
+      conversationHistory = [];
+      questionCount = 0;
+      document.getElementById('qCount').textContent = '0';
+      document.getElementById('chatMessages').innerHTML = '';
+      const chatInput = document.getElementById('chatInput');
+      chatInput.disabled = false;
+      chatInput.placeholder = 'Ask a question about the patient…';
+      document.getElementById('sendBtn').disabled = false;
+      document.getElementById('diagnosisWrap').classList.remove('visible');
+      document.querySelector('.diagnosis-toggle').style.display = '';
+      // Go back to start screen
       document.getElementById('startScreen').classList.remove('hidden');
-      document.getElementById('gameScreen').classList.remove('visible');
       document.getElementById('gameScreen').classList.remove('visible');
     }
 
