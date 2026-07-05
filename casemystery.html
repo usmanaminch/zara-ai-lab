@@ -251,6 +251,7 @@ cat > ~/Documents/zara-ai-lab/casemystery.html << 'HTMLEOF'
     let questionCount = 0;
     let gameOver = false;
     let caseId = Math.random();
+    let lastDiagnosis = '';
 
     function selectDiff(diff, btn){
       difficulty = diff;
@@ -283,7 +284,8 @@ cat > ~/Documents/zara-ai-lab/casemystery.html << 'HTMLEOF'
 
       // Send opening message
       caseId = Math.random();
-      await sendToAI('Start a new case. Present the mystery patient.');
+      const avoidMsg = lastDiagnosis ? `Start a new case. The previous diagnosis was ${lastDiagnosis} — do NOT use that condition or anything similar. Pick a completely different condition. Present the mystery patient.` : 'Start a new case. Present the mystery patient.';
+      await sendToAI(avoidMsg);
     }
 
     function addMessage(role, text){
@@ -360,6 +362,7 @@ cat > ~/Documents/zara-ai-lab/casemystery.html << 'HTMLEOF'
       document.getElementById('diagnosisWrap').classList.remove('visible');
       document.querySelector('.diagnosis-toggle').style.display = 'none';
 
+      lastDiagnosis = diagnosis;
       await sendToAI(`FINAL DIAGNOSIS: ${diagnosis}`);
     }
 
