@@ -339,10 +339,18 @@ cat > ~/Documents/zara-ai-lab/casemystery.html << 'HTMLEOF'
       const diagnosis = input.value.trim();
       if(!diagnosis) return;
       gameOver = true;
-      addMessage('user', `My diagnosis: ${diagnosis}`);
+
+      // Lock input
+      document.getElementById('chatInput').disabled = true;
+      document.getElementById('sendBtn').disabled = true;
+      document.getElementById('chatInput').placeholder = 'Case closed.';
+
+      addMessage('user', `🔬 Final diagnosis: ${diagnosis}`);
       input.value = '';
       document.getElementById('diagnosisWrap').classList.remove('visible');
-      await sendToAI(`My diagnosis is: ${diagnosis}`);
+      document.querySelector('.diagnosis-toggle').style.display = 'none';
+
+      await sendToAI(`FINAL DIAGNOSIS: ${diagnosis}`);
     }
 
     function newCase(){

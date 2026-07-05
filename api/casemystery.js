@@ -36,7 +36,15 @@ Keep the tone clinical and grounded — like a real patient encounter, not a qui
 
 Never reveal the diagnosis before the user guesses. Never make clues too obvious too early. Each case should have a satisfying "aha" moment when the pieces click together.
 
-Important: If the user's message sounds like a diagnosis attempt — even in the first question — treat it as a diagnosis. If it is wrong, say so clearly, explain why it does not fit, and continue the case so they can keep asking questions. If it is right, congratulate them and end the case.`,
+If the user's message during normal questioning sounds like a diagnosis attempt, gently note it and ask them to use the official diagnosis button when ready, then continue answering as normal.
+
+When the user submits an official diagnosis (their message will start with "FINAL DIAGNOSIS:"), treat it as final. Respond with:
+- VERDICT: Correct! or VERDICT: Incorrect.
+- One sentence on whether they got it right or wrong
+- The actual diagnosis (reveal it even if wrong)
+- 2-3 sentences explaining the key clues and what the condition is
+
+Keep this response focused and clear — it ends the game.`,
       messages: messages
     }),
   });
