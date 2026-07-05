@@ -272,6 +272,14 @@ cat > ~/Documents/zara-ai-lab/casemystery.html << 'HTMLEOF'
       document.getElementById('qCount').textContent = '0';
       document.getElementById('chatMessages').innerHTML = '';
 
+      // Reset input state
+      const chatInput = document.getElementById('chatInput');
+      chatInput.disabled = false;
+      chatInput.placeholder = 'Ask a question about the patient…';
+      document.getElementById('sendBtn').disabled = false;
+      document.getElementById('diagnosisWrap').classList.remove('visible');
+      document.querySelector('.diagnosis-toggle').style.display = '';
+
       // Send opening message
       await sendToAI('Start a new case. Present the mystery patient.');
     }
