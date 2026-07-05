@@ -3,7 +3,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { messages, difficulty, caseId } = req.body;
+  const { messages, difficulty, caseId, avoidCondition } = req.body;
 
   if (!messages || messages.length === 0) {
     return res.status(400).json({ error: 'No messages provided' });
@@ -12,32 +12,58 @@ export default async function handler(req, res) {
   const diff = difficulty || 'medium';
   const seed = caseId || Math.random().toString();
 
-  const diffGuide = {
-    easy: 'Easy: Common conditions most people have heard of — appendicitis, asthma, UTI, migraine, dehydration, food poisoning, strep throat.',
-    medium: 'Medium: More clinical conditions requiring careful thinking — mono, GERD, hypothyroidism, iron deficiency anemia, eczema, hypertension, type 2 diabetes.',
-    hard: 'Hard: Subtler presentation with potentially misleading clues requiring real medical reasoning — still realistic but clues are indirect and require connecting multiple details.'
-  };
+  const easyConditions = [
+    'appendicitis', 'asthma attack', 'UTI', 'migraine', 'food poisoning',
+    'strep throat', 'dehydration', 'sunstroke', 'allergic reaction', 'pink eye',
+    'ear infection', 'acid reflux', 'sprained ankle', 'kidney stones', 'chicken pox'
+  ];
 
-  const systemPrompt = `You are a medical case mystery host running an interactive diagnosis game. At the start of each case, present a mystery patient with a brief description — age, main complaint, and one or two initial observations. Do not reveal the diagnosis.
+  const mediumConditions = [
+    'hypothyroidism', 'iron deficiency anemia', 'mono (mononucleosis)', 'GERD',
+    'type 2 diabetes', 'hypertension', 'eczema', 'sleep apnea', 'celiac disease',
+    'irritable bowel syndrome', 'polycystic ovary syndrome', 'gout', 'shingles',
+    'carpal tunnel syndrome', 'vitamin D deficiency', 'peptic ulcer', 'bronchitis',
+    'plantar fasciitis', 'rosacea', 'costochondritis'
+  ];
 
-The user asks up to 25 questions. After each answer, tell them how many questions they have remaining out of 25. Answer their questions honestly but do not give anything extra away. Keep answers concise — one to three sentences.
+  const hardConditions = [
+    'Lyme disease', 'lupus', 'multiple sclerosis (early)', 'Crohn\'s disease',
+    'endometriosis', 'pancreatitis', 'pulmonary embolism', 'aortic dissection',
+    'pericarditis', 'myasthenia gravis', 'Addison\'s disease', 'sarcoidosis',
+    'hemochromatosis', 'fibromyalgia', 'giant cell arteritis', 'meningitis',
+    'ectopic pregnancy', 'diabetic ketoacidosis', 'hyperthyroidism', 'reactive arthritis'
+  ];
 
-Current difficulty: ${diff}
-${diffGuide[diff] || diffGuide.medium}
+  const poolMap = { easy: easyConditions, medium: mediumConditions, hard: hardConditions };
+  const pool = poolMap[diff] || mediumConditions;
+  const poolList = pool.join(', ');
 
-Case seed: ${seed}. Use this seed to pick a specific, different condition each time. Never repeat the same diagnosis across sessions.
+  const avoidNote = avoidCondition ? `Do NOT use ${avoidCondition} or anything similar.` : '';
 
-If the user's message during normal questioning sounds like a diagnosis attempt, gently note it and ask them to use the official diagnosis button when ready, then continue answering as normal.
+  const systemPrompt = `You are a medical case mystery host running an interactive diagnosis game.
 
-When the user submits an official diagnosis (their message will start with "FINAL DIAGNOSIS:"), treat it as final. Respond with:
+CONDITION POOL for ${diff} difficulty — choose ONLY from this list: ${poolList}
+${avoidNote}
+Use the case seed ${seed} to pick a specific condition from the list above. Pick unpredictably — vary across the full list.
+
+PATIENT VARIETY — randomize these every case:
+- Age: vary widely — children (5-15), young adults (18-30), middle-aged (35-55), elderly (60-80)
+- Gender: alternate between male, female, and non-binary patients
+- Background: vary occupation, lifestyle, and context
+
+At the start of each case, present the mystery patient with: age, gender, main complaint, and 1-2 initial observations. Do not reveal the diagnosis.
+
+The user asks up to 25 questions. After each answer, tell them how many questions they have remaining. Answer honestly but concisely — do not give extra clues beyond what is asked.
+
+If the user's message sounds like a diagnosis attempt during questioning, note it and ask them to use the official diagnosis button, then continue the case.
+
+When the user submits a message starting with "FINAL DIAGNOSIS:", treat it as final and respond with:
 - VERDICT: Correct! or VERDICT: Incorrect.
-- One sentence on whether they got it right or wrong
-- The actual diagnosis (reveal it even if wrong)
-- 2-3 sentences explaining the key clues and what the condition is
+- Whether they got it right or wrong
+- The actual diagnosis (reveal even if wrong)
+- 2-3 sentences on the key clues and what the condition is
 
-Keep the tone clinical and grounded — like a real patient encounter, not a quiz show. Be encouraging but not overly dramatic.
-
-Never reveal the diagnosis before the user submits their final diagnosis. Never make clues too obvious too early. Each case should have a satisfying moment when the pieces click together.`;
+Keep the tone clinical and grounded. Never reveal the diagnosis before the final submission.`;
 
   const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',

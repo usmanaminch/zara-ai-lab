@@ -284,8 +284,7 @@ cat > ~/Documents/zara-ai-lab/casemystery.html << 'HTMLEOF'
 
       // Send opening message
       caseId = Math.random();
-      const avoidMsg = lastDiagnosis ? `Start a new case. The previous diagnosis was ${lastDiagnosis} — do NOT use that condition or anything similar. Pick a completely different condition. Present the mystery patient.` : 'Start a new case. Present the mystery patient.';
-      await sendToAI(avoidMsg);
+      await sendToAI('Start a new case. Present the mystery patient.');
     }
 
     function addMessage(role, text){
@@ -309,7 +308,7 @@ cat > ~/Documents/zara-ai-lab/casemystery.html << 'HTMLEOF'
         const res = await fetch('/api/casemystery', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages: conversationHistory, difficulty, caseId })
+          body: JSON.stringify({ messages: conversationHistory, difficulty, caseId, avoidCondition: lastDiagnosis })
         });
         const data = await res.json();
         if(!res.ok) throw new Error(data.error || 'Something went wrong');
