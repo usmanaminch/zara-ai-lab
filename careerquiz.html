@@ -24,10 +24,10 @@
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;}
-    body{font-family:var(--font-body);background:var(--surface);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition);display:flex;flex-direction:column;height:100vh;}
+    body{font-family:var(--font-body);background:var(--surface);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition);}
     a{color:inherit;text-decoration:none;}
 
-    nav{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;background:var(--surface);border-bottom:1px solid var(--border);}
+    nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;background:var(--surface);border-bottom:1px solid var(--border);}
     .nav-logo{font-family:var(--font-display);font-weight:700;font-size:1rem;letter-spacing:-0.02em;display:flex;align-items:center;gap:0.45rem;}
     .nav-logo .pip{width:8px;height:8px;background:linear-gradient(135deg,var(--teal),var(--lavender));border-radius:50%;}
     .nav-back{font-size:0.8rem;font-weight:500;color:var(--ink-60);transition:color var(--transition);}
@@ -35,67 +35,55 @@
     .theme-btn{background:var(--card-bg);border:1px solid var(--border);color:var(--ink-60);border-radius:20px;padding:0.28rem 0.7rem;font-size:0.75rem;cursor:pointer;font-family:var(--font-body);transition:all var(--transition);}
     .theme-btn:hover{border-color:var(--teal);color:var(--teal);}
 
+    .page{max-width:640px;margin:0 auto;padding:2.5rem 2rem 4rem;}
+
     /* Start screen */
-    .start-screen{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem;}
-    .start-screen.hidden{display:none;}
-    .start-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:2.5rem;max-width:520px;width:100%;text-align:center;}
-    .start-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);background:var(--teal-faint);border:1px solid rgba(58,175,169,0.25);padding:0.28rem 0.75rem;border-radius:20px;margin-bottom:1.25rem;}
-    .start-title{font-family:var(--font-display);font-size:clamp(1.6rem,4vw,2.2rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.6rem;}
-    .start-title .grad{background:linear-gradient(135deg,var(--teal),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-    .start-sub{color:var(--ink-60);font-size:0.88rem;line-height:1.7;margin-bottom:2rem;}
-    .start-btn{width:100%;padding:0.8rem;background:linear-gradient(135deg,var(--teal),var(--lavender));color:white;border:none;border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:600;font-size:0.95rem;cursor:pointer;transition:opacity var(--transition),transform var(--transition);}
+    .start-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:2.5rem;text-align:center;}
+    .page-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);background:var(--teal-faint);border:1px solid rgba(58,175,169,0.25);padding:0.28rem 0.75rem;border-radius:20px;margin-bottom:1.25rem;}
+    .page-title{font-family:var(--font-display);font-size:clamp(1.6rem,4vw,2.2rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.6rem;}
+    .page-title .grad{background:linear-gradient(135deg,var(--teal),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .page-sub{color:var(--ink-60);font-size:0.88rem;line-height:1.7;margin-bottom:2rem;}
+    .start-btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.8rem 2rem;background:linear-gradient(135deg,var(--teal),var(--lavender));color:white;border:none;border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:600;font-size:0.95rem;cursor:pointer;transition:opacity var(--transition),transform var(--transition);}
     .start-btn:hover{opacity:0.88;transform:translateY(-1px);}
 
-    /* Progress bar */
-    .progress-wrap{flex-shrink:0;padding:0.75rem 2rem;max-width:760px;margin:0 auto;width:100%;}
-    .progress-bar{width:100%;height:4px;background:var(--border);border-radius:2px;}
-    .progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--lavender));border-radius:2px;transition:width 0.4s ease;}
-    .progress-label{font-size:0.72rem;color:var(--ink-60);text-align:right;margin-top:0.35rem;font-family:var(--font-display);font-weight:500;}
+    /* Loading */
+    .loading{display:none;text-align:center;padding:3rem 2rem;}
+    .loading.visible{display:block;}
+    .spinner{display:inline-block;width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:1rem;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .loading p{font-size:0.9rem;color:var(--ink-60);font-style:italic;}
 
-    /* Chat */
-    .game-screen{flex:1;display:none;flex-direction:column;overflow:hidden;}
-    .game-screen.visible{display:flex;}
-    .chat-messages{flex:1;overflow-y:auto;padding:1.25rem 2rem;display:flex;flex-direction:column;gap:1rem;max-width:760px;margin:0 auto;width:100%;}
-    .message{display:flex;gap:0.75rem;max-width:88%;}
-    .message.user{align-self:flex-end;flex-direction:row-reverse;}
-    .message.assistant{align-self:flex-start;}
-    .message-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;flex-shrink:0;margin-top:0.1rem;font-weight:700;font-family:var(--font-display);}
-    .message.assistant .message-avatar{background:linear-gradient(135deg,var(--teal),var(--lavender));color:white;}
-    .message.user .message-avatar{background:#DCDCDC;color:var(--ink-60);font-size:0.85rem;}
-    .message-bubble{padding:0.75rem 1rem;border-radius:var(--radius);font-size:0.88rem;line-height:1.75;}
-    .message.assistant .message-bubble{background:var(--card-bg);border:1px solid var(--border);color:var(--ink-60);border-top-left-radius:4px;}
-    .message.user .message-bubble{background:linear-gradient(135deg,var(--teal),var(--lavender));color:white;border-top-right-radius:4px;}
-    .message.assistant .message-bubble strong{color:var(--ink);font-weight:600;}
+    /* Quiz card */
+    .quiz-card{display:none;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;}
+    .quiz-card.visible{display:block;}
+
+    .quiz-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
+    .quiz-counter{font-size:0.72rem;font-weight:600;color:var(--ink-60);font-family:var(--font-display);letter-spacing:0.05em;}
+    .progress-bar{width:100%;height:5px;background:var(--border);border-radius:3px;margin-bottom:1.75rem;}
+    .progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--lavender));border-radius:3px;transition:width 0.4s ease;}
+
+    .question-text{font-family:var(--font-display);font-size:1.1rem;font-weight:600;letter-spacing:-0.02em;line-height:1.4;margin-bottom:1.5rem;color:var(--ink);}
+
+    .options{display:flex;flex-direction:column;gap:0.65rem;}
+    .option-btn{width:100%;text-align:left;padding:0.9rem 1.1rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);font-family:var(--font-body);font-size:0.88rem;color:var(--ink-60);cursor:pointer;transition:all var(--transition);line-height:1.4;}
+    .option-btn:hover{border-color:var(--teal);background:var(--teal-faint);color:var(--ink);}
+    .option-btn.selected{border-color:var(--teal);background:var(--teal-faint);color:var(--teal);font-weight:500;}
 
     /* Result card */
-    .result-card{display:none;align-self:flex-start;max-width:88%;background:linear-gradient(135deg,var(--teal-faint),var(--lav-faint));border:1px solid var(--teal-light);border-radius:var(--radius);padding:1.25rem;margin-top:0.5rem;}
+    .result-card{display:none;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;text-align:center;}
     .result-card.visible{display:block;}
-    .result-career{font-family:var(--font-display);font-size:1.3rem;font-weight:700;background:linear-gradient(135deg,var(--teal),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.5rem;}
-    .result-body{font-size:0.85rem;color:var(--ink-60);line-height:1.8;}
+    .result-eyebrow{font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);margin-bottom:0.5rem;}
+    .result-career{font-family:var(--font-display);font-size:clamp(1.8rem,5vw,2.8rem);font-weight:700;letter-spacing:-0.03em;background:linear-gradient(135deg,var(--teal),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.5rem;line-height:1.1;}
+    .result-category{display:inline-block;font-size:0.72rem;font-weight:600;padding:0.2rem 0.65rem;border-radius:12px;background:var(--lav-faint);color:var(--lavender);margin-bottom:1.25rem;}
+    .result-headline{font-family:var(--font-display);font-size:1rem;font-weight:500;color:var(--ink);margin-bottom:1.25rem;line-height:1.5;padding:0 0.5rem;}
+    .result-divider{border:none;border-top:1px solid var(--border);margin:1.25rem 0;}
+    .result-section-label{font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-60);margin-bottom:0.5rem;text-align:left;}
+    .result-text{font-size:0.88rem;color:var(--ink-60);line-height:1.8;text-align:left;margin-bottom:1.25rem;}
+    .retake-btn{margin-top:0.5rem;padding:0.65rem 1.5rem;background:var(--surface);color:var(--ink-60);border:1px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:500;font-size:0.85rem;cursor:pointer;transition:border-color var(--transition),color var(--transition);}
+    .retake-btn:hover{border-color:var(--teal);color:var(--teal);}
 
-    /* Typing */
-    .typing{display:none;align-self:flex-start;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);border-top-left-radius:4px;max-width:760px;margin:0 2rem;}
-    .typing.visible{display:flex;gap:0.3rem;align-items:center;}
-    .typing span{width:6px;height:6px;background:var(--ink-30);border-radius:50%;animation:bounce 1.2s infinite;}
-    .typing span:nth-child(2){animation-delay:0.2s;}
-    .typing span:nth-child(3){animation-delay:0.4s;}
-    @keyframes bounce{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-6px);}}
-
-    /* Input */
-    .chat-input-wrap{flex-shrink:0;padding:0.75rem 2rem 1.25rem;max-width:760px;margin:0 auto;width:100%;}
-    .chat-input-row{display:flex;gap:0.65rem;align-items:flex-end;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:0.55rem 0.55rem 0.55rem 1rem;transition:border-color var(--transition);}
-    .chat-input-row:focus-within{border-color:var(--teal);}
-    .chat-input{flex:1;border:none;background:transparent;font-family:var(--font-body);font-size:0.9rem;color:var(--ink);resize:none;outline:none;max-height:100px;line-height:1.5;}
-    .chat-input::placeholder{color:var(--ink-30);}
-    .send-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--lavender));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity var(--transition);}
-    .send-btn:hover:not(:disabled){opacity:0.85;}
-    .send-btn:disabled{opacity:0.35;cursor:not-allowed;}
-    .send-btn svg{width:15px;height:15px;fill:white;}
-
-    .restart-btn{display:none;width:100%;margin-top:0.75rem;padding:0.65rem;background:var(--card-bg);color:var(--ink-60);border:1px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:500;font-size:0.85rem;cursor:pointer;transition:border-color var(--transition),color var(--transition);}
-    .restart-btn:hover{border-color:var(--teal);color:var(--teal);}
-    .restart-btn.visible{display:block;}
-    .chat-hint{font-size:0.68rem;color:var(--ink-30);text-align:center;margin-top:0.4rem;}
+    .error-msg{display:none;background:#FFF0F0;border:1px solid #FFCCCC;border-radius:var(--radius-sm);padding:1rem;font-size:0.85rem;color:#CC4444;margin-top:1rem;text-align:center;}
+    .error-msg.visible{display:block;}
   </style>
 </head>
 <body>
@@ -105,39 +93,48 @@
     <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">🌙 Dark</button>
   </nav>
 
-  <!-- Start screen -->
-  <div class="start-screen" id="startScreen">
-    <div class="start-card">
-      <div class="start-eyebrow">✦ Project 09 · Medical Career Quiz</div>
-      <h1 class="start-title">What kind of doctor<br>are you <span class="grad">meant to be?</span></h1>
-      <p class="start-sub">10 questions about your personality, working style, and what drives you — and we'll suggest the medical career that might suit you best. No wrong answers, just vibes.</p>
-      <button class="start-btn" onclick="startQuiz()">Start the Quiz →</button>
-    </div>
-  </div>
+  <div class="page">
 
-  <!-- Game screen -->
-  <div class="game-screen" id="gameScreen">
-    <div class="progress-wrap">
-      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
-      <p class="progress-label" id="progressLabel">Question 0 of 10</p>
+    <!-- Start -->
+    <div id="startCard" class="start-card">
+      <div class="page-eyebrow">✦ Project 09 · Medical Career Quiz</div>
+      <h1 class="page-title">What kind of doctor<br>are you <span class="grad">meant to be?</span></h1>
+      <p class="page-sub">10 questions about your personality and working style — and we'll match you to a medical career that might just fit. No right or wrong answers.</p>
+      <button class="start-btn" onclick="startQuiz()">✦ Start the Quiz</button>
     </div>
 
-    <div class="chat-messages" id="chatMessages"></div>
-
-    <div class="typing" id="typing">
-      <span></span><span></span><span></span>
+    <!-- Loading -->
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <p>Building your quiz…</p>
     </div>
 
-    <div class="chat-input-wrap">
-      <div class="chat-input-row">
-        <textarea class="chat-input" id="chatInput" placeholder="Type your answer…" rows="1"></textarea>
-        <button class="send-btn" id="sendBtn" onclick="sendAnswer()">
-          <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
-        </button>
+    <div class="error-msg" id="errorMsg"></div>
+
+    <!-- Quiz -->
+    <div class="quiz-card" id="quizCard">
+      <div class="quiz-meta">
+        <span class="quiz-counter" id="quizCounter">Question 1 of 10</span>
       </div>
-      <p class="chat-hint">Press Enter to send</p>
-      <button class="restart-btn" id="restartBtn" onclick="restartQuiz()">↺ Retake the quiz</button>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:10%"></div></div>
+      <p class="question-text" id="questionText"></p>
+      <div class="options" id="optionsContainer"></div>
     </div>
+
+    <!-- Result -->
+    <div class="result-card" id="resultCard">
+      <p class="result-eyebrow">Your career match</p>
+      <h2 class="result-career" id="resultCareer"></h2>
+      <span class="result-category" id="resultCategory"></span>
+      <p class="result-headline" id="resultHeadline"></p>
+      <hr class="result-divider" />
+      <p class="result-section-label">Why it fits you</p>
+      <p class="result-text" id="resultExplanation"></p>
+      <p class="result-section-label">What the job actually looks like</p>
+      <p class="result-text" id="resultDaytoday"></p>
+      <button class="retake-btn" onclick="resetQuiz()">↺ Retake the quiz</button>
+    </div>
+
   </div>
 
   <script>
@@ -155,104 +152,115 @@
       document.getElementById('theme-btn').textContent=saved==='dark'?'☀️ Light':'🌙 Dark';
     }
 
-    let conversationHistory = [];
-    let questionCount = 0;
-    let quizDone = false;
+    let questions = [];
+    let answers = [];
+    let currentQ = 0;
 
-    function startQuiz(){
-      document.getElementById('startScreen').classList.add('hidden');
-      document.getElementById('gameScreen').classList.add('visible');
-      conversationHistory = [];
-      questionCount = 0;
-      quizDone = false;
-      document.getElementById('chatMessages').innerHTML = '';
-      document.getElementById('progressFill').style.width = '0%';
-      document.getElementById('progressLabel').textContent = 'Question 0 of 10';
-      document.getElementById('chatInput').disabled = false;
-      document.getElementById('chatInput').placeholder = 'Type your answer\u2026';
-      document.getElementById('sendBtn').disabled = false;
-      document.getElementById('restartBtn').classList.remove('visible');
-      sendToAI('Start the quiz. Ask the first question.');
-    }
-
-    function addMessage(role, text){
-      const container = document.getElementById('chatMessages');
-      const div = document.createElement('div');
-      div.className = `message ${role}`;
-      const avatar = role === 'assistant' ? '🩺' : '👤';
-      const formatted = text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
-      div.innerHTML = `<div class="message-avatar">${avatar}</div><div class="message-bubble">${formatted}</div>`;
-      container.appendChild(div);
-      container.scrollTop = container.scrollHeight;
-    }
-
-    async function sendToAI(userMessage){
-      conversationHistory.push({ role: 'user', content: userMessage });
-      document.getElementById('sendBtn').disabled = true;
-      document.getElementById('typing').classList.add('visible');
+    async function startQuiz(){
+      document.getElementById('startCard').style.display = 'none';
+      document.getElementById('loading').classList.add('visible');
+      hideError();
 
       try {
         const res = await fetch('/api/careerquiz', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages: conversationHistory })
+          body: JSON.stringify({ mode: 'generate' })
         });
         const data = await res.json();
-        if(!res.ok) throw new Error(data.error || 'Something went wrong');
-        conversationHistory.push({ role: 'assistant', content: data.reply });
-
-        // Check if this is the final result
-        const isResult = questionCount >= 10 || data.reply.toLowerCase().includes('your career match') || data.reply.toLowerCase().includes('based on your answers');
-        addMessage('assistant', data.reply);
-
-        if(isResult){
-          quizDone = true;
-          document.getElementById('progressFill').style.width = '100%';
-          document.getElementById('progressLabel').textContent = 'Complete!';
-          document.getElementById('chatInput').disabled = true;
-          document.getElementById('chatInput').placeholder = 'Quiz complete!';
-          document.getElementById('restartBtn').classList.add('visible');
-        }
-
+        if(!res.ok || !data.questions) throw new Error('Failed to generate quiz');
+        questions = data.questions;
+        answers = [];
+        currentQ = 0;
+        document.getElementById('loading').classList.remove('visible');
+        document.getElementById('quizCard').classList.add('visible');
+        renderQuestion();
       } catch(err){
-        addMessage('assistant', 'Something went wrong. Please try again.');
-        document.getElementById('sendBtn').disabled = false;
-      } finally {
-        document.getElementById('typing').classList.remove('visible');
-        if(!quizDone) document.getElementById('sendBtn').disabled = false;
+        document.getElementById('loading').classList.remove('visible');
+        document.getElementById('startCard').style.display = 'block';
+        showError('Something went wrong loading the quiz. Please try again.');
       }
     }
 
-    async function sendAnswer(){
-      if(quizDone) return;
-      const input = document.getElementById('chatInput');
-      const text = input.value.trim();
-      if(!text) return;
+    function renderQuestion(){
+      const q = questions[currentQ];
+      const total = questions.length;
+      document.getElementById('quizCounter').textContent = `Question ${currentQ + 1} of ${total}`;
+      document.getElementById('progressFill').style.width = `${((currentQ + 1) / total) * 100}%`;
+      document.getElementById('questionText').textContent = q.question;
 
-      questionCount++;
-      const progress = Math.min((questionCount / 10) * 100, 100);
-      document.getElementById('progressFill').style.width = progress + '%';
-      document.getElementById('progressLabel').textContent = `Question ${Math.min(questionCount, 10)} of 10`;
-
-      addMessage('user', text);
-      input.value = '';
-      input.style.height = 'auto';
-      await sendToAI(text);
+      const container = document.getElementById('optionsContainer');
+      container.innerHTML = '';
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = opt;
+        btn.onclick = () => selectOption(btn, opt, i);
+        container.appendChild(btn);
+      });
     }
 
-    function restartQuiz(){
-      document.getElementById('startScreen').classList.remove('hidden');
-      document.getElementById('gameScreen').classList.remove('visible');
+    function selectOption(btn, text, idx){
+      // Highlight selected
+      document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+
+      // Store answer
+      answers[currentQ] = { question: questions[currentQ].question, selected: text };
+
+      // Short delay then advance
+      setTimeout(() => {
+        currentQ++;
+        if(currentQ < questions.length){
+          renderQuestion();
+        } else {
+          getResult();
+        }
+      }, 300);
     }
 
-    const chatInput = document.getElementById('chatInput');
-    chatInput.addEventListener('input', () => {
-      chatInput.style.height = 'auto';
-      chatInput.style.height = chatInput.scrollHeight + 'px';
-    });
-    chatInput.addEventListener('keydown', e => {
-      if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); sendAnswer(); }
-    });
+    async function getResult(){
+      document.getElementById('quizCard').classList.remove('visible');
+      document.getElementById('loading').classList.add('visible');
+      document.getElementById('loading').querySelector('p').textContent = 'Analyzing your answers…';
+
+      try {
+        const res = await fetch('/api/careerquiz', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mode: 'result', answers })
+        });
+        const data = await res.json();
+        if(!res.ok || !data.result) throw new Error('Failed to get result');
+        const r = data.result;
+        document.getElementById('resultCareer').textContent = r.career || 'Your Match';
+        document.getElementById('resultCategory').textContent = r.category || '';
+        document.getElementById('resultHeadline').textContent = r.headline || '';
+        document.getElementById('resultExplanation').textContent = r.explanation || '';
+        document.getElementById('resultDaytoday').textContent = r.daytoday || '';
+        document.getElementById('loading').classList.remove('visible');
+        document.getElementById('resultCard').classList.add('visible');
+        window.scrollTo({top:0,behavior:'smooth'});
+      } catch(err){
+        document.getElementById('loading').classList.remove('visible');
+        showError('Something went wrong getting your result. Please retake the quiz.');
+        document.getElementById('startCard').style.display = 'block';
+      }
+    }
+
+    function resetQuiz(){
+      questions = [];
+      answers = [];
+      currentQ = 0;
+      document.getElementById('resultCard').classList.remove('visible');
+      document.getElementById('quizCard').classList.remove('visible');
+      document.getElementById('startCard').style.display = 'block';
+      hideError();
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+
+    function showError(msg){ const el=document.getElementById('errorMsg'); el.textContent=msg; el.classList.add('visible'); }
+    function hideError(){ document.getElementById('errorMsg').classList.remove('visible'); }
   </script>
 </body>
 </html>
