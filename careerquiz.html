@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Medical Career Match | Zara's AI Lab</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&display=swap');
+
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --border: #2a2d3a;
+      --accent: #7c9ef5;
+      --accent2: #a78bfa;
+      --text: #e8eaf0;
+      --muted: #8b8fa8;
+      --gold: #f5c842;
+      --silver: #a0aec0;
+      --bronze: #cd7f32;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    header a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 16px;
+      transition: color 0.2s;
+    }
+    header a:hover { color: var(--accent); }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.4rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    .quiz-container {
+      width: 100%;
+      max-width: 620px;
+    }
+
+    .progress-bar-wrap {
+      background: var(--border);
+      border-radius: 99px;
+      height: 6px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 6px;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width 0.4s ease;
+    }
+
+    .progress-label {
+      text-align: right;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .question-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .question-text {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .option-btn {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      padding: 14px 20px;
+      text-align: left;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .option-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .option-btn.selected {
+      border-color: var(--accent);
+      background: rgba(124, 158, 245, 0.1);
+      color: var(--accent);
+    }
+
+    /* Results */
+    .results-container {
+      width: 100%;
+      max-width: 620px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .results-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .results-header h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .results-header p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .career-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 16px;
+    }
+
+    .career-card.first { border-color: var(--gold); }
+    .career-card.second { border-color: var(--silver); }
+    .career-card.third { border-color: var(--bronze); }
+
+    .career-rank {
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+    }
+
+    .career-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .career-card.first .career-title { color: var(--gold); }
+    .career-card.second .career-title { color: var(--silver); }
+    .career-card.third .career-title { color: var(--bronze); }
+
+    .career-desc {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .career-why {
+      font-size: 0.92rem;
+      color: var(--text);
+      line-height: 1.6;
+      border-left: 3px solid var(--accent);
+      padding-left: 12px;
+    }
+
+    .profile-line {
+      background: linear-gradient(135deg, rgba(124,158,245,0.1), rgba(167,139,250,0.1));
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 8px;
+      color: var(--accent2);
+      font-style: italic;
+    }
+
+    .loading-state {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 20px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-state p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .retake-btn {
+      display: block;
+      margin: 28px auto 0;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 12px 32px;
+      border-radius: 99px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .retake-btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .disclaimer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-top: 32px;
+      max-width: 500px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="/">← Back to Portfolio</a>
+  <h1>Medical Career Match</h1>
+  <p>Answer 10 questions about yourself and discover which health careers fit you best.</p>
+</header>
+
+<div id="app"></div>
+
+<script>
+  const questions = [
+    {
+      text: "When you're solving a problem, you prefer to:",
+      options: ["Work with your hands", "Talk through it with people", "Dig into data and research", "Figure out the system behind it"]
+    },
+    {
+      text: "Your ideal workday looks like:",
+      options: ["Every day is completely different", "Deep focus on one complex thing", "Helping someone through something hard", "Building or creating something new"]
+    },
+    {
+      text: "How do you feel about uncertainty?",
+      options: ["I like clear right answers", "I'm okay with gray areas", "I thrive on open-ended questions", "I want to reduce uncertainty for others"]
+    },
+    {
+      text: "You'd rather be known for:",
+      options: ["Saving a life in a critical moment", "Discovering something new", "Improving a broken system", "Helping someone long-term"]
+    },
+    {
+      text: "In a group project, you're usually:",
+      options: ["The one with the plan", "The one doing deep research", "The one keeping people connected", "The one building the actual thing"]
+    },
+    {
+      text: "Which feels most meaningful to you?",
+      options: ["Helping one patient at a time", "Improving health for whole communities", "Understanding how the body works", "Designing better medical tools"]
+    },
+    {
+      text: "How do you feel about years of training?",
+      options: ["The longer the better if it's worth it", "I want to get working sooner", "I don't mind as long as I'm learning", "Depends on what I'm training for"]
+    },
+    {
+      text: "Pick the setting where you'd thrive:",
+      options: ["Hospital or clinic", "Research lab", "Office or policy setting", "Tech company or startup"]
+    },
+    {
+      text: "Which word describes you best?",
+      options: ["Empathetic", "Analytical", "Creative", "Driven"]
+    },
+    {
+      text: "What would make you most proud at the end of your career?",
+      options: ["I helped people heal", "I discovered something that changed medicine", "I built something that lasted", "I made the system better for everyone"]
+    }
+  ];
+
+  let answers = [];
+  let currentQ = 0;
+
+  const systemPrompt = `You are a career discovery assistant that helps anyone explore medical and health careers. When given a user's answers to 10 quiz questions, analyze their personality, interests, and work style to return their top 3 career matches.
+
+Career categories you can draw from:
+- Clinical: physician, surgeon, nurse practitioner, physician assistant, pharmacist, dentist
+- Research: biomedical researcher, epidemiologist, geneticist, clinical trial coordinator
+- Tech/Innovation: health informaticist, medical device engineer, bioinformatician, digital health designer
+- Public Health: public health analyst, health policy advisor, global health worker
+- Allied Health: physical therapist, occupational therapist, speech pathologist, radiologic technologist
+- Mental Health: psychiatrist, psychologist, licensed counselor, social worker
+- Behind the Scenes: medical writer, bioethicist, healthcare administrator, medical illustrator
+
+For each match return: the career title, a 2 sentence description of what they actually do, and a sentence explaining why this user's answers point to this career.
+
+Format your response EXACTLY like this with no extra text before or after:
+🏆 #1 Match: [Career Title]
+[2 sentence description of what they do]
+[Why their answers match this career]
+
+🥈 #2 Match: [Career Title]
+[2 sentence description of what they do]
+[Why their answers match this career]
+
+🥉 #3 Match: [Career Title]
+[2 sentence description of what they do]
+[Why their answers match this career]
+
+**[One bold encouraging sentence capturing their overall profile — what kind of person they are and where they're headed]**
+
+Tone: encouraging, clear, and kind. Do not push the user to take any specific job — these are possibilities, not prescriptions. Never tell someone they are wrong for any answer.`;
+
+  function renderQuestion() {
+    const app = document.getElementById('app');
+    const progress = ((currentQ) / questions.length) * 100;
+
+    app.innerHTML = `
+      <div class="quiz-container">
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" style="width: ${progress}%"></div>
+        </div>
+        <div class="progress-label">Question ${currentQ + 1} of ${questions.length}</div>
+        <div class="question-card">
+          <div class="question-text">${questions[currentQ].text}</div>
+          <div class="options">
+            ${questions[currentQ].options.map((opt, i) => `
+              <button class="option-btn" onclick="selectAnswer('${opt.replace(/'/g, "\\'")}')">${opt}</button>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function selectAnswer(answer) {
+    answers.push({ question: questions[currentQ].text, answer });
+    currentQ++;
+    if (currentQ < questions.length) {
+      renderQuestion();
+    } else {
+      showLoading();
+      getResults();
+    }
+  }
+
+  function showLoading() {
+    document.getElementById('app').innerHTML = `
+      <div class="quiz-container">
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <p>Analyzing your answers...</p>
+        </div>
+      </div>
+    `;
+  }
+
+  async function getResults() {
+    const userMessage = answers.map((a, i) =>
+      `Q${i+1}: ${a.question}\nAnswer: ${a.answer}`
+    ).join('\n\n');
+
+    try {
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-6",
+          max_tokens: 1000,
+          system: systemPrompt,
+          messages: [{ role: "user", content: userMessage }]
+        })
+      });
+
+      const data = await response.json();
+      const text = data.content[0].text;
+      renderResults(text);
+    } catch (err) {
+      document.getElementById('app').innerHTML = `
+        <div class="quiz-container">
+          <div class="loading-state">
+            <p>Something went wrong. Please try again.</p>
+            <button class="retake-btn" onclick="restartQuiz()">Try Again</button>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  function renderResults(text) {
+    const blocks = text.split(/(?=🏆|🥈|🥉)/g).filter(b => b.trim());
+    const medals = ['first', 'second', 'third'];
+
+    let profileLine = '';
+    const boldMatch = text.match(/\*\*(.+?)\*\*/);
+    if (boldMatch) profileLine = boldMatch[1];
+
+    const cardsHTML = blocks.slice(0, 3).map((block, i) => {
+      const lines = block.trim().split('\n').filter(l => l.trim());
+      const titleLine = lines[0] || '';
+      const title = titleLine.replace(/🏆|🥈|🥉/, '').replace('#1 Match:', '').replace('#2 Match:', '').replace('#3 Match:', '').trim();
+      const desc = lines[1] || '';
+      const why = lines[2] || '';
+
+      return `
+        <div class="career-card ${medals[i]}">
+          <div class="career-rank">${titleLine.match(/🏆|🥈|🥉/)?.[0] || ''}</div>
+          <div class="career-title">${title}</div>
+          <div class="career-desc">${desc}</div>
+          <div class="career-why">${why}</div>
+        </div>
+      `;
+    }).join('');
+
+    document.getElementById('app').innerHTML = `
+      <div class="results-container">
+        <div class="results-header">
+          <h2>Your Career Matches</h2>
+          <p>Based on your answers, here are the careers that fit you best.</p>
+        </div>
+        ${cardsHTML}
+        ${profileLine ? `<div class="profile-line">"${profileLine}"</div>` : ''}
+        <button class="retake-btn" onclick="restartQuiz()">Retake Quiz</button>
+        <p class="disclaimer">These results are for exploration only. There's no wrong answer — every path in medicine matters.</p>
+      </div>
+    `;
+  }
+
+  function restartQuiz() {
+    answers = [];
+    currentQ = 0;
+    renderQuestion();
+  }
+
+  renderQuestion();
+</script>
+</body>
+</html>
+ENDOFFILE</parameter>
+<parameter name="description">Generate the careerquiz.html terminal paste command</parameter>
+git add careerquiz.html
+git commit -m "Add Project 09 - Medical Career Match Quiz"
+git push
+git status
