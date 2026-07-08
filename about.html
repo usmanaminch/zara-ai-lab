@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Zara's Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --teal:#3AAFA9;--teal-light:#6ECBC6;--teal-faint:#E0F5F4;
+      --lavender:#8B7FD4;--lav-faint:#EEEAFF;
+      --ink:#1C1C2E;--ink-60:#5A5A7A;--ink-30:#B0B0C8;
+      --surface:#F0F0F0;--border:#D0D0D0;--card-bg:#FFFFFF;
+      --font-display:'Space Grotesk',sans-serif;
+      --font-body:'Inter',sans-serif;
+      --radius:14px;--radius-sm:9px;--transition:0.22s ease;
+    }
+    [data-theme="dark"]{
+      --ink:#EEF0FF;--ink-60:#9090B0;--ink-30:#4A4A6A;
+      --surface:#0F1020;--border:#2C2D45;--card-bg:#181928;
+      --teal-faint:#0C2422;--lav-faint:#14122A;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--font-body);background:var(--surface);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition);}
+    a{color:inherit;text-decoration:none;}
+
+    nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;background:var(--surface);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:var(--font-display);font-weight:700;font-size:1rem;letter-spacing:-0.02em;display:flex;align-items:center;gap:0.45rem;}
+    .nav-logo .pip{width:8px;height:8px;background:linear-gradient(135deg,var(--teal),var(--lavender));border-radius:50%;}
+    .nav-links{display:flex;align-items:center;gap:1.75rem;list-style:none;}
+    .nav-links a{font-size:0.82rem;font-weight:500;color:var(--ink-60);transition:color var(--transition);}
+    .nav-links a:hover{color:var(--teal);}
+    .nav-links a.active{color:var(--teal);}
+    .theme-btn{background:var(--card-bg);border:1px solid var(--border);color:var(--ink-60);border-radius:20px;padding:0.28rem 0.7rem;font-size:0.75rem;cursor:pointer;font-family:var(--font-body);transition:all var(--transition);}
+    .theme-btn:hover{border-color:var(--teal);color:var(--teal);}
+
+    .page{max-width:720px;margin:0 auto;padding:2.5rem 2rem 4rem;}
+    .section-label{font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:0.5rem;}
+    .section-heading{font-family:var(--font-display);font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;margin-bottom:1.5rem;}
+
+    .bio-text p{color:var(--ink-60);font-size:0.95rem;line-height:1.9;margin-bottom:1rem;}
+    .bio-text p:last-child{margin-bottom:0;}
+    .bio-text strong{color:var(--ink);font-weight:500;}
+
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem;margin-top:2.5rem;}
+    .stat-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem;transition:border-color var(--transition);}
+    .stat-card:hover{border-color:var(--teal-light);}
+    .stat-number{font-family:var(--font-display);font-size:1.8rem;font-weight:700;background:linear-gradient(135deg,var(--teal),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.04em;line-height:1;margin-bottom:0.2rem;}
+    .stat-label{font-size:0.72rem;color:var(--ink-60);line-height:1.4;}
+
+    @media(max-width:580px){.nav-links{display:none;}.stats-grid{grid-template-columns:1fr 1fr;}}
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/" class="nav-logo"><span class="pip"></span>Zara</a>
+    <ul class="nav-links">
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+    </ul>
+    <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">🌙 Dark</button>
+  </nav>
+
+  <div class="page">
+    <p class="section-label">The person behind it all</p>
+    <h1 class="section-heading">About Me</h1>
+
+    <div class="bio-text">
+      <p>I'm Zara. I build AI tools, write research papers, and explore what happens when technology meets medicine.</p>
+      <p>This site is my living portfolio — everything here is something I actually made, researched, or shipped. I started this AI lab because I learn best by building real things. That's still true.</p>
+      <p>I'm interested in how AI can make healthcare more <strong>accessible</strong> and more <strong>equitable</strong> — for patients who look different, live in different places, and have different levels of access to care. My projects and writing keep coming back to that question.</p>
+      <p><strong>This page grows as I do.</strong></p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-number">09</div><div class="stat-label">AI projects shipped</div></div>
+      <div class="stat-card"><div class="stat-number">03</div><div class="stat-label">Research papers published</div></div>
+      <div class="stat-card"><div class="stat-number">1hr</div><div class="stat-label">Daily building time</div></div>
+      <div class="stat-card"><div class="stat-number">∞</div><div class="stat-label">Things left to learn</div></div>
+    </div>
+  </div>
+
+  <script>
+    function toggleTheme(){
+      const html=document.documentElement;
+      const btn=document.getElementById('theme-btn');
+      const isDark=html.getAttribute('data-theme')==='dark';
+      html.setAttribute('data-theme',isDark?'light':'dark');
+      btn.textContent=isDark?'🌙 Dark':'☀️ Light';
+      localStorage.setItem('zara-theme',isDark?'light':'dark');
+    }
+    const saved=localStorage.getItem('zara-theme');
+    if(saved){
+      document.documentElement.setAttribute('data-theme',saved);
+      document.getElementById('theme-btn').textContent=saved==='dark'?'☀️ Light':'🌙 Dark';
+    }
+  </script>
+</body>
+</html>

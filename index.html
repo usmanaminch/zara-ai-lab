@@ -12,306 +12,109 @@
       --teal:#3AAFA9;--teal-light:#6ECBC6;--teal-faint:#E0F5F4;
       --lavender:#8B7FD4;--lav-faint:#EEEAFF;
       --ink:#1C1C2E;--ink-60:#5A5A7A;--ink-30:#B0B0C8;
-      --surface:#F0F0F0;
-      --surface-2:#E6E6E6;
-      --surface-3:#DCDCDC;
-      --border:#D0D0D0;
-      --card-bg:#FFFFFF;
-      --font-display:'Space Grotesk',sans-serif;--font-body:'Inter',sans-serif;
+      --surface:#F0F0F0;--border:#D0D0D0;--card-bg:#FFFFFF;
+      --font-display:'Space Grotesk',sans-serif;
+      --font-body:'Inter',sans-serif;
       --radius:14px;--radius-sm:9px;--transition:0.22s ease;
     }
     [data-theme="dark"]{
       --ink:#EEF0FF;--ink-60:#9090B0;--ink-30:#4A4A6A;
-      --surface:#0F1020;--surface-2:#181928;--surface-3:#212235;
-      --border:#2C2D45;--teal-faint:#0C2422;--lav-faint:#14122A;
-      --card-bg:#181928;
+      --surface:#0F1020;--border:#2C2D45;--card-bg:#181928;
+      --teal-faint:#0C2422;--lav-faint:#14122A;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;}
-    body{font-family:var(--font-body);background:var(--surface);color:var(--ink);line-height:1.6;transition:background var(--transition),color var(--transition);-webkit-font-smoothing:antialiased;}
+    body{font-family:var(--font-body);background:var(--surface);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition);min-height:100vh;display:flex;flex-direction:column;}
     a{color:inherit;text-decoration:none;}
 
-    nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;background:var(--surface);border-bottom:1px solid var(--border);transition:background var(--transition),border-color var(--transition);}
+    nav{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;background:var(--surface);border-bottom:1px solid var(--border);}
     .nav-logo{font-family:var(--font-display);font-weight:700;font-size:1rem;letter-spacing:-0.02em;display:flex;align-items:center;gap:0.45rem;}
     .nav-logo .pip{width:8px;height:8px;background:linear-gradient(135deg,var(--teal),var(--lavender));border-radius:50%;}
-    .nav-links{display:flex;align-items:center;gap:1.5rem;list-style:none;}
-    .nav-links a{font-size:0.8rem;font-weight:500;color:var(--ink-60);transition:color var(--transition);}
+    .nav-links{display:flex;align-items:center;gap:1.75rem;list-style:none;}
+    .nav-links a{font-size:0.82rem;font-weight:500;color:var(--ink-60);transition:color var(--transition);}
     .nav-links a:hover{color:var(--teal);}
-    .theme-btn{background:var(--surface-2);border:1px solid var(--border);color:var(--ink-60);border-radius:20px;padding:0.28rem 0.7rem;font-size:0.75rem;cursor:pointer;transition:all var(--transition);font-family:var(--font-body);}
+    .theme-btn{background:var(--card-bg);border:1px solid var(--border);color:var(--ink-60);border-radius:20px;padding:0.28rem 0.7rem;font-size:0.75rem;cursor:pointer;font-family:var(--font-body);transition:all var(--transition);}
     .theme-btn:hover{border-color:var(--teal);color:var(--teal);}
 
-    .hero{min-height:70vh;display:flex;align-items:center;padding:2.5rem 2.5rem 2rem;position:relative;overflow:hidden;}
+    /* Hero */
+    .hero{flex:1;display:flex;align-items:center;padding:3rem 2.5rem;position:relative;overflow:hidden;}
     .hero::before,.hero::after{content:'';position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;}
-    .hero::before{width:360px;height:360px;background:radial-gradient(circle,rgba(58,175,169,0.1) 0%,transparent 70%);top:-80px;right:0;}
-    .hero::after{width:300px;height:300px;background:radial-gradient(circle,rgba(139,127,212,0.08) 0%,transparent 70%);bottom:-60px;left:35%;}
-    .hero-inner{max-width:640px;position:relative;z-index:1;}
+    .hero::before{width:400px;height:400px;background:radial-gradient(circle,rgba(58,175,169,0.1) 0%,transparent 70%);top:-100px;right:-50px;}
+    .hero::after{width:300px;height:300px;background:radial-gradient(circle,rgba(139,127,212,0.08) 0%,transparent 70%);bottom:-80px;left:30%;}
+    .hero-inner{max-width:680px;position:relative;z-index:1;}
     .hero-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);background:var(--teal-faint);border:1px solid rgba(58,175,169,0.25);padding:0.28rem 0.75rem;border-radius:20px;margin-bottom:1.25rem;}
-    .hero-name{font-family:var(--font-display);font-size:clamp(2.8rem,7vw,4.8rem);font-weight:700;line-height:0.95;letter-spacing:-0.04em;margin-bottom:0.65rem;}
+    .hero-name{font-family:var(--font-display);font-size:clamp(3rem,8vw,5rem);font-weight:700;line-height:0.95;letter-spacing:-0.04em;margin-bottom:0.65rem;}
     .hero-name .grad{background:linear-gradient(135deg,var(--teal) 0%,var(--lavender) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
     .hero-tagline{font-family:var(--font-display);font-size:clamp(1rem,2vw,1.2rem);font-weight:400;color:var(--ink-60);margin-bottom:1.1rem;line-height:1.5;}
-    .hero-bio{font-size:0.88rem;color:var(--ink-60);max-width:500px;margin-bottom:1.5rem;line-height:1.8;}
+    .hero-bio{font-size:0.88rem;color:var(--ink-60);max-width:500px;margin-bottom:2rem;line-height:1.8;}
     .hero-bio strong{color:var(--ink);font-weight:500;}
-    .hero-badges{display:flex;flex-wrap:wrap;gap:0.45rem;margin-bottom:1.75rem;}
-    .badge{font-size:0.72rem;padding:0.25rem 0.7rem;border-radius:20px;border:1px solid var(--border);color:var(--ink-60);background:var(--card-bg);transition:border-color var(--transition),color var(--transition);}
-    .badge:hover{border-color:var(--teal);color:var(--teal);}
-    .hero-cta{display:flex;gap:0.75rem;flex-wrap:wrap;}
-    .btn-primary{display:inline-flex;align-items:center;gap:0.4rem;background:linear-gradient(135deg,var(--teal),var(--lavender));color:white;padding:0.6rem 1.3rem;border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:600;font-size:0.85rem;transition:opacity var(--transition),transform var(--transition);}
-    .btn-primary:hover{opacity:0.88;transform:translateY(-2px);}
-    .btn-secondary{display:inline-flex;align-items:center;gap:0.4rem;border:1px solid var(--border);color:var(--ink-60);padding:0.6rem 1.3rem;border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:500;font-size:0.85rem;background:var(--card-bg);transition:border-color var(--transition),color var(--transition),transform var(--transition);}
-    .btn-secondary:hover{border-color:var(--teal);color:var(--teal);transform:translateY(-2px);}
 
-    section{padding:2.5rem 2.5rem;border-top:1px solid var(--border);}
-    .section-label{font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:0.4rem;}
-    .section-heading{font-family:var(--font-display);font-size:clamp(1.4rem,3vw,2rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.5rem;}
-    .section-subhead{color:var(--ink-60);font-size:0.85rem;max-width:500px;line-height:1.7;margin-bottom:1.5rem;}
+    /* Nav cards */
+    .nav-cards{display:flex;gap:0.85rem;flex-wrap:wrap;}
+    .nav-card{display:flex;align-items:center;gap:0.75rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.4rem;cursor:pointer;transition:border-color var(--transition),transform var(--transition),box-shadow var(--transition);text-decoration:none;}
+    .nav-card:hover{border-color:var(--teal-light);transform:translateY(-2px);box-shadow:0 6px 24px rgba(58,175,169,0.1);}
+    .nav-card-icon{font-size:1.4rem;flex-shrink:0;}
+    .nav-card-body{}
+    .nav-card-title{font-family:var(--font-display);font-weight:700;font-size:0.95rem;letter-spacing:-0.02em;color:var(--ink);margin-bottom:0.15rem;}
+    .nav-card-desc{font-size:0.75rem;color:var(--ink-60);}
+    .nav-card-arrow{margin-left:auto;color:var(--ink-30);font-size:1rem;transition:color var(--transition),transform var(--transition);}
+    .nav-card:hover .nav-card-arrow{color:var(--teal);transform:translateX(3px);}
 
-    .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;}
-    .project-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;transition:border-color var(--transition),transform var(--transition),box-shadow var(--transition);display:flex;flex-direction:column;}
-    .project-card:hover{border-color:var(--teal-light);transform:translateY(-3px);box-shadow:0 8px 28px rgba(58,175,169,0.1);}
-    .project-card.coming-soon{opacity:0.42;pointer-events:none;}
-    .card-number{font-family:var(--font-display);font-size:0.6rem;font-weight:700;letter-spacing:0.12em;color:var(--teal);margin-bottom:0.5rem;}
-    .card-title{font-family:var(--font-display);font-size:0.96rem;font-weight:600;letter-spacing:-0.02em;margin-bottom:0.38rem;}
-    .card-desc{font-size:0.78rem;color:var(--ink-60);line-height:1.65;margin-bottom:0.85rem;}
-    .card-tags{display:flex;flex-wrap:wrap;gap:0.32rem;margin-bottom:0.85rem;}
-    .card-tag{font-size:0.62rem;font-weight:600;padding:0.18rem 0.55rem;border-radius:12px;background:var(--teal-faint);color:var(--teal);}
-    .card-tag.lav{background:var(--lav-faint);color:var(--lavender);}
-    .card-links{display:flex;gap:0.75rem;margin-top:auto;}
-    .card-link{font-size:0.72rem;font-weight:500;color:var(--ink-60);display:flex;align-items:center;gap:0.3rem;transition:color var(--transition);}
-    .card-link:hover{color:var(--teal);}
+    /* GitHub link */
+    .hero-github{display:inline-flex;align-items:center;gap:0.4rem;margin-top:1.25rem;font-size:0.78rem;font-weight:500;color:var(--ink-60);border:1px solid var(--border);border-radius:20px;padding:0.28rem 0.8rem;background:var(--card-bg);transition:all var(--transition);}
+    .hero-github:hover{border-color:var(--teal);color:var(--teal);}
 
-    .achievements-list{display:flex;flex-direction:column;gap:0.65rem;max-width:660px;}
-    .achievement-item{display:flex;align-items:flex-start;gap:1rem;padding:0.9rem 1.1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-sm);transition:border-color var(--transition);}
-    .achievement-item:hover{border-color:var(--teal-light);}
-    .ach-icon{font-size:1.2rem;flex-shrink:0;margin-top:0.08rem;}
-    .ach-title{font-family:var(--font-display);font-weight:600;font-size:0.87rem;margin-bottom:0.1rem;}
-    .ach-detail{font-size:0.75rem;color:var(--ink-60);}
-    .ach-year{margin-left:auto;flex-shrink:0;font-size:0.68rem;font-weight:600;color:var(--ink-30);font-family:var(--font-display);letter-spacing:0.05em;padding-top:0.12rem;}
-    .ach-placeholder{padding:1.1rem;background:var(--card-bg);border:1px dashed var(--border);border-radius:var(--radius-sm);text-align:center;font-size:0.8rem;color:var(--ink-30);font-style:italic;}
-
-    .art-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:1rem;}
-    .art-card{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--card-bg);transition:transform var(--transition),box-shadow var(--transition);}
-    .art-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.07);}
-    .art-placeholder{width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,var(--teal-faint),var(--lav-faint));display:flex;align-items:center;justify-content:center;font-size:2rem;}
-    .art-info{padding:0.7rem 0.9rem;}
-    .art-title{font-family:var(--font-display);font-weight:600;font-size:0.8rem;margin-bottom:0.15rem;}
-    .art-caption{font-size:0.7rem;color:var(--ink-60);font-style:italic;}
-
-    .about-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:2.5rem;align-items:start;}
-    @media(max-width:680px){.about-grid{grid-template-columns:1fr;}}
-    .about-text p{color:var(--ink-60);font-size:0.87rem;line-height:1.85;margin-bottom:0.75rem;}
-    .about-text p:last-child{margin-bottom:0;}
-    .about-text strong{color:var(--ink);font-weight:500;}
-    .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.65rem;width:100%;}
-    .stat-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.9rem;transition:border-color var(--transition);width:100%;}
-    .stat-card:hover{border-color:var(--teal-light);}
-    .stat-number{font-family:var(--font-display);font-size:1.7rem;font-weight:700;background:linear-gradient(135deg,var(--teal),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.04em;line-height:1;margin-bottom:0.15rem;}
-    .stat-label{font-size:0.7rem;color:var(--ink-60);line-height:1.4;}
-
-    footer{border-top:1px solid var(--border);padding:1.25rem 2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;}
-    .footer-left{font-size:0.78rem;color:var(--ink-60);}
-    .footer-right{display:flex;gap:1.25rem;}
-    .footer-right a{font-size:0.78rem;color:var(--ink-60);transition:color var(--transition);}
-    .footer-right a:hover{color:var(--teal);}
-
-    .fade-in{opacity:0;transform:translateY(12px);transition:opacity 0.5s ease,transform 0.5s ease;}
-    .fade-in.visible{opacity:1;transform:translateY(0);}
-    @media(max-width:580px){.nav-links{display:none;}}
-    @media(prefers-reduced-motion:reduce){.fade-in{opacity:1;transform:none;}}
+    @media(max-width:580px){.nav-links{display:none;}.nav-cards{flex-direction:column;}.nav-card{width:100%;}}
   </style>
 </head>
 <body>
   <nav>
     <div class="nav-logo"><span class="pip"></span>Zara</div>
     <ul class="nav-links">
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#research">Research</a></li>
-      <li><a href="#art">Creative</a></li>
-      <li><a href="#about">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="about.html">About</a></li>
     </ul>
     <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">🌙 Dark</button>
   </nav>
 
-  <section class="hero" id="home" style="border-top:none;">
+  <div class="hero">
     <div class="hero-inner">
-      <div class="hero-eyebrow fade-in">✦ Builder · Artist · Explorer</div>
-      <h1 class="hero-name fade-in">Hi, I'm<br><span class="grad">Zara.</span></h1>
-      <p class="hero-tagline fade-in">I build with AI. I explore science. I make things.</p>
-      <p class="hero-bio fade-in">This is my living portfolio — where <strong>AI projects, research, and creative work</strong> live side by side. Everything here is something I actually built, wrote, or made. It grows as I do.</p>
-      <div class="hero-badges fade-in">
-        <span class="badge">🤖 AI & Technology</span>
-        <span class="badge">🔬 Science</span>
-        <span class="badge">🎨 Art & Design</span>
-        <span class="badge">📚 Lifelong Learner</span>
-        <span class="badge">💻 Vibe Coder</span>
+      <div class="hero-eyebrow">✦ Builder · Artist · Explorer</div>
+      <h1 class="hero-name">Hi, I'm<br><span class="grad">Zara.</span></h1>
+      <p class="hero-tagline">I build with AI. I explore science. I make things.</p>
+      <p class="hero-bio">This is my living portfolio — where <strong>AI projects, research, and creative work</strong> live side by side. Everything here is something I actually built, wrote, or made. It grows as I do.</p>
+
+      <div class="nav-cards">
+        <a href="projects.html" class="nav-card">
+          <div class="nav-card-icon">🤖</div>
+          <div class="nav-card-body">
+            <p class="nav-card-title">AI Projects</p>
+            <p class="nav-card-desc">9 live tools built from scratch</p>
+          </div>
+          <span class="nav-card-arrow">→</span>
+        </a>
+        <a href="research.html" class="nav-card">
+          <div class="nav-card-icon">📄</div>
+          <div class="nav-card-body">
+            <p class="nav-card-title">Research</p>
+            <p class="nav-card-desc">3 published papers</p>
+          </div>
+          <span class="nav-card-arrow">→</span>
+        </a>
+        <a href="about.html" class="nav-card">
+          <div class="nav-card-icon">👋</div>
+          <div class="nav-card-body">
+            <p class="nav-card-title">About Me</p>
+            <p class="nav-card-desc">Who I am and what drives me</p>
+          </div>
+          <span class="nav-card-arrow">→</span>
+        </a>
       </div>
-      <div class="hero-cta fade-in">
-        <a href="#projects" class="btn-primary">See My Work →</a>
-        <a href="https://github.com/usmanaminch/zara-ai-lab" target="_blank" class="btn-secondary">GitHub ↗</a>
-      </div>
+
+      <a href="https://github.com/usmanaminch/zara-ai-lab" target="_blank" class="hero-github">↗ GitHub</a>
     </div>
-  </section>
-
-  <section id="projects">
-    <p class="section-label fade-in">What I've built</p>
-    <h2 class="section-heading fade-in">AI Projects</h2>
-    <p class="section-subhead fade-in">Each project started with a question I was curious about. I use AI to explore ideas, build useful things, and learn how technology actually works.</p>
-    <div class="projects-grid">
-
-      <div class="project-card fade-in">
-        <p class="card-number">PROJECT 01</p>
-        <h3 class="card-title">This Website</h3>
-        <p class="card-desc">My personal portfolio, built from scratch with plain HTML and CSS. No templates — every line written by hand.</p>
-        <div class="card-tags"><span class="card-tag">HTML</span><span class="card-tag">CSS</span><span class="card-tag">GitHub Pages</span></div>
-        <div class="card-links"><a href="https://github.com/usmanaminch/zara-ai-lab" target="_blank" class="card-link">↗ GitHub</a></div>
-      </div>
-
-      <div class="project-card fade-in">
-        <p class="card-number">PROJECT 02</p>
-        <h3 class="card-title">ClearSkin AI</h3>
-        <p class="card-desc">Describe a skin concern and get a clear, judgment-free breakdown — possible causes, how to help it, and lifestyle changes to prevent it.</p>
-        <div class="card-tags"><span class="card-tag">Netlify Functions</span><span class="card-tag lav">Health</span></div>
-        <div class="card-links"><a href="clearskin.html" class="card-link">→ Try it</a></div>
-      </div>
-
-      <div class="project-card fade-in">
-        <p class="card-number">PROJECT 03</p>
-        <h3 class="card-title">ClimaSkin</h3>
-        <p class="card-desc">A skincare chatbot that gives climate-specific advice for wherever you are traveling. Tell it where you are going and it builds your routine.</p>
-        <div class="card-tags"><span class="card-tag">Chatbot</span><span class="card-tag lav">Skincare</span></div>
-        <div class="card-links"><a href="climaskin.html" class="card-link">→ Try it</a></div>
-      </div>
-
-      <div class="project-card fade-in">
-        <p class="card-number">PROJECT 04</p>
-        <h3 class="card-title">AI Art Critic</h3>
-        <p class="card-desc">Upload any drawing and AI gives thoughtful feedback — on composition, style, and how to improve.</p>
-        <div class="card-tags"><span class="card-tag">Multimodal AI</span><span class="card-tag lav">Creative</span></div>
-        <div class="card-links"><a href="art-critic.html" class="card-link">→ Try it</a></div>
-      </div>
-
-      <div class="project-card fade-in">
-        <p class="card-number">PROJECT 05</p>
-        <h3 class="card-title">Study Lab</h3>
-        <p class="card-desc">Type any topic and get a clear lesson with clickable definitions — then take a 5-question quiz to test what you learned.</p>
-        <div class="card-tags"><span class="card-tag">JSON Output</span><span class="card-tag lav">Education</span></div>
-        <div class="card-links"><a href="studylab.html" class="card-link">→ Try it</a></div>
-      </div>
-
-      <div class="project-card fade-in">
-        <p class="card-number">PROJECT 06</p>
-        <h3 class="card-title">Ingredient Checker</h3>
-        <p class="card-desc">Paste or photograph any skincare ingredient list and get a calm, friendly breakdown of what's good, what to watch out for, and better alternatives.</p>
-        <div class="card-tags"><span class="card-tag">Multimodal AI</span><span class="card-tag lav">Skincare</span></div>
-        <div class="card-links"><a href="ingredients.html" class="card-link">→ Try it</a></div>
-      </div>
-
-      <div class="project-card fade-in">
-        <p class="card-number">PROJECT 07</p>
-        <h3 class="card-title">Myth Buster</h3>
-        <p class="card-desc">Seen a health claim on social media? Paste it here and get the real science — verdict, explanation, and the bottom line.</p>
-        <div class="card-tags"><span class="card-tag">Fact Checking</span><span class="card-tag lav">Health</span></div>
-        <div class="card-links"><a href="mythbuster.html" class="card-link">→ Try it</a></div>
-      </div>
-
-      <div class="project-card fade-in">
-        <p class="card-number">PROJECT 08</p>
-        <h3 class="card-title">Medical Case Mystery</h3>
-        <p class="card-desc">A mystery patient walks in. Ask questions, gather clues, and make your diagnosis. Three difficulty levels. Think like a doctor.</p>
-        <div class="card-tags"><span class="card-tag">Chatbot</span><span class="card-tag lav">Medicine</span></div>
-        <div class="card-links"><a href="casemystery.html" class="card-link">→ Try it</a></div>
-      </div>
-
-      <div class="project-card fade-in">
-        <p class="card-number">PROJECT 09</p>
-        <h3 class="card-title">Medical Career Quiz</h3>
-        <p class="card-desc">10 questions about your personality and working style — get matched to the medical career that suits you best.</p>
-        <div class="card-tags"><span class="card-tag">Quiz</span><span class="card-tag lav">Medicine</span></div>
-        <div class="card-links"><a href="careerquiz.html" class="card-link">→ Try it</a></div>
-      </div>
-
-    </div>
-  </section>
-
-  <section id="research">
-    <p class="section-label fade-in">What I've written</p>
-    <h2 class="section-heading fade-in">Research</h2>
-    <p class="section-subhead fade-in">Papers and essays on topics where technology meets medicine and society.</p>
-    <div class="achievements-list">
-      <div class="achievement-item fade-in">
-        <div class="ach-icon">📄</div>
-        <div class="ach-body">
-          <p class="ach-title">Seeing Every Skin: AI in Dermatology and the Health Equity Gap</p>
-          <p class="ach-detail">How AI diagnostic tools are transforming dermatology — and why they risk deepening inequalities for patients with darker skin tones.</p>
-          <a href="research.html" style="font-size:0.78rem;color:var(--teal);font-weight:600;display:inline-block;margin-top:0.4rem;">Read paper →</a>
-        </div>
-        <span class="ach-year">2026</span>
-      </div>
-      <div class="achievement-item fade-in">
-        <div class="ach-icon">📄</div>
-        <div class="ach-body">
-          <p class="ach-title">Scroll, Buy, Regret? How Social Media is Reshaping Teen Skincare</p>
-          <p class="ach-detail">Social media has made dermatology more accessible than ever — but it has also flooded teens with misinformation, unrealistic standards, and products they don't need.</p>
-          <a href="research.html" style="font-size:0.78rem;color:var(--teal);font-weight:600;display:inline-block;margin-top:0.4rem;">Read paper →</a>
-        </div>
-        <span class="ach-year">2026</span>
-      </div>
-      <div class="achievement-item fade-in">
-        <div class="ach-icon">📄</div>
-        <div class="ach-body">
-          <p class="ach-title">The Invisible Ecosystem: Understanding the Skin Microbiome</p>
-          <p class="ach-detail">What the skin microbiome is, how its disruption drives acne and eczema, and what your skincare routine is actually doing to it.</p>
-          <a href="research.html" style="font-size:0.78rem;color:var(--teal);font-weight:600;display:inline-block;margin-top:0.4rem;">Read paper →</a>
-        </div>
-        <span class="ach-year">2026</span>
-      </div>
-      <div class="ach-placeholder fade-in">More papers coming — check back soon ✦</div>
-    </div>
-  </section>
-
-  <section id="art">
-    <p class="section-label fade-in">Where creativity meets technology</p>
-    <h2 class="section-heading fade-in">Creative Work</h2>
-    <p class="section-subhead fade-in">I love to draw and make things. Some of those creations become the starting point for AI experiments — I hand something off to an AI and see what happens next.</p>
-    <div class="art-grid">
-      <div class="art-card fade-in">
-        <div class="art-placeholder">🎨</div>
-        <div class="art-info"><p class="art-title">First Piece — Coming Soon</p><p class="art-caption">Drawing + AI critique</p></div>
-      </div>
-      <div class="art-card fade-in">
-        <div class="art-placeholder">✏️</div>
-        <div class="art-info"><p class="art-title">Second Piece — Coming Soon</p><p class="art-caption">AI as creative collaborator</p></div>
-      </div>
-      <div class="art-card fade-in">
-        <div class="art-placeholder">🖊️</div>
-        <div class="art-info"><p class="art-title">More to come…</p><p class="art-caption">Gallery grows every session</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="about">
-    <p class="section-label fade-in">The person behind it all</p>
-    <h2 class="section-heading fade-in">About Me</h2>
-    <div class="about-text fade-in" style="max-width:600px;margin-bottom:2rem;">
-        <p>I'm Zara. I build AI tools, write research papers, and explore what happens when technology meets medicine.</p>
-        <p>This site is my living portfolio — everything here is something I actually made, researched, or shipped. I started this AI lab because I learn best by building real things. That's still true.</p>
-        <p>I'm interested in how AI can make healthcare more accessible and more equitable — for patients who look different, live in different places, and have different levels of access to care. My projects and writing keep coming back to that question.</p>
-        <p><strong>This page grows as I do.</strong></p>
-      </div>
-      <div class="stats-grid fade-in" style="grid-template-columns:repeat(4,1fr);">
-        <div class="stat-card"><div class="stat-number">09</div><div class="stat-label">AI projects shipped</div></div>
-        <div class="stat-card"><div class="stat-number">03</div><div class="stat-label">Research papers published</div></div>
-        <div class="stat-card"><div class="stat-number">1hr</div><div class="stat-label">Daily building time</div></div>
-        <div class="stat-card"><div class="stat-number">∞</div><div class="stat-label">Things left to learn</div></div>
-      </div>
-    </section>
-
-  <footer>
-    <div class="footer-left">Zara · Built from scratch ✦</div>
-    <div class="footer-right">
-      <a href="https://github.com/usmanaminch/zara-ai-lab" target="_blank">GitHub</a>
-      <a href="#home">Back to top ↑</a>
-    </div>
-  </footer>
+  </div>
 
   <script>
     function toggleTheme(){
@@ -327,11 +130,6 @@
       document.documentElement.setAttribute('data-theme',saved);
       document.getElementById('theme-btn').textContent=saved==='dark'?'☀️ Light':'🌙 Dark';
     }
-    const obs=new IntersectionObserver(entries=>{
-      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
-    },{threshold:0.07});
-    document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
   </script>
 </body>
 </html>
-
