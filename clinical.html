@@ -36,47 +36,31 @@
     .nav-links a.active{color:var(--teal);}
     .theme-btn{background:var(--card-bg);border:1px solid var(--border);color:var(--ink-60);border-radius:20px;padding:0.28rem 0.7rem;font-size:0.75rem;cursor:pointer;font-family:var(--font-body);transition:all var(--transition);}
     .theme-btn:hover{border-color:var(--teal);color:var(--teal);}
-
     .page{max-width:720px;margin:0 auto;padding:2.5rem 2rem 4rem;}
     .page-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);background:var(--teal-faint);border:1px solid rgba(58,175,169,0.25);padding:0.28rem 0.75rem;border-radius:20px;margin-bottom:1rem;}
     .page-title{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.5rem;}
     .page-title .grad{background:linear-gradient(135deg,var(--teal),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
     .page-sub{color:var(--ink-60);font-size:0.9rem;line-height:1.7;margin-bottom:2.5rem;max-width:560px;}
 
-    /* Hours tracker */
-    .hours-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-bottom:1.5rem;}
+    .hours-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-bottom:2rem;}
     .hours-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
     .hours-title{font-family:var(--font-display);font-weight:700;font-size:0.95rem;}
     .hours-badge{font-size:0.65rem;font-weight:700;padding:0.2rem 0.65rem;border-radius:12px;background:var(--teal-faint);color:var(--teal);letter-spacing:0.05em;}
-    .hours-bar-wrap{margin-bottom:0.5rem;}
-    .hours-bar{width:100%;height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
-    .hours-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--lavender));border-radius:4px;transition:width 0.6s ease;}
-    .hours-meta{display:flex;justify-content:space-between;font-size:0.72rem;color:var(--ink-60);margin-top:0.4rem;}
+    .hours-bar{width:100%;height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:0.5rem;}
+    .hours-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--lavender));border-radius:4px;}
+    .hours-meta{display:flex;justify-content:space-between;font-size:0.72rem;color:var(--ink-60);}
     .hours-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0.65rem;margin-top:1.25rem;}
     .hour-milestone{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.75rem;text-align:center;}
-    .hour-milestone.done{background:var(--teal-faint);border-color:rgba(58,175,169,0.3);}
     .milestone-num{font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--ink-30);}
-    .hour-milestone.done .milestone-num{color:var(--teal);}
     .milestone-label{font-size:0.65rem;color:var(--ink-30);margin-top:0.15rem;}
-    .hour-milestone.done .milestone-label{color:var(--teal);}
 
-    /* Timeline */
-
-    /* Goal cards */
-
-
-
-
-
-
-    /* Why section */
     .why-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;}
     .why-title{font-family:var(--font-display);font-weight:700;font-size:0.95rem;margin-bottom:0.75rem;}
     .why-body{font-size:0.88rem;color:var(--ink-60);line-height:1.85;}
     .why-body p{margin-bottom:0.85rem;}
     .why-body p:last-child{margin-bottom:0;}
 
-    @media(max-width:580px){.nav-links{display:none;}.hours-grid{grid-template-columns:repeat(2,1fr);}.goals-grid{grid-template-columns:1fr;}}
+    @media(max-width:580px){.nav-links{display:none;}.hours-grid{grid-template-columns:repeat(2,1fr);}}
   </style>
 </head>
 <body>
@@ -93,77 +77,40 @@
   <div class="page">
     <div class="page-eyebrow">✦ Clinical Experience</div>
     <h1 class="page-title">Becoming a<br><span class="grad">doctor.</span></h1>
-    <p class="page-sub">Medicine is learned in rooms, not just books. This page documents my clinical journey — the hours I've logged, the environments I've been in, and what I've taken from each experience.</p>
+    <p class="page-sub">Medicine is learned in rooms, not just books. This page documents my clinical journey — the hours I've logged and what drives me toward medicine.</p>
 
-    <!-- Hours tracker -->
     <div class="hours-card">
       <div class="hours-header">
         <p class="hours-title">Clinical Hours</p>
         <span class="hours-badge">IN PROGRESS</span>
       </div>
-      <div class="hours-bar-wrap">
-        <div class="hours-bar">
-          <div class="hours-fill" style="width:0%"></div>
-        </div>
-        <div class="hours-meta">
-          <span><strong style="color:var(--ink)">0 hours</strong> logged</span>
-          <span>Target: 450 hours by 12th grade</span>
-        </div>
+      <div class="hours-bar">
+        <div class="hours-fill" style="width:0%"></div>
+      </div>
+      <div class="hours-meta">
+        <span><strong style="color:var(--ink)">0 hours</strong> logged</span>
+        <span>Target: 450 hours</span>
       </div>
       <div class="hours-grid">
         <div class="hour-milestone">
           <p class="milestone-num">50</p>
-          <p class="milestone-label">End of 9th grade</p>
+          <p class="milestone-label">First milestone</p>
         </div>
         <div class="hour-milestone">
           <p class="milestone-num">150</p>
-          <p class="milestone-label">End of 10th grade</p>
+          <p class="milestone-label">Second milestone</p>
         </div>
         <div class="hour-milestone">
           <p class="milestone-num">350</p>
-          <p class="milestone-label">End of 11th grade</p>
+          <p class="milestone-label">Third milestone</p>
         </div>
         <div class="hour-milestone">
           <p class="milestone-num">450</p>
-          <p class="milestone-label">End of 12th grade</p>
+          <p class="milestone-label">Final target</p>
         </div>
       </div>
     </div>
 
-    <!-- Timeline -->
-      <div class="timeline-item">
-        <div class="timeline-dot upcoming">🩺</div>
-        <div class="timeline-body">
-          <p class="timeline-date">Planned · 2027–2028</p>
-          <p class="timeline-title">Physician Shadowing</p>
-          <p class="timeline-desc">Planning to shadow a dermatologist and at least one other specialist through family connections. Goal: understand what a clinical day actually looks like across different specialties.</p>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot upcoming">🔬</div>
-        <div class="timeline-body">
-          <p class="timeline-date">Planned · 2028–2029</p>
-          <p class="timeline-title">University Research Program</p>
-          <p class="timeline-desc">Exploring summer research programs at UVA, George Mason University, and NIH for high school students. Interested in dermatology or AI in medicine research.</p>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot upcoming">🏥</div>
-        <div class="timeline-body">
-          <p class="timeline-date">Planned · 2029–2030</p>
-          <p class="timeline-title">Advanced Clinical Exposure</p>
-          <p class="timeline-desc">Targeting 350+ cumulative hours by end of 11th grade. Planning to seek more specialized clinical environments — dermatology clinics, free health clinics, or medical research settings.</p>
-        </div>
-      </div>
-
-    </div>
-
-
-</div>
-
-    <!-- Why medicine -->
     <div class="why-card">
       <p class="why-title">Why medicine</p>
       <div class="why-body">
