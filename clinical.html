@@ -61,17 +61,6 @@
     .hour-milestone.done .milestone-label{color:var(--teal);}
 
     /* Timeline */
-    .timeline{display:flex;flex-direction:column;gap:0;margin-bottom:2rem;}
-    .timeline-item{display:flex;gap:1.25rem;position:relative;}
-    .timeline-item:not(:last-child)::before{content:'';position:absolute;left:15px;top:32px;bottom:-8px;width:1px;background:var(--border);}
-    .timeline-dot{width:32px;height:32px;border-radius:50%;border:2px solid var(--border);background:var(--card-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.8rem;margin-top:0.1rem;z-index:1;}
-    .timeline-dot.active{border-color:var(--teal);background:var(--teal-faint);}
-    .timeline-dot.upcoming{border-color:var(--border);background:var(--surface);}
-    .timeline-body{padding-bottom:1.5rem;flex:1;}
-    .timeline-date{font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-30);margin-bottom:0.25rem;font-family:var(--font-display);}
-    .timeline-date.active{color:var(--teal);}
-    .timeline-title{font-family:var(--font-display);font-weight:700;font-size:0.92rem;margin-bottom:0.25rem;}
-    .timeline-desc{font-size:0.82rem;color:var(--ink-60);line-height:1.65;}
 
     /* Goal cards */
 
@@ -142,18 +131,6 @@
     </div>
 
     <!-- Timeline -->
-    <h2 style="font-family:var(--font-display);font-weight:700;font-size:1rem;letter-spacing:-0.02em;margin-bottom:1.25rem;">Experience Timeline</h2>
-    <div class="timeline">
-
-      <div class="timeline-item">
-        <div class="timeline-dot upcoming">📋</div>
-        <div class="timeline-body">
-          <p class="timeline-date active">Coming Soon · 2027</p>
-          <p class="timeline-title">Hospital Volunteering — Inova Loudoun Hospital</p>
-          <p class="timeline-desc">Applying to Inova Loudoun Hospital's volunteer program when I turn 14. Planning to volunteer weekly and log consistent hours through 9th grade.</p>
-        </div>
-      </div>
-
       <div class="timeline-item">
         <div class="timeline-dot upcoming">🩺</div>
         <div class="timeline-body">
