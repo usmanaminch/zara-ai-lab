@@ -9,20 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --teal:#3AAFA9;--teal-light:#6ECBC6;--teal-faint:#E0F5F4;
-      --lavender:#8B7FD4;--lav-faint:#EEEAFF;
-      --ink:#1C1C2E;--ink-60:#5A5A7A;--ink-30:#B0B0C8;
-      --surface:#F0F0F0;--border:#D0D0D0;--card-bg:#FFFFFF;
-      --font-display:'Space Grotesk',sans-serif;
-      --font-body:'Inter',sans-serif;
-      --radius:14px;--radius-sm:9px;--transition:0.22s ease;
-    }
-    [data-theme="dark"]{
-      --ink:#EEF0FF;--ink-60:#9090B0;--ink-30:#4A4A6A;
-      --surface:#0F1020;--border:#2C2D45;--card-bg:#181928;
-      --teal-faint:#0C2422;--lav-faint:#14122A;
-    }
+    :root{--teal:#3AAFA9;--teal-light:#6ECBC6;--teal-faint:#E0F5F4;--lavender:#8B7FD4;--lav-faint:#EEEAFF;--ink:#1C1C2E;--ink-60:#5A5A7A;--ink-30:#B0B0C8;--surface:#F0F0F0;--border:#D0D0D0;--card-bg:#FFFFFF;--font-display:'Space Grotesk',sans-serif;--font-body:'Inter',sans-serif;--radius:14px;--radius-sm:9px;--transition:0.22s ease;}
+    [data-theme="dark"]{--ink:#EEF0FF;--ink-60:#9090B0;--ink-30:#4A4A6A;--surface:#0F1020;--border:#2C2D45;--card-bg:#181928;--teal-faint:#0C2422;--lav-faint:#14122A;}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;}
     body{font-family:var(--font-body);background:var(--surface);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition);}
@@ -32,8 +20,7 @@
     .nav-logo .pip{width:8px;height:8px;background:linear-gradient(135deg,var(--teal),var(--lavender));border-radius:50%;}
     .nav-links{display:flex;align-items:center;gap:1.75rem;list-style:none;}
     .nav-links a{font-size:0.82rem;font-weight:500;color:var(--ink-60);transition:color var(--transition);}
-    .nav-links a:hover{color:var(--teal);}
-    .nav-links a.active{color:var(--teal);}
+    .nav-links a:hover,.nav-links a.active{color:var(--teal);}
     .theme-btn{background:var(--card-bg);border:1px solid var(--border);color:var(--ink-60);border-radius:20px;padding:0.28rem 0.7rem;font-size:0.75rem;cursor:pointer;font-family:var(--font-body);transition:all var(--transition);}
     .theme-btn:hover{border-color:var(--teal);color:var(--teal);}
     .page{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
@@ -41,7 +28,7 @@
     .page-title{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.5rem;}
     .page-title .grad{background:linear-gradient(135deg,var(--teal),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
     .page-sub{color:var(--ink-60);font-size:0.9rem;line-height:1.7;margin-bottom:2.5rem;}
-    .papers-list{display:flex;flex-direction:column;gap:1rem;margin-bottom:3rem;}
+    .papers-list{display:flex;flex-direction:column;gap:1rem;}
     .paper-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;cursor:pointer;transition:border-color var(--transition),transform var(--transition),box-shadow var(--transition);}
     .paper-card:hover{border-color:var(--teal-light);transform:translateY(-2px);box-shadow:0 6px 24px rgba(58,175,169,0.1);}
     .paper-meta{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.6rem;}
@@ -87,60 +74,43 @@
 
   <div class="page">
 
-    <!-- ── Research Index ── -->
+    <!-- INDEX -->
     <div id="researchIndex">
       <div class="page-eyebrow">✦ Research</div>
       <h1 class="page-title">Papers &<br><span class="grad">writing.</span></h1>
       <p class="page-sub">A collection of research papers and essays I've written on topics I care about — where technology meets medicine, and science meets society.</p>
-
       <div class="papers-list">
 
         <div class="paper-card" onclick="openPaper('paper1')">
-          <div class="paper-meta">
-            <span class="paper-date">JUNE 2026</span>
-            <span class="paper-tag">AI · Dermatology · Health Equity</span>
-          </div>
+          <div class="paper-meta"><span class="paper-date">JUNE 2026</span><span class="paper-tag">AI · Dermatology · Health Equity</span></div>
           <h3 class="paper-title">Seeing Every Skin: AI in Dermatology and the Health Equity Gap</h3>
-          <p class="paper-abstract">Artificial intelligence is transforming how skin conditions are diagnosed — but the same systems that promise better care may be deepening inequalities for patients with darker skin tones. This paper examines both the promise and the blind spots of AI in dermatology.</p>
+          <p class="paper-abstract">Artificial intelligence is transforming how skin conditions are diagnosed — but the same systems that promise better care may be deepening inequalities for patients with darker skin tones.</p>
           <span class="read-link">Read paper →</span>
         </div>
 
         <div class="paper-card" onclick="openPaper('paper2')">
-          <div class="paper-meta">
-            <span class="paper-date">JUNE 2026</span>
-            <span class="paper-tag">Social Media · Dermatology · Teen Health</span>
-          </div>
+          <div class="paper-meta"><span class="paper-date">JUNE 2026</span><span class="paper-tag">Social Media · Dermatology · Teen Health</span></div>
           <h3 class="paper-title">Scroll, Buy, Regret? How Social Media is Reshaping Teen Skincare</h3>
-          <p class="paper-abstract">Social media has made dermatology more accessible than ever — but it has also flooded teens with misinformation, unrealistic standards, and products they don't need. This paper examines both sides of the #DermTok era.</p>
+          <p class="paper-abstract">Social media has made dermatology more accessible than ever — but it has also flooded teens with misinformation, unrealistic standards, and products they don't need.</p>
           <span class="read-link">Read paper →</span>
         </div>
 
         <div class="paper-card" onclick="openPaper('paper3')">
-          <div class="paper-meta">
-            <span class="paper-date">JULY 2026</span>
-            <span class="paper-tag">Dermatology · Microbiology · Skincare Science</span>
-          </div>
+          <div class="paper-meta"><span class="paper-date">JULY 2026</span><span class="paper-tag">Dermatology · Microbiology · Skincare Science</span></div>
           <h3 class="paper-title">The Invisible Ecosystem: Understanding the Skin Microbiome</h3>
           <p class="paper-abstract">Trillions of bacteria live on your skin right now — and that's a good thing. This paper explores what the skin microbiome is, how its disruption drives conditions like acne and eczema, and what your skincare routine is actually doing to it.</p>
           <span class="read-link">Read paper →</span>
         </div>
 
-
         <div class="paper-card" onclick="openPaper('paper4')">
-          <div class="paper-meta">
-            <span class="paper-date">JULY 2026</span>
-            <span class="paper-tag">Dermatology · Mental Health · Psychodermatology</span>
-          </div>
+          <div class="paper-meta"><span class="paper-date">JULY 2026</span><span class="paper-tag">Dermatology · Mental Health · Psychodermatology</span></div>
           <h3 class="paper-title">More Than Skin Deep: The Mental Health Cost of Chronic Skin Conditions</h3>
           <p class="paper-abstract">Acne, eczema, and psoriasis carry a psychological weight that dermatology has been slow to address. This paper examines the biology of the skin-brain connection, the social cost of visible skin conditions, and the treatment gap that medicine keeps ignoring.</p>
           <span class="read-link">Read paper →</span>
         </div>
 
         <div class="paper-card" onclick="window.location.href='dashboard.html'">
-          <div class="paper-meta">
-            <span class="paper-date">JULY 2026</span>
-            <span class="paper-tag">Data · Health Equity · Dermatology</span>
-          </div>
+          <div class="paper-meta"><span class="paper-date">JULY 2026</span><span class="paper-tag">Data · Health Equity · Dermatology</span></div>
           <h3 class="paper-title">Health Equity in Dermatology — Data Dashboard</h3>
           <p class="paper-abstract">An interactive visualization of dermatology access gaps across the United States — by geography, income, and race. Real data, real inequalities.</p>
           <span class="read-link">View dashboard →</span>
@@ -149,7 +119,7 @@
       </div>
     </div>
 
-    <!-- ── Paper 1 ── -->
+    <!-- PAPER 1 -->
     <div class="paper-full" id="paper1">
       <div class="paper-back" onclick="closePaper()">← Back to research</div>
       <div class="paper-header">
@@ -164,13 +134,12 @@
         <p>This matters especially because dermatology is one of the most inaccessible specialties in medicine. There is a national shortage of dermatologists, with providers concentrated in urban centers while rural and underserved communities wait months for an appointment. AI diagnostic tools, accessible through smartphones and primary care clinics, could theoretically extend specialist-level care to anyone with a camera and a skin concern.</p>
         <div class="pull-quote"><p>"AI diagnostic tools could extend specialist-level care to anyone with a camera and a skin concern — but only if they work equally well for everyone."</p></div>
         <h2>The Problem Hidden in the Data</h2>
-        <p>The challenge lies in how these AI systems are built. Every AI model learns from training data — in this case, images of skin conditions. And the most widely used dermatology datasets are heavily skewed toward lighter skin tones, with Fitzpatrick skin types V and VI dramatically underrepresented. When a model learns primarily from lighter skin, it learns to recognize disease as it appears on lighter skin. The result is predictable: AI systems consistently underperform on patients with darker skin tones.</p>
-        <p>The numbers are striking. A 2025 meta-analysis found that AI diagnostic performance dropped from an AUROC of 0.89 for lighter skin tones to 0.82 for darker ones — a gap that could translate into thousands of missed or delayed diagnoses at scale.</p>
+        <p>The challenge lies in how these AI systems are built. Every AI model learns from training data — in this case, images of skin conditions. The most widely used dermatology datasets are heavily skewed toward lighter skin tones, with Fitzpatrick skin types V and VI dramatically underrepresented. When a model learns primarily from lighter skin, it learns to recognize disease as it appears on lighter skin. The result: AI systems consistently underperform on patients with darker skin tones.</p>
+        <p>A 2025 meta-analysis found that AI diagnostic performance dropped from an AUROC of 0.89 for lighter skin tones to 0.82 for darker ones — a gap that could translate into thousands of missed or delayed diagnoses at scale.</p>
         <h2>A Double Burden</h2>
-        <p>What makes this particularly troubling is that patients with darker skin tones already face compounding barriers to dermatology care. Dermatology is one of the least diverse specialties in medicine, and this lack of representation in the workforce means less clinical familiarity with how conditions present across the full range of human skin tones. Fitzpatrick skin types IV through VI — which represent a significant portion of the global population — remain the least studied and most underserved in both clinical training and AI model development.</p>
+        <p>Patients with darker skin tones already face compounding barriers to dermatology care. Dermatology is one of the least diverse specialties in medicine, and this lack of representation means less clinical familiarity with how conditions present across the full range of human skin tones. Fitzpatrick skin types IV through VI — which represent a significant portion of the global population — remain the least studied and most underserved in both clinical training and AI model development.</p>
         <h2>What Can Be Done</h2>
-        <p>The good news is that the problem, once identified, has tractable solutions. Research shows that when AI models are trained on more diverse datasets, their accuracy on darker skin tones improves meaningfully. Several institutions are now building more representative dermatology databases. Regulatory bodies including the FDA are beginning to explore how skin tone criteria should factor into medical device approval.</p>
-        <p>But technical fixes alone are insufficient. The deeper issue is representation: in training data, in clinical trials, in medical textbooks, and in the dermatology workforce itself. <strong>The technology to close this gap exists. The question is whether the field will prioritize building it for everyone.</strong></p>
+        <p>Research shows that when AI models are trained on more diverse datasets, their accuracy on darker skin tones improves meaningfully. Several institutions are now building more representative dermatology databases. Regulatory bodies including the FDA are beginning to explore how skin tone criteria should factor into medical device approval. <strong>The technology to close this gap exists. The question is whether the field will prioritize building it for everyone.</strong></p>
       </div>
       <div class="references">
         <h2>References</h2>
@@ -179,15 +148,14 @@
           <li data-num="2.">Racial bias in photo-based medical diagnosis despite AI help. MIT News, 2024. <a href="https://news.mit.edu/2024/doctors-more-difficulty-diagnosing-diseases-images-darker-skin-0205" target="_blank">mit.edu</a></li>
           <li data-num="3.">A Generative AI Approach for Reducing Skin Tone Bias. arXiv, 2026. <a href="https://arxiv.org/abs/2602.14356" target="_blank">arxiv.org</a></li>
           <li data-num="4.">Exploring AI Diagnostic Capability for Darker Skin Tones. PMC, 2025. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12624499/" target="_blank">ncbi.nlm.nih.gov</a></li>
-          <li data-num="5.">Dermatologic Concerns Among Members of the Hispanic Community. Dermatology Times, 2026. <a href="https://www.dermatologytimes.com/view/dermatologic-concerns-and-disparities-among-members-of-the-hispanic-community" target="_blank">dermatologytimes.com</a></li>
-          <li data-num="6.">Racial Disparities in Dermatology. PMC / NIH. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9743121/" target="_blank">pmc.ncbi.nlm.nih.gov</a></li>
-          <li data-num="7.">Racial, Ethnic Disparities Persist in Dermatology. AJMC, 2026. <a href="https://www.ajmc.com/view/racial-ethnic-disparities-persist-in-dermatology-research-and-in-workforce" target="_blank">ajmc.com</a></li>
-          <li data-num="8.">Ending the Pandemic of Inaccessibility in Dermatology. ScienceDirect, 2023. <a href="https://www.sciencedirect.com/science/article/abs/pii/S0738081X23000470" target="_blank">sciencedirect.com</a></li>
+          <li data-num="5.">Racial Disparities in Dermatology. PMC / NIH. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9743121/" target="_blank">pmc.ncbi.nlm.nih.gov</a></li>
+          <li data-num="6.">Racial, Ethnic Disparities Persist in Dermatology. AJMC, 2026. <a href="https://www.ajmc.com/view/racial-ethnic-disparities-persist-in-dermatology-research-and-in-workforce" target="_blank">ajmc.com</a></li>
+          <li data-num="7.">Ending the Pandemic of Inaccessibility in Dermatology. ScienceDirect, 2023. <a href="https://www.sciencedirect.com/science/article/abs/pii/S0738081X23000470" target="_blank">sciencedirect.com</a></li>
         </ol>
       </div>
     </div>
 
-    <!-- ── Paper 2 ── -->
+    <!-- PAPER 2 -->
     <div class="paper-full" id="paper2">
       <div class="paper-back" onclick="closePaper()">← Back to research</div>
       <div class="paper-header">
@@ -197,18 +165,15 @@
       </div>
       <div class="paper-body">
         <p>Open TikTok on any given day and within minutes you will encounter a teenager applying retinol, a twelve-year-old reviewing a $60 vitamin C serum, or a "get ready with me" video featuring a ten-step routine lifted from a thirty-five-year-old influencer. Welcome to #DermTok — the corner of the internet where skincare has become a spectator sport, a shopping habit, and for a growing number of young people, a source of genuine confusion and harm.</p>
-        <p>Social media has done something no dermatology clinic ever could: made skin health a topic of everyday conversation for millions of teenagers. That is, in many ways, a remarkable thing. But it has also created a landscape where misinformation spreads faster than sunscreen, where the line between expert and influencer is almost impossible to see, and where teens are spending hundreds of dollars on products that may be actively hurting their skin. The truth, as with most things, lives somewhere in the middle.</p>
         <h2>The Good: Democratizing Skin Knowledge</h2>
-        <p>Before social media, teenagers with skin concerns had limited options: see a dermatologist (expensive, often inaccessible), ask a parent (who may not know), or guess. Social media changed that equation. Platforms like TikTok and Instagram gave millions of young people access to information about ingredients, routines, and skin conditions that previously lived only in medical offices or academic journals.</p>
-        <p>The benefits are real. Research published in 2026 found that people who regularly consumed dermatologist-authored content on social media were more than twice as likely to follow a structured skincare routine. A 2025 study of rural high school students found that 87 percent cited social media as their primary source of skincare information.</p>
+        <p>Before social media, teenagers with skin concerns had limited options: see a dermatologist (expensive, often inaccessible), ask a parent (who may not know), or guess. Social media changed that equation. Research published in 2026 found that people who regularly consumed dermatologist-authored content on social media were more than twice as likely to follow a structured skincare routine. A 2025 study of rural high school students found that 87 percent cited social media as their primary source of skincare information.</p>
         <div class="pull-quote"><p>"Only 2.5% of the most viewed skincare videos on TikTok are created by board-certified dermatologists. The rest are influencers with no medical training and no accountability."</p></div>
         <h2>The Bad: Misinformation at Scale</h2>
-        <p>The problem is that the vast majority of dermatology content on social media is not created by dermatologists. A study published in the Journal of the American Academy of Dermatology found that only 2.5 percent of the most viewed skincare videos on TikTok are created by board-certified dermatologists. Dermatology clinics have reported seeing teenagers with compromised skin barriers, acne flares, and chemical irritation — all caused by products discovered online. One of the most striking trends: teenagers spending $500 to $1,000 a month on anti-aging products their skin does not need.</p>
-        <p>Specific trends illustrate the problem. Slugging went viral as a hydration hack but can trap bacteria and worsen acne. Skin cycling often ignores individual skin needs. The widespread promotion of retinol to pre-teens, whose skin is far more sensitive, is perhaps most concerning.</p>
+        <p>A study published in the Journal of the American Academy of Dermatology found that only 2.5 percent of the most viewed skincare videos on TikTok are created by board-certified dermatologists. Clinics have reported seeing teenagers with compromised skin barriers, acne flares, and chemical irritation — all caused by products discovered online. One of the most striking trends: teenagers spending $500 to $1,000 a month on anti-aging products their skin does not need. Slugging went viral as a hydration hack but can trap bacteria and worsen acne. The widespread promotion of retinol to pre-teens, whose skin is far more sensitive, is perhaps most concerning.</p>
         <h2>The Ugly: Standards Nobody Can Meet</h2>
-        <p>Beyond the products and the misinformation lies a more insidious problem: what social media is quietly doing to how teenagers feel about their skin. The glass skin trend — poreless, luminous, impossibly smooth — is a beauty standard that does not exist in nature. Research published in 2025 found significant links between heavy consumption of skincare content and negative self-perception in adolescents.</p>
+        <p>The glass skin trend — poreless, luminous, impossibly smooth — is a beauty standard that does not exist in nature. Research published in 2025 found significant links between heavy consumption of skincare content and negative self-perception in adolescents.</p>
         <h2>What Would Actually Help</h2>
-        <p>The answer is not to ban teenagers from skincare content. Platforms could do more to label content by creator credentials. More dermatologists on these platforms means more signal in a very noisy space. And teenagers themselves can develop the most protective habit: <strong>asking who is telling them something, and why they should trust them.</strong></p>
+        <p>Platforms could do more to label content by creator credentials. More dermatologists on these platforms means more signal in a noisy space. And teenagers can develop the most protective habit: <strong>asking who is telling them something, and why they should trust them.</strong></p>
         <h2>A Final Note</h2>
         <p>I am a teenager who uses social media and cares about skincare. What I have come to believe is this: social media is not the enemy of good skincare. Uncritical consumption of it is. <strong>Used thoughtfully, the internet is an extraordinary resource for skin health. The challenge for this generation is learning to use it that way.</strong></p>
       </div>
@@ -218,17 +183,14 @@
           <li data-num="1.">TikTok Skincare Trends and their Clinical Evidence. JAAD, 2024. <a href="https://www.jaad.org/article/S0190-9622(24)02389-2/fulltext" target="_blank">jaad.org</a></li>
           <li data-num="2.">Tween Skin Care Mishaps via Misinformation on Social Media. Dermatology Times, 2024. <a href="https://www.dermatologytimes.com/view/tween-skin-care-mishaps-via-misinformation-on-social-media" target="_blank">dermatologytimes.com</a></li>
           <li data-num="3.">Young Adults Skin Care Habits Shaped by Social Media. Dermatology Times, 2026. <a href="https://www.dermatologytimes.com/view/young-adults-skin-care-habits-shaped-by-social-media-study-finds" target="_blank">dermatologytimes.com</a></li>
-          <li data-num="4.">Impact of Social Media on Skincare Product Choices. Clean Skin Club, 2025. <a href="https://cleanskinclub.com/pages/the-impact-of-social-media-on-skincare-product-choices" target="_blank">cleanskinclub.com</a></li>
-          <li data-num="5.">Unseen Impacts: Rural Adolescents Self-Perception. Cureus, 2025. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12534720/" target="_blank">ncbi.nlm.nih.gov</a></li>
-          <li data-num="6.">Social Media Dermatology Content in Rural Adolescents. Indiana University, 2025. <a href="https://scholarworks.indianapolis.iu.edu/items/5411a603-e357-43a8-b00c-0aa7ab742832" target="_blank">scholarworks.indianapolis.iu.edu</a></li>
-          <li data-num="7.">#DermTok: Navigating TikToks Acne Advice Misinformation. Dermatology Times, 2025. <a href="https://www.dermatologytimes.com/view/dermtok-navigating-tiktok-s-acne-advice-misinformation" target="_blank">dermatologytimes.com</a></li>
-          <li data-num="8.">Glow or No-Go: Ethical considerations of adolescent skincare trends. JAAD, 2024. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11345696/" target="_blank">ncbi.nlm.nih.gov</a></li>
-          <li data-num="9.">Ethics of educating teenage patients about skin care. JAAD, 2024. <a href="https://www.jaad.org/article/S0190-9622(24)00656-X/fulltext" target="_blank">jaad.org</a></li>
+          <li data-num="4.">Unseen Impacts: Rural Adolescents Self-Perception. Cureus, 2025. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12534720/" target="_blank">ncbi.nlm.nih.gov</a></li>
+          <li data-num="5.">#DermTok: Navigating TikToks Acne Advice Misinformation. Dermatology Times, 2025. <a href="https://www.dermatologytimes.com/view/dermtok-navigating-tiktok-s-acne-advice-misinformation" target="_blank">dermatologytimes.com</a></li>
+          <li data-num="6.">Glow or No-Go: Ethical considerations of adolescent skincare trends. JAAD, 2024. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11345696/" target="_blank">ncbi.nlm.nih.gov</a></li>
         </ol>
       </div>
     </div>
 
-    <!-- ── Paper 3 ── -->
+    <!-- PAPER 3 -->
     <div class="paper-full" id="paper3">
       <div class="paper-back" onclick="closePaper()">← Back to research</div>
       <div class="paper-header">
@@ -239,33 +201,65 @@
       <div class="paper-body">
         <p>Here's something that might surprise you: no matter how thoroughly you wash your face, your skin is never truly clean. Right now, trillions of bacteria, fungi, and other tiny organisms are living on its surface. And that is actually a good thing. This community of microscopic life — called the <strong>skin microbiome</strong> — is one of the most important players in skin health. We are only beginning to understand how much it matters.</p>
         <h2>Think of your skin as a neighborhood</h2>
-        <p>Your skin is home to somewhere between 1,000 and 1 million bacteria per square centimeter. The type of bacteria depends on where you look. Oily areas like your nose and forehead attract different species than dry areas like your arms. Warm, damp spots have their own communities entirely. It is less like a uniform coating and more like a neighborhood, where different streets have different residents.</p>
-        <p>Two of the most talked-about residents are <em>Staphylococcus epidermidis</em> — a generally helpful bacteria that blocks harmful invaders — and <em>Cutibacterium acnes</em>, the bacteria linked to acne. Neither is inherently the enemy. It is the balance between them, and between thousands of other species on your skin, that determines whether your skin is healthy or struggling.</p>
-        <p>When the community is balanced and diverse, scientists call that state <strong>eubiosis</strong>. Your skin barrier works well, your immune system gets the right signals, and your skin stays hydrated. When that balance tips — when certain species overgrow and crowd out others — it is called <strong>dysbiosis</strong>. And dysbiosis shows up on your skin in ways most people recognize.</p>
+        <p>Your skin is home to somewhere between 1,000 and 1 million bacteria per square centimeter. The type of bacteria depends on where you look. Oily areas like your nose and forehead attract different species than dry areas like your arms. It is less like a uniform coating and more like a neighborhood, where different streets have different residents.</p>
+        <p>Two of the most talked-about residents are <em>Staphylococcus epidermidis</em> — a generally helpful bacteria that blocks harmful invaders — and <em>Cutibacterium acnes</em>, the bacteria linked to acne. When the community is balanced and diverse, scientists call that state <strong>eubiosis</strong>. When that balance tips, it is called <strong>dysbiosis</strong>. And dysbiosis shows up on your skin in ways most people recognize.</p>
         <h2>When things get out of balance</h2>
-        <p>A major 2025 review found that dysbiosis plays a direct role in four of the most common skin conditions: acne, eczema, rosacea, and psoriasis. Each works differently, but the pattern is the same — a loss of microbial variety and an overgrowth of one or two problematic species.</p>
-        <p>Take acne. Most people assume it is caused simply by the presence of <em>Cutibacterium acnes</em> on their skin — but this bacteria lives on almost everyone's face, including people who never break out. What actually matters is the strain and the proportion. When sebum increases — often due to puberty or hormonal changes — the proportion of inflammatory strains can rise, setting off the cycle of clogged pores and breakouts.</p>
-        <p>Eczema tells a different story. Skin affected by eczema tends to have dramatically less microbial diversity, with <em>Staphylococcus aureus</em> often dominating. A 2024 study found that this imbalance may appear before eczema symptoms develop. Rosacea is linked to microscopic mites called <em>Demodex folliculorum</em> whose populations appear to be partly controlled by the surrounding microbial community.</p>
+        <p>A major 2025 review found that dysbiosis plays a direct role in four of the most common skin conditions: acne, eczema, rosacea, and psoriasis. In acne, what matters is the strain and proportion of <em>Cutibacterium acnes</em> — when sebum increases due to puberty or hormonal changes, inflammatory strains can rise, setting off the cycle of clogged pores and breakouts. Eczema skin has dramatically less microbial diversity, with <em>Staphylococcus aureus</em> often dominating. A 2024 study found this imbalance may appear before eczema symptoms develop — meaning the disrupted microbiome might be helping to cause the condition.</p>
         <div class="pull-quote"><p>A 2024 review of 38 studies found that most skin conditions come with decreased microbial diversity — suggesting that a rich, varied microbiome is quietly protective in ways we are only starting to map.</p></div>
         <h2>What your skincare is actually doing</h2>
-        <p>Most people pick skincare products based on what they add — hydration, SPF, active ingredients like retinol. Far fewer think about what those products do to the living community already on their skin.</p>
-        <p>Harsh cleansers — especially those with antibacterial agents like triclosan — do not discriminate between harmful and helpful bacteria. After repeated use, they can leave the skin with a less diverse, less resilient microbial community. The pH of a product also plays a role. Healthy skin sits at a slightly acidic pH of around 4.5 to 5.5. Many cleansers sit at higher pH levels, temporarily disrupting this balance with every wash.</p>
-        <p>But there is good news. Products containing <strong>prebiotics</strong> (ingredients that feed good bacteria), <strong>probiotics</strong> (live beneficial bacteria), and <strong>postbiotics</strong> (useful byproducts of bacterial activity) are showing real results. A 2026 review of 33 studies found that postbiotic treatments for acne reduced lesion counts by nearly 50% — competing with antibiotic treatments, without the risk of antibiotic resistance.</p>
+        <p>Harsh cleansers with antibacterial agents like triclosan do not discriminate between harmful and helpful bacteria. After repeated use, they leave the skin with a less diverse, less resilient microbial community. The pH of a product also plays a role — healthy skin sits at a slightly acidic pH of 4.5 to 5.5, and many cleansers disrupt this with every wash.</p>
+        <p>But there is good news. Products containing <strong>prebiotics</strong>, <strong>probiotics</strong>, and <strong>postbiotics</strong> are showing real results. A 2026 review of 33 studies found that postbiotic treatments for acne reduced lesion counts by nearly 50% — competing with antibiotic treatments, without the risk of antibiotic resistance.</p>
         <h2>Where dermatology is headed</h2>
-        <p>The skin microbiome is a young field. Most of the key research has been published in the last five years. But the direction is clear: dermatology is moving away from eliminate what is bad and toward restore what is balanced. Microbiome transplant therapies have already shown early promise for eczema. The idea of skincare tailored to a person's individual microbial profile is no longer science fiction.</p>
-        <p><strong>Your skin has always been an ecosystem. Dermatology is finally starting to treat it like one.</strong></p>
+        <p>The skin microbiome is a young field, but the direction is clear: dermatology is moving away from "eliminate what is bad" and toward "restore what is balanced." Microbiome transplant therapies have shown early promise for eczema. The idea of skincare tailored to a person's individual microbial profile is no longer science fiction. <strong>Your skin has always been an ecosystem. Dermatology is finally starting to treat it like one.</strong></p>
       </div>
       <div class="references">
         <h2>References</h2>
         <ol class="ref-list">
           <li data-num="1.">Skin Microbiome Shifts in Various Dermatological Conditions. PMC, 2025. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12429258/" target="_blank">pmc.ncbi.nlm.nih.gov</a></li>
-          <li data-num="2.">Dermatological Health in the Light of Skin Microbiome Evolution. Haykal et al., 2024. <a href="https://onlinelibrary.wiley.com/doi/10.1111/jocd.16557" target="_blank">wiley.com</a></li>
+          <li data-num="2.">Dermatological Health in the Light of Skin Microbiome Evolution. Wiley, 2024. <a href="https://onlinelibrary.wiley.com/doi/10.1111/jocd.16557" target="_blank">wiley.com</a></li>
           <li data-num="3.">Microbiome and Postbiotics in Skin Health. PMC, 2025. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12025169/" target="_blank">pmc.ncbi.nlm.nih.gov</a></li>
-          <li data-num="4.">Microbiome-Based Products for Inflammatory Skin Diseases. MDPI, 2025. <a href="https://www.mdpi.com/1422-0067/26/14/6745" target="_blank">mdpi.com</a></li>
-          <li data-num="5.">Cosmetic Interventions for Skin Microbiome Modulation. PMC, 2026. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13084527/" target="_blank">pmc.ncbi.nlm.nih.gov</a></li>
-          <li data-num="6.">The Skin Microbiome Revolution. MDPI Cosmetics, 2026. <a href="https://www.mdpi.com/2079-9284/13/1/43" target="_blank">mdpi.com</a></li>
-          <li data-num="7.">Breakthroughs in Skin Microbiome Medicine. Dermatology Advisor, 2026. <a href="https://www.dermatologyadvisor.com/features/skin-microbiome-medicine/" target="_blank">dermatologyadvisor.com</a></li>
-          <li data-num="8.">Skin Microbiome and Inflammatory Dermatoses. CosmoDerma, 2025. <a href="https://cosmoderma.org/skin-microbiome-and-inflammatory-dermatoses-a-focused-review/" target="_blank">cosmoderma.org</a></li>
+          <li data-num="4.">Cosmetic Interventions for Skin Microbiome Modulation. PMC, 2026. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13084527/" target="_blank">pmc.ncbi.nlm.nih.gov</a></li>
+          <li data-num="5.">The Skin Microbiome Revolution. MDPI Cosmetics, 2026. <a href="https://www.mdpi.com/2079-9284/13/1/43" target="_blank">mdpi.com</a></li>
+          <li data-num="6.">Skin Microbiome and Inflammatory Dermatoses. CosmoDerma, 2025. <a href="https://cosmoderma.org/skin-microbiome-and-inflammatory-dermatoses-a-focused-review/" target="_blank">cosmoderma.org</a></li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- PAPER 4 -->
+    <div class="paper-full" id="paper4">
+      <div class="paper-back" onclick="closePaper()">← Back to research</div>
+      <div class="paper-header">
+        <span class="paper-tag">Dermatology · Mental Health · Psychodermatology</span>
+        <h1>More Than Skin Deep: The Mental Health Cost of Chronic Skin Conditions</h1>
+        <p class="paper-byline"><strong>Zara</strong> &nbsp;·&nbsp; July 2026 &nbsp;·&nbsp; Independent research</p>
+      </div>
+      <div class="paper-body">
+        <p>When most people think about acne, eczema, or psoriasis, they think about the skin. The redness, the texture, the visibility. What gets talked about far less — in waiting rooms, in treatment plans, and in medical education — is what happens in the mind. Chronic skin conditions carry a psychological weight that the medical system has been slow to recognize and slower still to treat. That gap between what patients experience and what their doctors address is one of dermatology's most important unsolved problems.</p>
+        <h2>The biology of the skin-brain connection</h2>
+        <p>The relationship between skin and mental health is not metaphorical — it is biological. Skin and brain tissue originate from the same embryonic layer, called the ectoderm, which means they share developmental origins and remain biochemically connected throughout life. The skin is richly innervated with nerve endings that communicate directly with the central nervous system, and it contains its own immune cells that respond to psychological stress.</p>
+        <p>In conditions like psoriasis, this connection becomes a clinical problem. Research published in PLOS One in 2025 found that psychological stress and skin symptoms interact in a reinforcing loop — stress triggers inflammatory pathways that worsen psoriasis plaques, and worsening plaques cause more stress. The same inflammatory molecules — including IL-6, TNF-α, and IL-17 — that drive psoriasis have been found at elevated levels in patients with depression and anxiety. <strong>The skin and the mind are running on some of the same biological infrastructure, and when one suffers, the other frequently follows.</strong></p>
+        <h2>The social cost of visible skin</h2>
+        <p>Skin is the most visible organ in the body. It is what people see first, what strangers notice, and what patients see every time they look in the mirror. A 2024 study examining adolescents with acne found significantly elevated rates of depression and anxiety compared to healthy controls, as well as measurably lower self-esteem. Adults with eczema are at least three times more likely to experience anxiety and depression than those without. Psoriasis patients report high rates of social withdrawal, embarrassment in public settings, and avoidance of physical contact — consequences not of the disease itself, but of how others respond to it.</p>
+        <div class="pull-quote"><p>Research from 2024 found that some acne patients develop suicidal ideation — a finding that underscores how catastrophically underestimated the psychological burden of skin disease can be.</p></div>
+        <p>A 2024 study on psoriasis found that stigma — the experience of being judged or excluded because of visible skin — was directly linked to worsening psychological health. Patients describe changing how they dress, avoiding swimming pools, declining social invitations, and struggling in relationships — not because the skin condition prevented them, but because the anticipated reactions of others did.</p>
+        <h2>The treatment gap that medicine keeps ignoring</h2>
+        <p>Given the weight of this evidence, one might expect mental health to be a routine part of dermatology care. It is not. A 2025 review described dermatology and psychiatry as operating in separate worlds. A study found that 34 percent of hospitalized dermatology patients had at least one psychiatric diagnosis — and yet psychiatric referral rates remain low across the specialty.</p>
+        <p>The emerging field attempting to close this gap is called <strong>psychodermatology</strong>. Research published in 2024 made a direct case for integrating psychiatry into dermatology workflows. A 2026 review found that antidepressants not only reduced anxiety and depression in dermatology patients but also reduced skin inflammation itself — a dual benefit that reinforces just how entangled these two systems are.</p>
+        <h2>What better care would look like</h2>
+        <p>Dermatologists screening for depression and anxiety at routine appointments would identify a significant proportion of patients who need support but aren't getting it. Integrated care teams that include psychologists alongside dermatologists would allow support to be delivered in the same setting. Patient education about the skin-brain connection would reduce the stigma of seeking mental health support in a dermatology context.</p>
+        <p><strong>Skin conditions are visible. Mental health is not. That asymmetry has allowed medicine to treat one while quietly ignoring the other. The evidence now available makes that asymmetry harder to justify — and the patients living with both deserve better than a system that only treats half of what they carry.</strong></p>
+      </div>
+      <div class="references">
+        <h2>References</h2>
+        <ol class="ref-list">
+          <li data-num="1.">Psychophysiological skin disorders. PLOS One, 2025. <a href="https://journals.plos.org/plosone/article/file?type=printable&id=10.1371/journal.pone.0338947" target="_blank">plosone.org</a></li>
+          <li data-num="2.">Depression, Self-esteem, and Anxiety in Adolescent Acne Patients. PMC, 2024. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11249996/" target="_blank">pmc.ncbi.nlm.nih.gov</a></li>
+          <li data-num="3.">Mental Health Difficulties in Young People with Chronic Skin Conditions. SAGE Journals, 2025. <a href="https://journals.sagepub.com/doi/10.1177/13591053241252216" target="_blank">sagepub.com</a></li>
+          <li data-num="4.">Anxiety and Depression in Eczema and Psoriasis. British Journal of Dermatology, 2023. <a href="https://academic.oup.com/bjd/article/188/4/460/6931836" target="_blank">academic.oup.com</a></li>
+          <li data-num="5.">Stigma and Psychological Health in Psoriasis. Frontiers in Psychiatry, 2024. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11703903/" target="_blank">pmc.ncbi.nlm.nih.gov</a></li>
+          <li data-num="6.">Bridging the Gap in Dermatology and Psychiatry. Skin Health and Disease, 2024. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11608868/" target="_blank">pmc.ncbi.nlm.nih.gov</a></li>
+          <li data-num="7.">Psychodermatology: An Opportunity for Collaboration. Dermatology Times, 2025. <a href="https://www.dermatologytimes.com/view/psychodermatology-an-opportunity-for-collaboration-among-health-care-professionals" target="_blank">dermatologytimes.com</a></li>
+          <li data-num="8.">Mental Health Treatment Expands Role in Dermatology Care. EMJ Reviews, 2026. <a href="https://www.emjreviews.com/dermatology/news/mental-health-treatment-expands-role-in-dermatology-care/" target="_blank">emjreviews.com</a></li>
         </ol>
       </div>
     </div>
@@ -297,68 +291,5 @@
       window.scrollTo({top:0,behavior:'smooth'});
     }
   </script>
-
-  <div class="paper-full" id="paper4">
-      <div class="paper-back" onclick="closePaper()">← Back to research</div>
-      <div class="paper-header">
-        <span class="paper-tag">Dermatology · Mental Health · Psychodermatology</span>
-        <h1>More Than Skin Deep: The Mental Health Cost of Chronic Skin Conditions</h1>
-        <p class="paper-byline"><strong>Zara</strong> &nbsp;·&nbsp; July 2026 &nbsp;·&nbsp; Independent research</p>
-      </div>
-      <div class="paper-body">
-
-        <p>When most people think about acne, eczema, or psoriasis, they think about the skin. The redness, the texture, the visibility. What gets talked about far less — in waiting rooms, in treatment plans, and in medical education — is what happens in the mind. Chronic skin conditions carry a psychological weight that the medical system has been slow to recognize and slower still to treat. That gap between what patients experience and what their doctors address is one of dermatology's most important unsolved problems.</p>
-
-        <h2>The biology of the skin-brain connection</h2>
-
-        <p>The relationship between skin and mental health is not metaphorical — it is biological. Skin and brain tissue originate from the same embryonic layer, called the ectoderm, which means they share developmental origins and remain biochemically connected throughout life. The skin is richly innervated with nerve endings that communicate directly with the central nervous system, and it contains its own immune cells that respond to psychological stress.</p>
-
-        <p>In conditions like psoriasis, this connection becomes a clinical problem. Research published in PLOS One in 2025 found that psychological stress and skin symptoms interact in a reinforcing loop — stress triggers inflammatory pathways that worsen psoriasis plaques, and worsening plaques cause more stress, which worsens the plaques further. The same inflammatory molecules — including IL-6, TNF-α, and IL-17 — that drive psoriasis have been found at elevated levels in patients with depression and anxiety. This is not coincidence. <strong>The skin and the mind are running on some of the same biological infrastructure, and when one suffers, the other frequently follows.</strong></p>
-
-        <h2>The social cost of visible skin</h2>
-
-        <p>Beyond the biology, skin conditions carry a social weight that is hard to overstate. Skin is the most visible organ in the body. It is what people see first, what strangers notice, and what patients see every time they look in the mirror. When the skin is persistently different — marked by acne scars, eczema patches, or psoriasis plaques — the psychological toll accumulates in ways that standard dermatology appointments rarely address.</p>
-
-        <p>A 2024 study examining adolescents with acne found significantly elevated rates of depression and anxiety compared to healthy controls, as well as measurably lower self-esteem. A systematic review published in 2025 examining young people with chronic skin conditions found increased prevalence of mental health difficulties across multiple conditions, with the strongest associations in those with more severe or visible disease. Adults with eczema are at least three times more likely to experience anxiety and depression than those without. Psoriasis patients report high rates of social withdrawal, embarrassment in public settings, and avoidance of physical contact — consequences not of the disease itself, but of how others respond to it.</p>
-
-        <div class="pull-quote">
-          <p>Research from 2024 found that some acne patients develop suicidal ideation — a finding that underscores how catastrophically underestimated the psychological burden of skin disease can be.</p>
-        </div>
-
-        <p>Perhaps most striking is the stigma dimension. A 2024 study on psoriasis found that stigma — the experience of being judged or excluded because of visible skin — was directly linked to worsening psychological health through a chain of social appearance anxiety and emotional suppression. Patients describe changing how they dress, avoiding swimming pools, declining social invitations, and struggling in romantic relationships — not because the skin condition prevented them, but because the anticipated reactions of others did.</p>
-
-        <h2>The treatment gap that medicine keeps ignoring</h2>
-
-        <p>Given the weight of this evidence, one might expect mental health to be a routine part of dermatology care. It is not. A 2025 review described dermatology and psychiatry as operating in separate worlds, with limited collaboration between them and a global shortage of outcomes data from integrated care settings. A study examining psychiatric illness in hospitalized dermatology patients found that 34 percent had at least one psychiatric diagnosis — and yet psychiatric referral rates remain low across the specialty.</p>
-
-        <p>The emerging field attempting to close this gap is called <strong>psychodermatology</strong> — the study of the relationship between psychological factors and skin disease. Research published in 2024 made a direct case for integrating psychiatry into dermatology workflows, arguing that dermatologists are uniquely positioned as frontline clinicians to identify and refer patients experiencing psychological distress. A 2026 review found that antidepressants not only reduced anxiety and depression in dermatology patients but also reduced skin inflammation itself — a dual benefit that reinforces just how entangled these two systems are.</p>
-
-        <p>The barriers to integrated care are real. Patient reluctance to psychiatric referral is common — many patients see a dermatology appointment as medical and a psychiatry referral as stigmatizing. Clinicians face time constraints and lack of training in psychological screening. And the global shortage of psychodermatology specialists means that even patients who are identified and referred face long waits for help.</p>
-
-        <h2>What better care would look like</h2>
-
-        <p>The path forward is not complicated in principle, even if it is in practice. Dermatologists screening for depression and anxiety at routine appointments would identify a significant proportion of patients who need support but aren't getting it. Integrated care teams that include psychologists alongside dermatologists would allow that support to be delivered in the same setting, reducing the friction of referral. Patient education about the skin-brain connection would reduce the stigma of seeking mental health support in a dermatology context.</p>
-
-        <p><strong>Skin conditions are visible. Mental health is not. That asymmetry has allowed medicine to treat one while quietly ignoring the other. The evidence now available makes that asymmetry harder to justify — and the patients living with both deserve better than a system that only treats half of what they carry.</strong></p>
-
-      </div>
-      <div class="references">
-        <h2>References</h2>
-        <ol class="ref-list">
-          <li data-num="1.">Psychophysiological skin disorders and the interplay between psychological factors and dermatological symptoms. PLOS One, December 2025. <a href="https://journals.plos.org/plosone/article/file?type=printable&id=10.1371/journal.pone.0338947" target="_blank">plosone.org</a></li>
-          <li data-num="2.">Evaluation of Depression, Self-esteem, Anxiety, and Dermatological Quality of Life in Adolescent Acne Patients. PMC, 2024. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11249996/" target="_blank">pmc.ncbi.nlm.nih.gov</a></li>
-          <li data-num="3.">Prevalence of comorbid mental health difficulties in young people with chronic skin conditions. SAGE Journals, 2025. <a href="https://journals.sagepub.com/doi/10.1177/13591053241252216" target="_blank">sagepub.com</a></li>
-          <li data-num="4.">Anxiety and Depression in People with Eczema or Psoriasis. British Journal of Dermatology, 2023. <a href="https://academic.oup.com/bjd/article/188/4/460/6931836" target="_blank">academic.oup.com</a></li>
-          <li data-num="5.">Stigma and psychological health in psoriasis patients. Frontiers in Psychiatry, 2024. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11703903/" target="_blank">pmc.ncbi.nlm.nih.gov</a></li>
-          <li data-num="6.">Bridging the Gap in Dermatology and Psychiatry: A Scientific Rationale. Skin Health and Disease, 2024. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11608868/" target="_blank">pmc.ncbi.nlm.nih.gov</a></li>
-          <li data-num="7.">Psychodermatology: An Opportunity for Collaboration. Dermatology Times, February 2025. <a href="https://www.dermatologytimes.com/view/psychodermatology-an-opportunity-for-collaboration-among-health-care-professionals" target="_blank">dermatologytimes.com</a></li>
-          <li data-num="8.">Psychodermatology: A comprehensive review. Journal of Comprehensive Dermatology, 2026. <a href="https://jcderma.com/psychodermatology-a-comprehensive-review-of-mental-health-and-skin-disease/" target="_blank">jcderma.com</a></li>
-          <li data-num="9.">Mental Health Treatment Expands Role in Dermatology Care. EMJ Reviews, 2026. <a href="https://www.emjreviews.com/dermatology/news/mental-health-treatment-expands-role-in-dermatology-care/" target="_blank">emjreviews.com</a></li>
-        </ol>
-      </div>
-    </div>
-
-  </div>
-
 </body>
 </html>
