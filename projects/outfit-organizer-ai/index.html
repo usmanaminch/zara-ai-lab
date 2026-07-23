@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Outfit Organizer AI · Amal AI Lab</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<main class="page">
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">AI inside the project</p>
+      <h1>Outfit<br>Organizer AI</h1>
+      <p class="subtitle">
+        AI turns your closet photos, style choices, and weekly plans into
+        7 days of personalized outfit ideas.
+      </p>
+      <div class="pill">Built-in AI stylist · closet photos only · no copying into ChatGPT or Gemini</div>
+    </div>
+    <div class="hero-word">STYLE<br>ISSUE</div>
+    <div class="hero-tags">
+      <span>closet photo</span>
+      <span>AI style quiz</span>
+      <span>AI lookbook</span>
+    </div>
+  </section>
+
+  <section class="top-grid">
+    <article class="card upload-card">
+      <p class="eyebrow">AI closet snapshot</p>
+      <h2>Show the wardrobe</h2>
+      <p>Upload a closet photo and AI can identify your clothes.</p>
+      <label class="upload-box">
+        <input id="closet-photo" type="file" accept="image/*">
+        <div id="closet-preview">
+          <div class="upload-icon">⌁</div>
+          <strong>Upload closet photo</strong>
+          <span>Click to browse or drag & drop</span>
+          <small>JPG, PNG up to 20MB</small>
+        </div>
+      </label>
+    </article>
+
+    <article class="card interview-card">
+      <p class="eyebrow">Style interview</p>
+      <h2>Tell the stylist</h2>
+
+      <div class="row">
+        <label>What is your style?</label>
+        <select id="style">
+          <option>Cute and colorful</option>
+          <option>Sporty and comfy</option>
+          <option>Simple and neat</option>
+          <option>Dressy and polished</option>
+          <option>Soft pastel</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <label>What kind of week is it?</label>
+        <select id="week">
+          <option>Summer vacation week</option>
+          <option>School week</option>
+          <option>Family trip</option>
+          <option>Busy activity week</option>
+          <option>Weekend plans</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <label>What’s the weather?</label>
+        <select id="weather">
+          <option>Hot and sunny</option>
+          <option>Cool and breezy</option>
+          <option>Rainy</option>
+          <option>Cold</option>
+          <option>Mixed weather</option>
+        </select>
+      </div>
+
+      <div class="row colors-row">
+        <label>Favorite colors<br><small>(Optional)</small></label>
+        <div class="swatches">
+          <button style="--c:#f35aa8" data-color="pink"></button>
+          <button style="--c:#b990f8" data-color="lavender"></button>
+          <button style="--c:#c9ef6e" data-color="green"></button>
+          <button style="--c:#ffdc70" data-color="yellow"></button>
+          <button style="--c:#a9d8ff" data-color="blue"></button>
+          <button class="plus" data-color="rainbow">+</button>
+        </div>
+      </div>
+
+      <button id="generate-outfits">Generate AI lookbook</button>
+    </article>
+  </section>
+
+  <section class="bottom-grid">
+    <article class="card lookbook-card">
+      <p class="eyebrow">7-day AI outfit plan</p>
+      <h2>Your AI-generated outfits</h2>
+      <div id="outfit-week" class="outfit-week"></div>
+    </article>
+
+    <article class="card advice-card">
+      <div class="spark">✦</div>
+      <p class="eyebrow">Weekly AI advice</p>
+      <h2>Weekly AI Advice</h2>
+      <div id="advice-list" class="advice-list">
+        <div class="advice"><span>↔</span><div><strong>Mix & match more</strong><p>Add a closet photo to build better combinations.</p></div></div>
+        <div class="advice"><span>⟳</span><div><strong>Smart repeats</strong><p>Repeat favorite pieces in a fresh way.</p></div></div>
+        <div class="advice"><span>▣</span><div><strong>Backup outfit</strong><p>Keep one comfy backup outfit ready.</p></div></div>
+        <div class="advice"><span>◉</span><div><strong>Color balance</strong><p>Pick 2 main colors and 1 accent color.</p></div></div>
+      </div>
+    </article>
+  </section>
+</main>
+<script src="script.js"></script>
+</body>
+</html>

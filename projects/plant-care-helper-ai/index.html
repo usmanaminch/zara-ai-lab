@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Plant Care Helper AI · Amal AI Lab</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<main class="page">
+  <section class="hero">
+    <div>
+      <p class="eyebrow">AI Builder Lab · Day 6 Upgrade</p>
+      <h1>Plant Care<br>Helper</h1>
+      <p class="subtitle">
+        Tell the condition of your plant, upload a plant photo, and use the built-in AI helper
+        to get customized care advice plus a 3-week recovery plan.
+      </p>
+      <div class="pill">Educational project · not a professional plant diagnosis</div>
+    </div>
+
+    <article class="upgrade-card">
+      <p class="eyebrow">Today’s upgrade</p>
+      <h2>AI-assisted plant care 🪴</h2>
+      <p>
+        This version works inside the website: describe the plant, add a photo,
+        ask the AI helper, and get a weekly plan with picture previews.
+      </p>
+    </article>
+  </section>
+
+  <section class="steps">
+    <article class="step-card">
+      <p class="eyebrow">Step 1</p>
+      <h2>Upload plant photo</h2>
+      <label class="upload-box">
+        <input id="plant-photo" type="file" accept="image/*">
+        <div id="photo-preview">
+          <span>🌿</span>
+          <strong>Choose plant photo</strong>
+          <p>Use a clear photo of the leaves, stem, and soil.</p>
+        </div>
+      </label>
+    </article>
+
+    <article class="step-card">
+      <p class="eyebrow">Step 2</p>
+      <h2>Tell the condition</h2>
+
+      <label>What kind of plant is it?
+        <select id="plant-type">
+          <option>Houseplant</option>
+          <option>Flower</option>
+          <option>Herb</option>
+          <option>Succulent</option>
+          <option>Vegetable plant</option>
+          <option>I am not sure</option>
+        </select>
+      </label>
+
+      <label>Where is the plant?
+        <select id="location">
+          <option>Indoors</option>
+          <option>Outdoors</option>
+          <option>Near a window</option>
+          <option>Far from a window</option>
+        </select>
+      </label>
+
+      <label>What is the main problem?
+        <select id="main-problem">
+          <option>Yellow leaves</option>
+          <option>Brown tips</option>
+          <option>Drooping or wilted</option>
+          <option>Dry soil</option>
+          <option>Soil too wet</option>
+          <option>Spots on leaves</option>
+          <option>No new growth</option>
+          <option>I am not sure</option>
+        </select>
+      </label>
+
+      <label>What do you notice?
+        <textarea id="notes" rows="4" placeholder="Example: leaves are yellow and droopy, soil feels wet, plant looks weak"></textarea>
+      </label>
+    </article>
+
+    <article class="step-card ai-card">
+      <p class="eyebrow">Step 3</p>
+      <h2>Ask AI helper</h2>
+      <p>
+        Press the button and the website will make a kid-friendly plant-care check,
+        explain what may be wrong, and suggest how to fix it.
+      </p>
+      <button id="ask-ai">Ask AI to check my plant</button>
+      <div id="ai-advice" class="care-report">
+        Upload a photo, describe your plant, and then press the AI button.
+      </div>
+    </article>
+
+    <article class="step-card report-card">
+      <p class="eyebrow">Step 4</p>
+      <h2>3-week AI recovery plan</h2>
+      <p>
+        At the bottom you will see Week 1, Week 2, and Week 3 picture ideas and care steps.
+      </p>
+      <div class="mini-plan-note">
+        The pictures are AI-style progress previews that match your plant problem.
+      </div>
+    </article>
+  </section>
+
+  <section class="timeline-section">
+    <div class="timeline-header">
+      <p class="eyebrow">AI picture plan</p>
+      <h2>What to do each week</h2>
+      <p class="timeline-subtitle">These picture cards show how the plant may look as it gets better.</p>
+    </div>
+
+    <div class="timeline-bar"></div>
+
+    <div class="week-grid" id="week-grid">
+      <article class="week-card">
+        <div class="week-badge">Week 1</div>
+        <div class="week-image" id="week1-image">
+          <div class="plant-illustration stage-1">
+            <div class="pot"></div><div class="stem"></div><div class="leaf leaf-left"></div><div class="leaf leaf-right"></div>
+          </div>
+        </div>
+        <h3>First care change</h3>
+        <p id="week1-text">Your week 1 plan will appear here.</p>
+      </article>
+
+      <article class="week-card">
+        <div class="week-badge">Week 2</div>
+        <div class="week-image" id="week2-image">
+          <div class="plant-illustration stage-2">
+            <div class="pot"></div><div class="stem"></div><div class="leaf leaf-left"></div><div class="leaf leaf-right"></div><div class="leaf leaf-top"></div>
+          </div>
+        </div>
+        <h3>Watch for progress</h3>
+        <p id="week2-text">Your week 2 plan will appear here.</p>
+      </article>
+
+      <article class="week-card">
+        <div class="week-badge">Week 3</div>
+        <div class="week-image" id="week3-image">
+          <div class="plant-illustration stage-3">
+            <div class="pot"></div><div class="stem"></div><div class="leaf leaf-left"></div><div class="leaf leaf-right"></div><div class="leaf leaf-top"></div><div class="leaf leaf-extra"></div>
+          </div>
+        </div>
+        <h3>Stronger plant</h3>
+        <p id="week3-text">Your week 3 plan will appear here.</p>
+      </article>
+    </div>
+  </section>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
