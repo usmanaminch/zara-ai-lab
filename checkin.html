@@ -25,18 +25,16 @@
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;}
-    body{font-family:var(--font-body);background:var(--surface);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition);display:flex;flex-direction:column;min-height:100vh;}
+    body{font-family:var(--font-body);background:var(--surface);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition);}
     a{color:inherit;text-decoration:none;}
-
-    nav{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;background:var(--surface);border-bottom:1px solid var(--border);}
+    nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;background:var(--surface);border-bottom:1px solid var(--border);}
     .nav-logo{font-family:var(--font-display);font-weight:700;font-size:1rem;letter-spacing:-0.02em;display:flex;align-items:center;gap:0.45rem;}
     .nav-logo .pip{width:8px;height:8px;background:linear-gradient(135deg,var(--teal),var(--lavender));border-radius:50%;}
     .nav-back{font-size:0.8rem;font-weight:500;color:var(--ink-60);transition:color var(--transition);}
     .nav-back:hover{color:var(--teal);}
     .theme-btn{background:var(--card-bg);border:1px solid var(--border);color:var(--ink-60);border-radius:20px;padding:0.28rem 0.7rem;font-size:0.75rem;cursor:pointer;font-family:var(--font-body);transition:all var(--transition);}
     .theme-btn:hover{border-color:var(--teal);color:var(--teal);}
-
-    .page{max-width:600px;margin:0 auto;padding:2.5rem 2rem 4rem;width:100%;flex:1;}
+    .page{max-width:600px;margin:0 auto;padding:2.5rem 2rem 4rem;}
     .page-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--lavender);background:var(--lav-faint);border:1px solid rgba(139,127,212,0.25);padding:0.28rem 0.75rem;border-radius:20px;margin-bottom:1rem;}
     .page-title{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.4rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.5rem;}
     .page-title .grad{background:linear-gradient(135deg,var(--teal),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
@@ -47,51 +45,36 @@
     .start-btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.8rem 2rem;background:linear-gradient(135deg,var(--teal),var(--lavender));color:white;border:none;border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:600;font-size:0.95rem;cursor:pointer;transition:opacity var(--transition),transform var(--transition);}
     .start-btn:hover{opacity:0.88;transform:translateY(-1px);}
 
-    /* Chat */
-    .chat-screen{display:none;flex-direction:column;gap:1rem;}
-    .chat-screen.visible{display:flex;}
-    .message{display:flex;gap:0.75rem;max-width:92%;}
-    .message.assistant{align-self:flex-start;}
-    .message.user{align-self:flex-end;flex-direction:row-reverse;}
-    .message-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;margin-top:0.1rem;}
-    .message.assistant .message-avatar{background:linear-gradient(135deg,var(--teal),var(--lavender));color:white;font-size:0.75rem;font-weight:700;font-family:var(--font-display);}
-    .message.user .message-avatar{background:var(--border);font-size:1rem;}
-    .message-bubble{padding:0.85rem 1.1rem;border-radius:var(--radius);font-size:0.9rem;line-height:1.75;}
-    .message.assistant .message-bubble{background:var(--card-bg);border:1px solid var(--border);color:var(--ink-60);border-top-left-radius:4px;}
-    .message.user .message-bubble{background:linear-gradient(135deg,var(--teal),var(--lavender));color:white;border-top-right-radius:4px;}
-    .message.assistant .message-bubble strong{color:var(--ink);font-weight:600;}
+    .loading{display:none;text-align:center;padding:3rem 2rem;}
+    .loading.visible{display:block;}
+    .spinner{display:inline-block;width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:1rem;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .loading p{font-size:0.88rem;color:var(--ink-60);font-style:italic;}
 
-    /* Disclaimer box */
-    .disclaimer-bubble{background:var(--lav-faint);border:1px solid rgba(139,127,212,0.25);border-radius:var(--radius-sm);padding:0.85rem 1.1rem;font-size:0.78rem;color:var(--ink-60);line-height:1.6;margin-top:0.25rem;max-width:92%;}
-    .disclaimer-bubble a{color:var(--lavender);font-weight:600;}
+    .quiz-card{display:none;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;}
+    .quiz-card.visible{display:block;}
+    .progress-bar{width:100%;height:5px;background:var(--border);border-radius:3px;margin-bottom:1.75rem;}
+    .progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--lavender));border-radius:3px;transition:width 0.4s ease;}
+    .q-counter{font-size:0.72rem;font-weight:600;color:var(--ink-60);font-family:var(--font-display);letter-spacing:0.05em;margin-bottom:1.25rem;}
+    .q-text{font-family:var(--font-display);font-size:1.1rem;font-weight:600;letter-spacing:-0.02em;line-height:1.4;margin-bottom:1.5rem;color:var(--ink);}
+    .options{display:flex;flex-direction:column;gap:0.65rem;}
+    .option-btn{width:100%;text-align:left;padding:0.9rem 1.1rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);font-family:var(--font-body);font-size:0.9rem;color:var(--ink-60);cursor:pointer;transition:all var(--transition);}
+    .option-btn:hover{border-color:var(--teal);background:var(--teal-faint);color:var(--ink);}
+    .option-btn.selected{border-color:var(--teal);background:var(--teal-faint);color:var(--teal);font-weight:500;}
 
-    .typing{display:none;align-self:flex-start;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);border-top-left-radius:4px;}
-    .typing.visible{display:flex;gap:0.3rem;align-items:center;}
-    .typing span{width:6px;height:6px;background:var(--ink-30);border-radius:50%;animation:bounce 1.2s infinite;}
-    .typing span:nth-child(2){animation-delay:0.2s;}
-    .typing span:nth-child(3){animation-delay:0.4s;}
-    @keyframes bounce{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-6px);}}
-
-    .input-wrap{margin-top:1rem;}
-    .input-row{display:flex;gap:0.65rem;align-items:flex-end;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:0.55rem 0.55rem 0.55rem 1rem;transition:border-color var(--transition);}
-    .input-row:focus-within{border-color:var(--teal);}
-    .chat-input{flex:1;border:none;background:transparent;font-family:var(--font-body);font-size:0.9rem;color:var(--ink);resize:none;outline:none;max-height:100px;line-height:1.5;}
-    .chat-input::placeholder{color:var(--ink-30);}
-    .send-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--lavender));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity var(--transition);}
-    .send-btn:hover:not(:disabled){opacity:0.85;}
-    .send-btn:disabled{opacity:0.35;cursor:not-allowed;}
-    .send-btn svg{width:15px;height:15px;fill:white;}
-
-    .restart-btn{display:none;width:100%;margin-top:1rem;padding:0.65rem;background:var(--card-bg);color:var(--ink-60);border:1px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:500;font-size:0.85rem;cursor:pointer;transition:all var(--transition);}
+    .result-card{display:none;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;}
+    .result-card.visible{display:block;}
+    .result-emoji{font-size:2rem;margin-bottom:0.75rem;}
+    .result-title{font-family:var(--font-display);font-weight:700;font-size:1rem;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+    .result-body{font-size:0.9rem;color:var(--ink-60);line-height:1.85;margin-bottom:1.25rem;}
+    .result-body strong{color:var(--ink);font-weight:600;}
+    .disclaimer{background:var(--lav-faint);border:1px solid rgba(139,127,212,0.25);border-radius:var(--radius-sm);padding:1rem 1.25rem;font-size:0.78rem;color:var(--ink-60);line-height:1.6;}
+    .disclaimer strong{color:var(--lavender);font-weight:600;}
+    .restart-btn{display:block;width:100%;margin-top:1rem;padding:0.65rem;background:var(--surface);color:var(--ink-60);border:1px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:500;font-size:0.85rem;cursor:pointer;transition:all var(--transition);}
     .restart-btn:hover{border-color:var(--teal);color:var(--teal);}
-    .restart-btn.visible{display:block;}
 
-    .crisis-note{background:#FFF0F0;border:1px solid rgba(200,50,50,0.2);border-radius:var(--radius-sm);padding:1rem 1.25rem;font-size:0.82rem;color:#AA3333;line-height:1.6;margin-top:0.5rem;}
-    [data-theme="dark"] .crisis-note{background:#2A1010;color:#FF9999;}
-    .crisis-note strong{font-weight:600;}
-    .crisis-note a{color:inherit;text-decoration:underline;}
-
-    @media(max-width:580px){.page{padding:1.5rem 1rem 3rem;}}
+    .error-msg{display:none;background:#FFF0F0;border:1px solid #FFCCCC;border-radius:var(--radius-sm);padding:1rem;font-size:0.85rem;color:#CC4444;margin-top:1rem;text-align:center;}
+    .error-msg.visible{display:block;}
   </style>
 </head>
 <body>
@@ -104,25 +87,33 @@
   <div class="page">
     <div class="page-eyebrow">✦ Project 10 · Mental Health Check-in</div>
     <h1 class="page-title">How are you<br><span class="grad">doing today?</span></h1>
-    <p class="page-sub">A gentle 5-question check-in about your mood, energy, sleep, and stress. No scores, no labels — just a warm reflection and a few suggestions. Takes about 2 minutes.</p>
+    <p class="page-sub">A gentle 5-question check-in about your mood, energy, sleep, and stress. No scores, no labels — just a warm reflection. Takes about 2 minutes.</p>
 
     <div id="startCard" class="start-card">
-      <p>This check-in will ask you a few simple questions about how you're feeling. Your answers stay private. This is not a medical or mental health assessment — it's a moment to pause and reflect.</p>
+      <p>This check-in will ask you 5 short questions about how you're feeling today. Your answers stay private and are not stored anywhere. This is not a medical or mental health assessment — it's a moment to pause and check in with yourself.</p>
       <button class="start-btn" onclick="startCheckin()">✦ Start Check-in</button>
     </div>
 
-    <div class="chat-screen" id="chatScreen">
-      <div id="messages"></div>
-      <div class="typing" id="typing"><span></span><span></span><span></span></div>
-      <div class="input-wrap" id="inputWrap">
-        <div class="input-row">
-          <textarea class="chat-input" id="chatInput" placeholder="Type your answer…" rows="1"></textarea>
-          <button class="send-btn" id="sendBtn" onclick="sendMessage()">
-            <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
-          </button>
-        </div>
-      </div>
-      <button class="restart-btn" id="restartBtn" onclick="restart()">↺ Start a new check-in</button>
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <p>Preparing your check-in…</p>
+    </div>
+
+    <div class="error-msg" id="errorMsg"></div>
+
+    <div class="quiz-card" id="quizCard">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:20%"></div></div>
+      <p class="q-counter" id="qCounter">Question 1 of 5</p>
+      <p class="q-text" id="qText"></p>
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-card" id="resultCard">
+      <div class="result-emoji">💚</div>
+      <p class="result-title">Your check-in reflection</p>
+      <div class="result-body" id="resultBody"></div>
+      <div class="disclaimer" id="disclaimerBox"></div>
+      <button class="restart-btn" onclick="resetCheckin()">↺ Do another check-in</button>
     </div>
   </div>
 
@@ -141,106 +132,122 @@
       document.getElementById('theme-btn').textContent=saved==='dark'?'☀️ Light':'🌙 Dark';
     }
 
-    let history = [];
-    let done = false;
+    let questions = [];
+    let answers = [];
+    let currentQ = 0;
 
     async function startCheckin(){
       document.getElementById('startCard').style.display = 'none';
-      document.getElementById('chatScreen').classList.add('visible');
-      history = [{ role: 'user', content: 'Start my check-in. Ask me the first question.' }];
-      await getReply();
-    }
+      document.getElementById('loading').classList.add('visible');
+      hideError();
 
-    function addMessage(role, text){
-      const container = document.getElementById('messages');
-      const div = document.createElement('div');
-      div.className = `message ${role}`;
-      const avatar = role === 'assistant' ? '💚' : '👤';
-      const formatted = text
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\n/g, '<br>');
-
-      // Check if this is a reflection/final message with disclaimer
-      const hasDisclaimer = text.includes('988') || text.includes('Crisis Text Line') || text.includes('741741');
-      let bubbleContent = formatted;
-      let disclaimerHTML = '';
-
-      if(hasDisclaimer){
-        // Split out the disclaimer
-        const disclaimerStart = text.search(/Remember:|If you need|988|Crisis/i);
-        if(disclaimerStart > 0){
-          const mainText = text.slice(0, disclaimerStart).trim();
-          const disclaimerText = text.slice(disclaimerStart).trim();
-          bubbleContent = mainText.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
-          disclaimerHTML = `<div class="disclaimer-bubble">${disclaimerText.replace(/\n/g,'<br>')}</div>`;
-        }
-        done = true;
-        document.getElementById('inputWrap').style.display = 'none';
-        document.getElementById('restartBtn').classList.add('visible');
-      }
-
-      div.innerHTML = `<div class="message-avatar">${avatar}</div><div class="message-bubble">${bubbleContent}</div>`;
-      container.appendChild(div);
-      if(disclaimerHTML){
-        const discDiv = document.createElement('div');
-        discDiv.innerHTML = disclaimerHTML;
-        container.appendChild(discDiv);
-      }
-      container.scrollTop = container.scrollHeight;
-      document.getElementById('messages').scrollIntoView({behavior:'smooth', block:'end'});
-    }
-
-    async function getReply(){
-      document.getElementById('sendBtn').disabled = true;
-      document.getElementById('typing').classList.add('visible');
       try {
         const res = await fetch('/api/checkin', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages: history })
+          body: JSON.stringify({ mode: 'generate' })
         });
         const data = await res.json();
-        if(!res.ok) throw new Error('Something went wrong');
-        history.push({ role: 'assistant', content: data.reply });
-        addMessage('assistant', data.reply);
+        if(!res.ok || !data.questions) throw new Error('Failed to load questions');
+        questions = data.questions;
+        answers = [];
+        currentQ = 0;
+        document.getElementById('loading').classList.remove('visible');
+        document.getElementById('quizCard').classList.add('visible');
+        renderQuestion();
       } catch(err){
-        addMessage('assistant', 'Something went wrong. Please try again.');
-      } finally {
-        document.getElementById('typing').classList.remove('visible');
-        if(!done) document.getElementById('sendBtn').disabled = false;
+        document.getElementById('loading').classList.remove('visible');
+        document.getElementById('startCard').style.display = 'block';
+        showError('Something went wrong loading the check-in. Please try again.');
       }
     }
 
-    async function sendMessage(){
-      if(done) return;
-      const input = document.getElementById('chatInput');
-      const text = input.value.trim();
-      if(!text) return;
-      addMessage('user', text);
-      history.push({ role: 'user', content: text });
-      input.value = '';
-      input.style.height = 'auto';
-      await getReply();
+    function renderQuestion(){
+      const q = questions[currentQ];
+      const total = questions.length;
+      document.getElementById('qCounter').textContent = `Question ${currentQ + 1} of ${total}`;
+      document.getElementById('progressFill').style.width = `${((currentQ + 1) / total) * 100}%`;
+      document.getElementById('qText').textContent = q.question;
+
+      const container = document.getElementById('optionsContainer');
+      container.innerHTML = '';
+      q.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = opt;
+        btn.onclick = () => selectOption(btn, opt);
+        container.appendChild(btn);
+      });
     }
 
-    function restart(){
-      history = [];
-      done = false;
-      document.getElementById('messages').innerHTML = '';
-      document.getElementById('inputWrap').style.display = 'block';
-      document.getElementById('restartBtn').classList.remove('visible');
+    function selectOption(btn, text){
+      document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      answers[currentQ] = { question: questions[currentQ].question, selected: text };
+      setTimeout(() => {
+        currentQ++;
+        if(currentQ < questions.length){
+          renderQuestion();
+        } else {
+          getReflection();
+        }
+      }, 300);
+    }
+
+    async function getReflection(){
+      document.getElementById('quizCard').classList.remove('visible');
+      document.getElementById('loading').classList.add('visible');
+      document.getElementById('loading').querySelector('p').textContent = 'Writing your reflection…';
+
+      try {
+        const res = await fetch('/api/checkin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mode: 'reflect', answers })
+        });
+        const data = await res.json();
+        if(!res.ok || !data.reflection) throw new Error('Failed to get reflection');
+
+        const text = data.reflection;
+        const disclaimerStart = text.search(/Remember:/i);
+        let mainText = text;
+        let disclaimerText = '';
+
+        if(disclaimerStart > 0){
+          mainText = text.slice(0, disclaimerStart).trim();
+          disclaimerText = text.slice(disclaimerStart).trim();
+        }
+
+        document.getElementById('resultBody').innerHTML = mainText
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\n/g, '<br>');
+
+        document.getElementById('disclaimerBox').innerHTML = '<strong>⚕️ Note:</strong> ' + disclaimerText;
+
+        document.getElementById('loading').classList.remove('visible');
+        document.getElementById('resultCard').classList.add('visible');
+        window.scrollTo({top:0,behavior:'smooth'});
+      } catch(err){
+        document.getElementById('loading').classList.remove('visible');
+        showError('Something went wrong. Please try again.');
+        document.getElementById('startCard').style.display = 'block';
+      }
+    }
+
+    function resetCheckin(){
+      questions = [];
+      answers = [];
+      currentQ = 0;
+      document.getElementById('resultCard').classList.remove('visible');
+      document.getElementById('quizCard').classList.remove('visible');
       document.getElementById('startCard').style.display = 'block';
-      document.getElementById('chatScreen').classList.remove('visible');
+      document.getElementById('loading').querySelector('p').textContent = 'Preparing your check-in…';
+      hideError();
+      window.scrollTo({top:0,behavior:'smooth'});
     }
 
-    const chatInput = document.getElementById('chatInput');
-    chatInput.addEventListener('input', () => {
-      chatInput.style.height = 'auto';
-      chatInput.style.height = chatInput.scrollHeight + 'px';
-    });
-    chatInput.addEventListener('keydown', e => {
-      if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); sendMessage(); }
-    });
+    function showError(msg){ const el=document.getElementById('errorMsg'); el.textContent=msg; el.classList.add('visible'); }
+    function hideError(){ document.getElementById('errorMsg').classList.remove('visible'); }
   </script>
 </body>
 </html>
