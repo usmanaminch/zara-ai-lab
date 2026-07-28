@@ -18,11 +18,7 @@
       --font-body:'Inter',sans-serif;
       --radius:14px;--radius-sm:9px;--transition:0.22s ease;
     }
-    [data-theme="dark"]{
-      --ink:#EEF0FF;--ink-60:#9090B0;--ink-30:#4A4A6A;
-      --surface:#0F1020;--border:#2C2D45;--card-bg:#181928;
-      --teal-faint:#0C2422;--lav-faint:#14122A;
-    }
+    [data-theme="dark"]{--ink:#EEF0FF;--ink-60:#9090B0;--ink-30:#4A4A6A;--surface:#0F1020;--border:#2C2D45;--card-bg:#181928;--teal-faint:#0C2422;--lav-faint:#14122A;}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;}
     body{font-family:var(--font-body);background:var(--surface);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition);}
@@ -32,53 +28,41 @@
     .nav-logo .pip{width:8px;height:8px;background:linear-gradient(135deg,var(--teal),var(--lavender));border-radius:50%;}
     .theme-btn{background:var(--card-bg);border:1px solid var(--border);color:var(--ink-60);border-radius:20px;padding:0.28rem 0.7rem;font-size:0.75rem;cursor:pointer;font-family:var(--font-body);transition:all var(--transition);}
     .theme-btn:hover{border-color:var(--teal);color:var(--teal);}
-
     .page{max-width:720px;margin:0 auto;padding:2.5rem 2rem 4rem;}
     .page-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);background:var(--teal-faint);border:1px solid rgba(58,175,169,0.25);padding:0.28rem 0.75rem;border-radius:20px;margin-bottom:1rem;}
     .page-title{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.4rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.5rem;}
     .page-title .grad{background:linear-gradient(135deg,var(--teal),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
     .page-sub{color:var(--ink-60);font-size:0.88rem;line-height:1.7;margin-bottom:2rem;}
-
-    /* Type selector */
-    .type-select{display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;margin-bottom:2rem;}
-    .type-card{background:var(--card-bg);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.25rem;cursor:pointer;transition:all var(--transition);}
+    .type-select{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;margin-bottom:2rem;}
+    .type-card{background:var(--card-bg);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.1rem;cursor:pointer;transition:all var(--transition);}
     .type-card:hover{border-color:var(--teal);}
     .type-card.selected{border-color:var(--teal);background:var(--teal-faint);}
-    .type-badge{font-size:0.65rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal);margin-bottom:0.4rem;}
+    .type-badge{font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal);margin-bottom:0.35rem;}
     .type-card.selected .type-badge{color:var(--teal);}
-    .type-title{font-family:var(--font-display);font-weight:700;font-size:0.92rem;margin-bottom:0.25rem;}
-    .type-desc{font-size:0.78rem;color:var(--ink-60);line-height:1.5;}
-
+    .type-title{font-family:var(--font-display);font-weight:700;font-size:0.85rem;margin-bottom:0.2rem;}
+    .type-desc{font-size:0.72rem;color:var(--ink-60);line-height:1.4;}
     .generate-btn{width:100%;padding:0.8rem;background:linear-gradient(135deg,var(--teal),var(--lavender));color:white;border:none;border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:600;font-size:0.95rem;cursor:pointer;transition:opacity var(--transition),transform var(--transition);margin-bottom:1.5rem;}
     .generate-btn:hover:not(:disabled){opacity:0.88;transform:translateY(-1px);}
     .generate-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
-
     .loading{display:none;text-align:center;padding:2rem;color:var(--ink-60);}
     .loading.visible{display:block;}
     .spinner{display:inline-block;width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:0.75rem;}
     @keyframes spin{to{transform:rotate(360deg);}}
-
-    /* Prompt card */
     .prompt-card{display:none;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-bottom:1.25rem;}
     .prompt-card.visible{display:block;}
     .prompt-label{font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);margin-bottom:0.5rem;font-family:var(--font-display);}
     .prompt-text{font-size:0.95rem;color:var(--ink);line-height:1.75;margin-bottom:1rem;font-weight:500;}
     .prompt-instructions{font-size:0.8rem;color:var(--ink-60);line-height:1.65;padding:0.85rem 1rem;background:var(--surface);border-radius:var(--radius-sm);border-left:3px solid var(--teal);}
-
-    /* Response area */
     .response-area{display:none;margin-bottom:1.25rem;}
     .response-area.visible{display:block;}
     .response-label{font-family:var(--font-display);font-weight:600;font-size:0.85rem;margin-bottom:0.5rem;color:var(--ink);}
     .response-meta{font-size:0.75rem;color:var(--ink-60);margin-bottom:0.75rem;display:flex;justify-content:space-between;}
-    .char-count{font-variant-numeric:tabular-nums;}
     textarea{width:100%;min-height:200px;padding:0.85rem 1rem;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:0.9rem;color:var(--ink);background:var(--surface);resize:vertical;transition:border-color var(--transition);line-height:1.65;}
     textarea:focus{outline:none;border-color:var(--teal);}
     textarea::placeholder{color:var(--ink-30);}
     .submit-btn{width:100%;margin-top:0.75rem;padding:0.72rem;background:linear-gradient(135deg,var(--lavender),var(--teal));color:white;border:none;border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:600;font-size:0.92rem;cursor:pointer;transition:opacity var(--transition),transform var(--transition);}
     .submit-btn:hover:not(:disabled){opacity:0.88;transform:translateY(-1px);}
     .submit-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
-
-    /* Feedback */
     .feedback-card{display:none;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-bottom:1.25rem;}
     .feedback-card.visible{display:block;}
     .feedback-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
@@ -86,21 +70,27 @@
     .feedback-body{font-size:0.88rem;color:var(--ink-60);line-height:1.85;}
     .feedback-body strong{color:var(--ink);font-weight:700;}
     .feedback-body p{margin-bottom:0.85rem;}
-
     .try-again-btn{width:100%;padding:0.65rem;background:var(--card-bg);color:var(--ink-60);border:1px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:500;font-size:0.85rem;cursor:pointer;transition:all var(--transition);}
     .try-again-btn:hover{border-color:var(--teal);color:var(--teal);}
-
-    .area-badge{display:inline-block;font-size:0.62rem;font-weight:700;padding:0.15rem 0.5rem;border-radius:10px;margin-bottom:0.6rem;letter-spacing:0.06em;text-transform:uppercase;}
+    /* Concept check */
+    .concept-card{display:none;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-bottom:1.25rem;}
+    .concept-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+    .area-badge{display:inline-block;font-size:0.6rem;font-weight:700;padding:0.15rem 0.5rem;border-radius:10px;margin-bottom:0.5rem;letter-spacing:0.06em;text-transform:uppercase;}
     .area-badge.math{background:var(--teal-faint);color:var(--teal);}
     .area-badge.sps{background:var(--lav-faint);color:var(--lavender);}
-    .area-badge.tj{background:#FEF5E0;color:#F0A500;}
-    [data-theme="dark"] .area-badge.tj{background:#1F1600;color:#F0A500;}
-    .concept-result{display:none;padding:0.75rem 1rem;border-radius:var(--radius-sm);margin-top:0.75rem;font-size:0.82rem;line-height:1.6;}
-    .concept-result.correct{background:#EBF9F0;border:1px solid rgba(82,194,124,0.3);color:#2A7A4A;}
-    .concept-result.wrong{background:#FFF0F0;border:1px solid rgba(200,50,50,0.2);color:#AA3333;}
-    [data-theme="dark"] .concept-result.correct{background:#0A1F12;color:#7FD4A0;}
-    [data-theme="dark"] .concept-result.wrong{background:#2A1010;color:#FF9999;}
-    .concept-result strong{font-weight:600;}
+    .area-badge.tj{background:#FEF5E0;color:#C08000;}
+    [data-theme="dark"] .area-badge.tj{background:#1F1600;color:#F0C040;}
+    .concept-q{margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);}
+    .concept-q:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+    .concept-q-text{font-family:var(--font-display);font-size:0.88rem;font-weight:600;color:var(--ink);margin-bottom:0.75rem;line-height:1.4;}
+    .options{display:flex;flex-direction:column;gap:0.5rem;}
+    .option-btn{width:100%;text-align:left;padding:0.75rem 1rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);font-family:var(--font-body);font-size:0.82rem;color:var(--ink-60);cursor:pointer;transition:all var(--transition);line-height:1.4;}
+    .option-btn:hover:not(:disabled){border-color:var(--teal);background:var(--teal-faint);color:var(--ink);}
+    .option-btn.correct{border-color:#52C27C;background:#EBF9F0;color:#2A7A4A;font-weight:500;}
+    .option-btn.wrong{border-color:#E24B4A;background:#FFF0F0;color:#AA3333;}
+    [data-theme="dark"] .option-btn.correct{background:#0A1F12;color:#7FD4A0;}
+    [data-theme="dark"] .option-btn.wrong{background:#2A1010;color:#FF9999;}
+    .concept-result{display:none;padding:0.65rem 0.9rem;border-radius:var(--radius-sm);margin-top:0.5rem;font-size:0.78rem;line-height:1.6;background:var(--surface);border:1px solid var(--border);color:var(--ink-60);}
     .error-msg{display:none;background:#FFF0F0;border:1px solid #FFCCCC;border-radius:var(--radius-sm);padding:1rem;font-size:0.85rem;color:#CC4444;margin-bottom:1rem;}
     .error-msg.visible{display:block;}
   </style>
@@ -114,48 +104,36 @@
   <div class="page">
     <div class="page-eyebrow">✦ Private · TJ Application Prep</div>
     <h1 class="page-title">Practice for<br><span class="grad">TJHSST.</span></h1>
-    <p class="page-sub">Practice realistic SPS essays and problem-solving prompts, then get graded the way TJ admissions would actually evaluate your response. Honest feedback only.</p>
+    <p class="page-sub">Practice realistic SPS essays, problem-solving prompts, and concept checks — then get graded the way TJ admissions would actually evaluate your response.</p>
 
     <div class="error-msg" id="errorMsg"></div>
 
-    <!-- Type selector -->
-    <div class="type-select" id="typeSelect">
+    <div class="type-select">
       <div class="type-card selected" onclick="selectType('sps', this)">
         <p class="type-badge">Essay</p>
         <p class="type-title">Student Portrait Sheet</p>
-        <p class="type-desc">Practice SPS prompts that test your STAR method, STEM passion, and critical thinking.</p>
+        <p class="type-desc">Practice SPS prompts using STAR method and Portrait of a Graduate traits.</p>
       </div>
       <div class="type-card" onclick="selectType('pse', this)">
         <p class="type-badge">Problem Solving</p>
         <p class="type-title">Problem-Solving Essay</p>
-        <p class="type-desc">Practice math/science reasoning problems and get graded on your explanation, not just the answer.</p>
+        <p class="type-desc">Practice math/science reasoning — graded on explanation, not just the answer.</p>
       </div>
-      <div class="type-card" onclick="selectType('concept', this)" style="border-color:rgba(240,165,0,0.3);background:var(--surface);">
-        <p class="type-badge" style="color:#F0A500;">Concept Check</p>
+      <div class="type-card" onclick="selectType('concept', this)" style="border-color:rgba(240,165,0,0.25);">
+        <p class="type-badge" style="color:#C08000;">Concept Check</p>
         <p class="type-title">Concept Check Quiz</p>
-        <p class="type-desc">5 quick questions on math concepts, SPS writing structure, and TJ application knowledge.</p>
+        <p class="type-desc">5 quick questions on math concepts, SPS structure, and TJ application knowledge.</p>
       </div>
     </div>
 
     <button class="generate-btn" id="generateBtn" onclick="generateAction()">✦ Generate Practice Prompt</button>
 
-    <!-- Concept quiz card -->
-    <div class="prompt-card" id="conceptCard" style="display:none;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--border);">
-        <p style="font-family:var(--font-display);font-weight:700;font-size:0.95rem;">📚 Concept Check Quiz</p>
-        <span style="font-size:0.72rem;color:var(--ink-60);" id="conceptScore"></span>
-      </div>
-      <div id="conceptQuestions"></div>
-      <button class="try-again-btn" id="conceptRetryBtn" style="display:none;margin-top:1rem;" onclick="resetAll()">↺ Try another quiz</button>
-    </div>
-
-    <!-- Loading -->
     <div class="loading" id="loading">
       <div class="spinner"></div>
       <p style="font-style:italic;font-size:0.9rem;" id="loadingMsg">Generating your prompt…</p>
     </div>
 
-    <!-- Prompt -->
+    <!-- Prompt card -->
     <div class="prompt-card" id="promptCard">
       <p class="prompt-label" id="promptLabel">SPS Practice Prompt</p>
       <p class="prompt-text" id="promptText"></p>
@@ -167,7 +145,7 @@
       <p class="response-label">Your response</p>
       <div class="response-meta">
         <span>Write your full response below</span>
-        <span class="char-count" id="charCount">0 characters</span>
+        <span id="charCount">0 characters</span>
       </div>
       <textarea id="responseInput" placeholder="Write your response here…"></textarea>
       <button class="submit-btn" id="submitBtn" onclick="submitResponse()">Submit for Grading →</button>
@@ -181,7 +159,17 @@
       <div class="feedback-body" id="feedbackBody"></div>
     </div>
 
-    <button class="try-again-btn" id="tryAgainBtn" style="display:none;" onclick="resetAll()">↺ Try another prompt</button>
+    <!-- Concept check card -->
+    <div class="concept-card" id="conceptCard">
+      <div class="concept-header">
+        <p style="font-family:var(--font-display);font-weight:700;font-size:0.95rem;">📚 Concept Check Quiz</p>
+        <span style="font-size:0.78rem;font-family:var(--font-display);font-weight:600;color:var(--teal);" id="conceptScore"></span>
+      </div>
+      <div id="conceptQuestions"></div>
+      <button class="try-again-btn" id="conceptRetryBtn" style="display:none;margin-top:1rem;" onclick="resetAll()">↺ Try another quiz</button>
+    </div>
+
+    <button class="try-again-btn" id="tryAgainBtn" style="display:none;margin-top:0;" onclick="resetAll()">↺ Try another prompt</button>
   </div>
 
   <script>
@@ -200,41 +188,41 @@
     }
 
     let selectedType = 'sps';
-    let conceptAnswers = {};
     let currentPrompt = '';
+    let conceptAnswers = {};
+    let conceptTotal = 0;
 
     function selectType(type, el){
       selectedType = type;
       document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
       el.classList.add('selected');
       const btn = document.getElementById('generateBtn');
-      if(type === 'concept'){
-        btn.textContent = '✦ Generate Concept Check';
-      } else {
-        btn.textContent = '✦ Generate Practice Prompt';
-      }
+      btn.textContent = type === 'concept' ? '✦ Generate Concept Check' : '✦ Generate Practice Prompt';
     }
 
     function generateAction(){
-      if(selectedType === 'concept'){
-        generateConcept();
-      } else {
-        generatePrompt();
-      }
+      if(selectedType === 'concept') generateConcept();
+      else generatePrompt();
     }
 
-    async function generateConcept(){
+    function resetUI(){
       document.getElementById('generateBtn').disabled = true;
       document.getElementById('loading').classList.add('visible');
-      document.getElementById('conceptCard').style.display = 'none';
       document.getElementById('promptCard').classList.remove('visible');
       document.getElementById('responseArea').classList.remove('visible');
       document.getElementById('feedbackCard').classList.remove('visible');
+      document.getElementById('conceptCard').style.display = 'none';
       document.getElementById('tryAgainBtn').style.display = 'none';
-      document.getElementById('loadingMsg').textContent = 'Generating concept check…';
-      document.getElementById('generateBtn').textContent = '✦ Generate Concept Check';
       hideError();
+    }
+
+    async function generateConcept(){
+      resetUI();
+      document.getElementById('loadingMsg').textContent = 'Generating concept check…';
       conceptAnswers = {};
+      conceptTotal = 0;
+      document.getElementById('conceptScore').textContent = '';
+      document.getElementById('conceptRetryBtn').style.display = 'none';
 
       try {
         const res = await fetch('/api/tjprep', {
@@ -243,25 +231,45 @@
           body: JSON.stringify({ mode: 'concept' })
         });
         const data = await res.json();
-        if(!res.ok || !data.questions) throw new Error('Failed to generate questions');
+        if(!res.ok || !data.questions) throw new Error('Failed');
 
         const container = document.getElementById('conceptQuestions');
         container.innerHTML = '';
-        document.getElementById('conceptScore').textContent = '';
-        document.getElementById('conceptRetryBtn').style.display = 'none';
+        conceptTotal = data.questions.length;
 
-        data.questions.forEach((q, idx) => {
+        data.questions.forEach(function(q, idx){
           const areaClass = q.area === 'Math' ? 'math' : q.area === 'SPS Writing' ? 'sps' : 'tj';
           const div = document.createElement('div');
-          div.style.cssText = 'margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);';
-          div.innerHTML = \`
-            <span class="area-badge \${areaClass}">\${q.area}</span>
-            <p style="font-family:var(--font-display);font-size:0.9rem;font-weight:600;color:var(--ink);margin-bottom:0.75rem;">\${q.question}</p>
-            <div class="options" id="opts-\${idx}">\${q.options.map(opt =>
-              \`<button class="option-btn" onclick="selectConceptOption(\${idx}, this, '\${opt.replace(/'/g,"\\'")}', '\${q.answer.replace(/'/g,"\\'")}', '\${q.explanation.replace(/'/g,"\\'")}')">\${opt}</button>\`
-            ).join('')}</div>
-            <div class="concept-result" id="result-\${idx}"></div>
-          \`;
+          div.className = 'concept-q';
+
+          const badge = document.createElement('span');
+          badge.className = 'area-badge ' + areaClass;
+          badge.textContent = q.area;
+          div.appendChild(badge);
+
+          const qText = document.createElement('p');
+          qText.className = 'concept-q-text';
+          qText.textContent = q.question;
+          div.appendChild(qText);
+
+          const opts = document.createElement('div');
+          opts.className = 'options';
+          opts.id = 'opts-' + idx;
+
+          q.options.forEach(function(opt){
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.textContent = opt;
+            btn.onclick = function(){ selectConceptOption(idx, btn, opt, q.answer, q.explanation, q.options); };
+            opts.appendChild(btn);
+          });
+          div.appendChild(opts);
+
+          const result = document.createElement('div');
+          result.className = 'concept-result';
+          result.id = 'cresult-' + idx;
+          div.appendChild(result);
+
           container.appendChild(div);
         });
 
@@ -275,37 +283,36 @@
       }
     }
 
-    function selectConceptOption(idx, btn, selected, answer, explanation){
-      // Lock this question
-      document.querySelectorAll(\`#opts-\${idx} .option-btn\`).forEach(b => b.disabled = true);
-      const resultDiv = document.getElementById(\`result-\${idx}\`);
+    function selectConceptOption(idx, btn, selected, answer, explanation, allOptions){
+      const optsDiv = document.getElementById('opts-' + idx);
+      optsDiv.querySelectorAll('.option-btn').forEach(function(b){ b.disabled = true; });
+
       const correct = selected === answer;
       conceptAnswers[idx] = correct;
-      btn.classList.add('selected');
-      resultDiv.style.display = 'block';
-      resultDiv.className = \`concept-result \${correct ? 'correct' : 'wrong'}\`;
-      resultDiv.innerHTML = correct
-        ? \`<strong>✓ Correct!</strong> \${explanation}\`
-        : \`<strong>✗ Not quite.</strong> The correct answer is <strong>\${answer}</strong>. \${explanation}\`;
 
-      // Check if all answered
-      const total = document.querySelectorAll('[id^="opts-"]').length;
-      if(Object.keys(conceptAnswers).length === total){
+      if(correct){
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('wrong');
+        optsDiv.querySelectorAll('.option-btn').forEach(function(b){
+          if(b.textContent === answer) b.classList.add('correct');
+        });
+      }
+
+      const resultDiv = document.getElementById('cresult-' + idx);
+      resultDiv.style.display = 'block';
+      resultDiv.textContent = (correct ? '✓ Correct! ' : '✗ The correct answer is "' + answer + '". ') + explanation;
+
+      if(Object.keys(conceptAnswers).length === conceptTotal){
         const score = Object.values(conceptAnswers).filter(Boolean).length;
-        document.getElementById('conceptScore').textContent = \`Score: \${score}/\${total}\`;
+        document.getElementById('conceptScore').textContent = score + '/' + conceptTotal + ' correct';
         document.getElementById('conceptRetryBtn').style.display = 'block';
       }
     }
 
     async function generatePrompt(){
-      document.getElementById('generateBtn').disabled = true;
-      document.getElementById('loading').classList.add('visible');
-      document.getElementById('promptCard').classList.remove('visible');
-      document.getElementById('responseArea').classList.remove('visible');
-      document.getElementById('feedbackCard').classList.remove('visible');
-      document.getElementById('tryAgainBtn').style.display = 'none';
+      resetUI();
       document.getElementById('loadingMsg').textContent = 'Generating your prompt…';
-      hideError();
 
       try {
         const res = await fetch('/api/tjprep', {
@@ -314,7 +321,7 @@
           body: JSON.stringify({ mode: 'prompt', type: selectedType })
         });
         const data = await res.json();
-        if(!res.ok || !data.prompt) throw new Error('Failed to generate prompt');
+        if(!res.ok || !data.prompt) throw new Error('Failed');
 
         currentPrompt = data.prompt;
         document.getElementById('promptLabel').textContent = selectedType === 'sps' ? '📝 SPS Practice Prompt' : '🔢 Problem-Solving Practice Prompt';
@@ -328,20 +335,16 @@
         document.getElementById('promptCard').classList.add('visible');
         document.getElementById('responseArea').classList.add('visible');
         document.getElementById('promptCard').scrollIntoView({behavior:'smooth', block:'start'});
-
       } catch(err){
         document.getElementById('loading').classList.remove('visible');
         document.getElementById('generateBtn').disabled = false;
-        showError('Something went wrong generating the prompt. Please try again.');
+        showError('Something went wrong. Please try again.');
       }
     }
 
     async function submitResponse(){
       const response = document.getElementById('responseInput').value.trim();
-      if(!response || response.length < 20){
-        showError('Please write a response before submitting.');
-        return;
-      }
+      if(!response || response.length < 20){ showError('Please write a response before submitting.'); return; }
 
       document.getElementById('submitBtn').disabled = true;
       document.getElementById('responseArea').style.opacity = '0.5';
@@ -357,7 +360,7 @@
           body: JSON.stringify({ mode: 'grade', type: selectedType, prompt: currentPrompt, response })
         });
         const data = await res.json();
-        if(!res.ok || !data.feedback) throw new Error('Failed to get feedback');
+        if(!res.ok || !data.feedback) throw new Error('Failed');
 
         const formatted = data.feedback
           .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
@@ -369,7 +372,6 @@
         document.getElementById('feedbackCard').classList.add('visible');
         document.getElementById('tryAgainBtn').style.display = 'block';
         document.getElementById('feedbackCard').scrollIntoView({behavior:'smooth', block:'start'});
-
       } catch(err){
         document.getElementById('loading').classList.remove('visible');
         document.getElementById('submitBtn').disabled = false;
@@ -379,21 +381,19 @@
     }
 
     function resetAll(){
-      document.getElementById('conceptCard').style.display = 'none';
-      document.getElementById('conceptScore').textContent = '';
-      conceptAnswers = {};
       document.getElementById('generateBtn').disabled = false;
       document.getElementById('promptCard').classList.remove('visible');
       document.getElementById('responseArea').classList.remove('visible');
       document.getElementById('feedbackCard').classList.remove('visible');
+      document.getElementById('conceptCard').style.display = 'none';
       document.getElementById('tryAgainBtn').style.display = 'none';
       document.getElementById('responseArea').style.opacity = '1';
       document.getElementById('responseInput').value = '';
+      conceptAnswers = {};
       hideError();
       window.scrollTo({top:0,behavior:'smooth'});
     }
 
-    // Character counter
     document.getElementById('responseInput').addEventListener('input', function(){
       document.getElementById('charCount').textContent = this.value.length + ' characters';
     });
