@@ -93,7 +93,7 @@ Make questions genuinely useful for TJ prep. Not too easy, not too hard. The ans
         model: 'claude-sonnet-4-6',
         max_tokens: 800,
         system: PROMPT_SYSTEM,
-        messages: [{ role: 'user', content: `Generate a ${type} prompt for TJ practice.` }]
+        messages: [{ role: 'user', content: type === 'pse' ? `Generate a PSE prompt. Seed: ${Math.random()}. Pick a DIFFERENT topic each time — do NOT use trains, speed between cities, or distance problems. Choose from: genetics, physics forces, probability, geometry, biology, chemistry, environmental science, or algebra word problems.` : `Generate a fresh SPS prompt. Seed: ${Math.random()}. Pick a different Portrait of a Graduate trait each time.` }]
       }),
     });
     const data = await response.json();
