@@ -81,6 +81,32 @@ Make questions genuinely useful for TJ prep. Not too easy, not too hard. The ans
     }
   }
 
+  if (mode === 'sim') {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1500,
+        system: `You are a TJHSST admissions coach. Generate exactly 4 different Student Portrait Sheet prompts for a full simulation test. Each prompt must test a DIFFERENT Portrait of a Graduate trait: Communicator, Collaborator, Creative and Critical Thinker, Ethical and Global Citizen, or Goal-Directed and Resilient Individual. Each prompt should be specific, reflective, and similar to what TJ actually asks. Return ONLY a JSON array with no other text, no markdown: [{"trait": "trait name", "prompt": "full prompt text"}]`,
+        messages: [{ role: 'user', content: 'Generate 4 SPS simulation prompts now.' }]
+      }),
+    });
+    const data = await response.json();
+    let text = data.content?.[0]?.text || '[]';
+    text = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    try {
+      const prompts = JSON.parse(text);
+      return res.status(200).json({ prompts });
+    } catch(e) {
+      return res.status(500).json({ error: 'Failed to generate simulation prompts' });
+    }
+  }
+
   if (mode === 'prompt') {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
