@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
 If type is "sps", generate a Student Portrait Sheet prompt — a short essay question that asks the student to demonstrate one of these skills using a real example: critical thinking, problem solving, leadership, collaboration, resilience, or STEM passion. The prompt should be specific and reflective, similar to what TJ actually asks.
 
-If type is "pse", generate a Problem-Solving Essay prompt — a math or science reasoning problem that requires logical thinking, step-by-step work, and a written explanation of the process. Difficulty: 8th grade advanced level.
+If type is "pse", generate a Problem-Solving Essay prompt — alternate between math and science problems. Math topics include: rate/distance/time, unit conversions, proportions, probability, geometry, multi-step algebra. Science topics include: genetics (dominant/recessive traits), basic physics (speed, force, energy), environmental science, biology reasoning. Difficulty: 8th grade advanced to early high school level. The problem must require multiple steps AND a written explanation of reasoning — not just a calculation.
 
 Return ONLY a JSON object with no other text:
 {
