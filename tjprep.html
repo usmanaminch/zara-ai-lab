@@ -126,6 +126,15 @@
       </div>
     </div>
 
+    <!-- SPS mode toggle - only shows for SPS -->
+    <div id="spsModeWrap" style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;padding:0.85rem 1.1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-sm);">
+      <span style="font-size:0.8rem;color:var(--ink-60);font-family:var(--font-display);font-weight:500;">SPS Mode:</span>
+      <div style="display:flex;gap:0.5rem;">
+        <button id="modePractice" onclick="setSpsMode('practice')" style="padding:0.25rem 0.75rem;border-radius:20px;border:1.5px solid var(--teal);background:var(--teal-faint);color:var(--teal);font-size:0.72rem;font-weight:600;cursor:pointer;font-family:var(--font-display);">Practice (1 prompt)</button>
+        <button id="modeSim" onclick="setSpsMode('sim')" style="padding:0.25rem 0.75rem;border-radius:20px;border:1.5px solid var(--border);background:var(--surface);color:var(--ink-60);font-size:0.72rem;font-weight:600;cursor:pointer;font-family:var(--font-display);">Simulation (4 prompts)</button>
+      </div>
+    </div>
+
     <button class="generate-btn" id="generateBtn" onclick="generateAction()">✦ Generate Practice Prompt</button>
 
     <div class="loading" id="loading">
@@ -188,16 +197,32 @@
     }
 
     let selectedType = 'sps';
+    let spsMode = 'practice';
     let currentPrompt = '';
     let conceptAnswers = {};
     let conceptTotal = 0;
+
+    function setSpsMode(mode){
+      spsMode = mode;
+      document.getElementById('modePractice').style.background = mode === 'practice' ? 'var(--teal-faint)' : 'var(--surface)';
+      document.getElementById('modePractice').style.color = mode === 'practice' ? 'var(--teal)' : 'var(--ink-60)';
+      document.getElementById('modePractice').style.borderColor = mode === 'practice' ? 'var(--teal)' : 'var(--border)';
+      document.getElementById('modeSim').style.background = mode === 'sim' ? 'var(--lav-faint)' : 'var(--surface)';
+      document.getElementById('modeSim').style.color = mode === 'sim' ? 'var(--lavender)' : 'var(--ink-60)';
+      document.getElementById('modeSim').style.borderColor = mode === 'sim' ? 'var(--lavender)' : 'var(--border)';
+      document.getElementById('generateBtn').textContent = mode === 'sim' ? '✦ Start Full Simulation' : '✦ Generate Practice Prompt';
+    }
 
     function selectType(type, el){
       selectedType = type;
       document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
       el.classList.add('selected');
       const btn = document.getElementById('generateBtn');
-      btn.textContent = type === 'concept' ? '✦ Generate Concept Check' : '✦ Generate Practice Prompt';
+      const modeWrap = document.getElementById('spsModeWrap');
+      modeWrap.style.display = type === 'sps' ? 'flex' : 'none';
+      if(type === 'concept') btn.textContent = '✦ Generate Concept Check';
+      else if(type === 'sps' && spsMode === 'sim') btn.textContent = '✦ Start Full Simulation';
+      else btn.textContent = '✦ Generate Practice Prompt';
     }
 
     function generateAction(){
@@ -318,19 +343,33 @@
         const res = await fetch('/api/tjprep', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ mode: 'prompt', type: selectedType })
+          body: JSON.stringify({ mode: 'prompt', type: selectedType === 'sps' && spsMode === 'sim' ? 'sps-sim' : selectedType })
         });
         const data = await res.json();
         if(!res.ok || !data.prompt) throw new Error('Failed');
 
-        currentPrompt = data.prompt;
-        document.getElementById('promptLabel').textContent = selectedType === 'sps' ? '📝 SPS Practice Prompt' : '🔢 Problem-Solving Practice Prompt';
-        document.getElementById('promptText').textContent = data.prompt;
-        document.getElementById('promptInstructions').textContent = data.instructions || '';
+        // Handle simulation mode (4 prompts)
+        if(selectedType === 'sps' && spsMode === 'sim' && data.prompts){
+          currentPrompt = 'SIMULATION';
+          document.getElementById('promptLabel').textContent = '📝 SPS Full Simulation — 4 Prompts';
+          let simHtml = '';
+          data.prompts.forEach(function(p, i){
+            simHtml += '<div style="margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:' + (i < data.prompts.length-1 ? '1px solid var(--border)' : 'none') + ';">';
+            simHtml += '<p style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--lavender);font-family:var(--font-display);margin-bottom:0.4rem;">Prompt ' + (i+1) + ' · ' + (p.trait || '') + '</p>';
+            simHtml += '<p style="font-size:0.92rem;color:var(--ink);font-weight:500;line-height:1.7;">' + p.prompt + '</p>';
+            simHtml += '</div>';
+          });
+          document.getElementById('promptText').innerHTML = simHtml;
+          document.getElementById('promptInstructions').textContent = 'Write a response for each prompt. Aim for under 1,500 characters each. You have about 15 minutes per prompt.';
+        } else {
+          currentPrompt = data.prompt;
+          document.getElementById('promptLabel').textContent = selectedType === 'sps' ? '📝 SPS Practice Prompt' : '🔢 Problem-Solving Practice Prompt';
+          document.getElementById('promptText').textContent = data.prompt;
+          document.getElementById('promptInstructions').textContent = data.instructions || '';
+        }
         document.getElementById('responseInput').value = '';
         document.getElementById('charCount').textContent = '0 characters';
         document.getElementById('submitBtn').disabled = false;
-
         document.getElementById('loading').classList.remove('visible');
         document.getElementById('promptCard').classList.add('visible');
         document.getElementById('responseArea').classList.add('visible');

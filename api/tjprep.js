@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
   const PROMPT_SYSTEM = `You are a TJHSST admissions coach. Generate one realistic practice prompt for a student preparing for the TJHSST application.
 
-If type is "sps", generate a Student Portrait Sheet prompt — a short essay question that asks the student to demonstrate one of these skills using a real example: critical thinking, problem solving, leadership, collaboration, resilience, or STEM passion. The prompt should be specific and reflective, similar to what TJ actually asks.
+If type is "sps", generate ONE Student Portrait Sheet prompt — a short essay question asking the student to demonstrate one of these skills: critical thinking, problem solving, leadership, collaboration, resilience, or STEM passion. Make it specific and reflective, similar to what TJ actually asks. If type is "sps-sim", generate FOUR different Student Portrait Sheet prompts, each testing a DIFFERENT Portrait of a Graduate trait. Return them as a JSON array of 4 objects, each with fields: prompt and trait.
 
 If type is "pse", generate a Problem-Solving Essay prompt — alternate between math and science problems. Math topics include: rate/distance/time, unit conversions, proportions, probability, geometry, multi-step algebra. Science topics include: genetics (dominant/recessive traits), basic physics (speed, force, energy), environmental science, biology reasoning. Difficulty: 8th grade advanced to early high school level. The problem must require multiple steps AND a written explanation of reasoning — not just a calculation.
 
@@ -93,7 +93,7 @@ Make questions genuinely useful for TJ prep. Not too easy, not too hard. The ans
         model: 'claude-sonnet-4-6',
         max_tokens: 800,
         system: PROMPT_SYSTEM,
-        messages: [{ role: 'user', content: type === 'pse' ? `Generate a PSE prompt. Seed: ${Math.random()}. Pick a DIFFERENT topic each time — do NOT use trains, speed between cities, or distance problems. Choose from: genetics, physics forces, probability, geometry, biology, chemistry, environmental science, or algebra word problems.` : `Generate a fresh SPS prompt. Seed: ${Math.random()}. Pick a different Portrait of a Graduate trait each time.` }]
+        messages: [{ role: 'user', content: type === 'pse' ? `Generate a PSE prompt. Seed: ${Math.random()}. Pick a DIFFERENT topic each time — do NOT use trains, speed between cities, or distance problems. Choose from: genetics, physics forces, probability, geometry, biology, chemistry, environmental science, or algebra word problems.` : type === 'sps-sim' ? `Generate 4 SPS prompts for a full simulation. Seed: ${Math.random()}. Each must test a different Portrait of a Graduate trait. Return JSON array of 4 objects with fields: prompt and trait.` : `Generate a fresh SPS prompt. Seed: ${Math.random()}. Pick a different Portrait of a Graduate trait each time.` }]
       }),
     });
     const data = await response.json();
