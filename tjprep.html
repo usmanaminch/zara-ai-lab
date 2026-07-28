@@ -90,6 +90,17 @@
     .try-again-btn{width:100%;padding:0.65rem;background:var(--card-bg);color:var(--ink-60);border:1px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-display);font-weight:500;font-size:0.85rem;cursor:pointer;transition:all var(--transition);}
     .try-again-btn:hover{border-color:var(--teal);color:var(--teal);}
 
+    .area-badge{display:inline-block;font-size:0.62rem;font-weight:700;padding:0.15rem 0.5rem;border-radius:10px;margin-bottom:0.6rem;letter-spacing:0.06em;text-transform:uppercase;}
+    .area-badge.math{background:var(--teal-faint);color:var(--teal);}
+    .area-badge.sps{background:var(--lav-faint);color:var(--lavender);}
+    .area-badge.tj{background:#FEF5E0;color:#F0A500;}
+    [data-theme="dark"] .area-badge.tj{background:#1F1600;color:#F0A500;}
+    .concept-result{display:none;padding:0.75rem 1rem;border-radius:var(--radius-sm);margin-top:0.75rem;font-size:0.82rem;line-height:1.6;}
+    .concept-result.correct{background:#EBF9F0;border:1px solid rgba(82,194,124,0.3);color:#2A7A4A;}
+    .concept-result.wrong{background:#FFF0F0;border:1px solid rgba(200,50,50,0.2);color:#AA3333;}
+    [data-theme="dark"] .concept-result.correct{background:#0A1F12;color:#7FD4A0;}
+    [data-theme="dark"] .concept-result.wrong{background:#2A1010;color:#FF9999;}
+    .concept-result strong{font-weight:600;}
     .error-msg{display:none;background:#FFF0F0;border:1px solid #FFCCCC;border-radius:var(--radius-sm);padding:1rem;font-size:0.85rem;color:#CC4444;margin-bottom:1rem;}
     .error-msg.visible{display:block;}
   </style>
@@ -119,9 +130,24 @@
         <p class="type-title">Problem-Solving Essay</p>
         <p class="type-desc">Practice math/science reasoning problems and get graded on your explanation, not just the answer.</p>
       </div>
+      <div class="type-card" onclick="selectType('concept', this)" style="border-color:rgba(240,165,0,0.3);background:var(--surface);">
+        <p class="type-badge" style="color:#F0A500;">Concept Check</p>
+        <p class="type-title">Concept Check Quiz</p>
+        <p class="type-desc">5 quick questions on math concepts, SPS writing structure, and TJ application knowledge.</p>
+      </div>
     </div>
 
-    <button class="generate-btn" id="generateBtn" onclick="generatePrompt()">✦ Generate Practice Prompt</button>
+    <button class="generate-btn" id="generateBtn" onclick="generateAction()">✦ Generate Practice Prompt</button>
+
+    <!-- Concept quiz card -->
+    <div class="prompt-card" id="conceptCard" style="display:none;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--border);">
+        <p style="font-family:var(--font-display);font-weight:700;font-size:0.95rem;">📚 Concept Check Quiz</p>
+        <span style="font-size:0.72rem;color:var(--ink-60);" id="conceptScore"></span>
+      </div>
+      <div id="conceptQuestions"></div>
+      <button class="try-again-btn" id="conceptRetryBtn" style="display:none;margin-top:1rem;" onclick="resetAll()">↺ Try another quiz</button>
+    </div>
 
     <!-- Loading -->
     <div class="loading" id="loading">
@@ -174,12 +200,101 @@
     }
 
     let selectedType = 'sps';
+    let conceptAnswers = {};
     let currentPrompt = '';
 
     function selectType(type, el){
       selectedType = type;
       document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
       el.classList.add('selected');
+      const btn = document.getElementById('generateBtn');
+      if(type === 'concept'){
+        btn.textContent = '✦ Generate Concept Check';
+      } else {
+        btn.textContent = '✦ Generate Practice Prompt';
+      }
+    }
+
+    function generateAction(){
+      if(selectedType === 'concept'){
+        generateConcept();
+      } else {
+        generatePrompt();
+      }
+    }
+
+    async function generateConcept(){
+      document.getElementById('generateBtn').disabled = true;
+      document.getElementById('loading').classList.add('visible');
+      document.getElementById('conceptCard').style.display = 'none';
+      document.getElementById('promptCard').classList.remove('visible');
+      document.getElementById('responseArea').classList.remove('visible');
+      document.getElementById('feedbackCard').classList.remove('visible');
+      document.getElementById('tryAgainBtn').style.display = 'none';
+      document.getElementById('loadingMsg').textContent = 'Generating concept check…';
+      document.getElementById('generateBtn').textContent = '✦ Generate Concept Check';
+      hideError();
+      conceptAnswers = {};
+
+      try {
+        const res = await fetch('/api/tjprep', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mode: 'concept' })
+        });
+        const data = await res.json();
+        if(!res.ok || !data.questions) throw new Error('Failed to generate questions');
+
+        const container = document.getElementById('conceptQuestions');
+        container.innerHTML = '';
+        document.getElementById('conceptScore').textContent = '';
+        document.getElementById('conceptRetryBtn').style.display = 'none';
+
+        data.questions.forEach((q, idx) => {
+          const areaClass = q.area === 'Math' ? 'math' : q.area === 'SPS Writing' ? 'sps' : 'tj';
+          const div = document.createElement('div');
+          div.style.cssText = 'margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);';
+          div.innerHTML = \`
+            <span class="area-badge \${areaClass}">\${q.area}</span>
+            <p style="font-family:var(--font-display);font-size:0.9rem;font-weight:600;color:var(--ink);margin-bottom:0.75rem;">\${q.question}</p>
+            <div class="options" id="opts-\${idx}">\${q.options.map(opt =>
+              \`<button class="option-btn" onclick="selectConceptOption(\${idx}, this, '\${opt.replace(/'/g,"\\'")}', '\${q.answer.replace(/'/g,"\\'")}', '\${q.explanation.replace(/'/g,"\\'")}')">\${opt}</button>\`
+            ).join('')}</div>
+            <div class="concept-result" id="result-\${idx}"></div>
+          \`;
+          container.appendChild(div);
+        });
+
+        document.getElementById('loading').classList.remove('visible');
+        document.getElementById('conceptCard').style.display = 'block';
+        document.getElementById('conceptCard').scrollIntoView({behavior:'smooth', block:'start'});
+      } catch(err){
+        document.getElementById('loading').classList.remove('visible');
+        document.getElementById('generateBtn').disabled = false;
+        showError('Something went wrong. Please try again.');
+      }
+    }
+
+    function selectConceptOption(idx, btn, selected, answer, explanation){
+      // Lock this question
+      document.querySelectorAll(\`#opts-\${idx} .option-btn\`).forEach(b => b.disabled = true);
+      const resultDiv = document.getElementById(\`result-\${idx}\`);
+      const correct = selected === answer;
+      conceptAnswers[idx] = correct;
+      btn.classList.add('selected');
+      resultDiv.style.display = 'block';
+      resultDiv.className = \`concept-result \${correct ? 'correct' : 'wrong'}\`;
+      resultDiv.innerHTML = correct
+        ? \`<strong>✓ Correct!</strong> \${explanation}\`
+        : \`<strong>✗ Not quite.</strong> The correct answer is <strong>\${answer}</strong>. \${explanation}\`;
+
+      // Check if all answered
+      const total = document.querySelectorAll('[id^="opts-"]').length;
+      if(Object.keys(conceptAnswers).length === total){
+        const score = Object.values(conceptAnswers).filter(Boolean).length;
+        document.getElementById('conceptScore').textContent = \`Score: \${score}/\${total}\`;
+        document.getElementById('conceptRetryBtn').style.display = 'block';
+      }
     }
 
     async function generatePrompt(){
@@ -264,6 +379,9 @@
     }
 
     function resetAll(){
+      document.getElementById('conceptCard').style.display = 'none';
+      document.getElementById('conceptScore').textContent = '';
+      conceptAnswers = {};
       document.getElementById('generateBtn').disabled = false;
       document.getElementById('promptCard').classList.remove('visible');
       document.getElementById('responseArea').classList.remove('visible');

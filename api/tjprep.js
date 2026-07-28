@@ -34,6 +34,53 @@ Be honest. If a response is weak, say so clearly and directly — but always exp
 
 Format your response with clear bold headers: **Score**, **What You Did Well**, **What To Improve**, **What An Ideal Response Looks Like**`;
 
+
+  const CONCEPT_SYSTEM = `You are a TJ admissions prep quiz master. Generate exactly 5 multiple choice concept check questions for a student preparing for TJHSST.
+
+Mix questions from these three areas:
+- Math concepts (rate problems, ratios, proportions, area/volume formulas, algebra basics, unit conversions, probability)
+- SPS writing structure (STAR method, Portrait of a Graduate traits, what makes a strong SPS response, common mistakes)
+- TJ application knowledge (character limits, number of prompts, PSE time limit, what TJ looks for, key dates)
+
+Return ONLY a JSON array with no other text, no markdown, no code blocks:
+[
+  {
+    "area": "Math" or "SPS Writing" or "TJ Knowledge",
+    "question": "question text here",
+    "options": ["A. option one", "B. option two", "C. option three", "D. option four"],
+    "answer": "A. option one",
+    "explanation": "brief explanation of why this is correct"
+  }
+]
+
+Make questions genuinely useful for TJ prep. Not too easy, not too hard. The answer field must exactly match one of the options.`;
+
+  if (mode === 'concept') {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1500,
+        system: CONCEPT_SYSTEM,
+        messages: [{ role: 'user', content: 'Generate 5 concept check questions.' }]
+      }),
+    });
+    const data = await response.json();
+    let text = data.content?.[0]?.text || '[]';
+    text = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    try {
+      const questions = JSON.parse(text);
+      return res.status(200).json({ questions });
+    } catch(e) {
+      return res.status(500).json({ error: 'Failed to generate questions' });
+    }
+  }
+
   if (mode === 'prompt') {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
