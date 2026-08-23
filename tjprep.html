@@ -197,6 +197,7 @@
     }
 
     let selectedType = 'sps';
+    let spsIndex = parseInt(localStorage.getItem('spsIndex') || '0');
     let spsMode = 'practice';
     let currentPrompt = '';
     let conceptAnswers = {};
@@ -343,7 +344,7 @@
         const res = await fetch('/api/tjprep', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(selectedType === 'sps' && spsMode === 'sim' ? { mode: 'sim' } : { mode: 'prompt', type: selectedType })
+          body: JSON.stringify(selectedType === 'sps' && spsMode === 'sim' ? { mode: 'sim' } : { mode: 'prompt', type: selectedType === 'sps' ? 'sps-' + spsIndex : selectedType })
         });
         const data = await res.json();
         if(!res.ok || !data.prompt) throw new Error('Failed');
