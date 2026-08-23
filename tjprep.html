@@ -364,6 +364,10 @@
           document.getElementById('promptInstructions').textContent = 'Write a response for each prompt. Aim for under 1,500 characters each. You have about 15 minutes per prompt.';
         } else {
           currentPrompt = data.prompt;
+          if(selectedType === 'sps' && spsMode !== 'sim'){
+            spsIndex = (spsIndex + 1) % 5;
+            localStorage.setItem('spsIndex', spsIndex);
+          }
           document.getElementById('promptLabel').textContent = selectedType === 'sps' ? '📝 SPS Practice Prompt' : '🔢 Problem-Solving Practice Prompt';
           document.getElementById('promptText').textContent = data.prompt;
           document.getElementById('promptInstructions').textContent = data.instructions || '';
