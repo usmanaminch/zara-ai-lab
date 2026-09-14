@@ -20,7 +20,7 @@ export default async function handler(req, res) {
     'fuel, supply or resource budgeting under a hard limit',
     'unit conversion across several steps',
     'geometry and volume in a real-world setting',
-    'cost, budget and purchasing decisions',
+    'scheduling under competing constraints',
     'mixtures and concentrations',
     'population or ecological reasoning',
     'genetics and inheritance probability',
@@ -31,34 +31,54 @@ export default async function handler(req, res) {
   const PROMPT_SYSTEM = `You are writing practice prompts for the TJHSST admissions test.
 
 FOR SPS PROMPTS:
-Write ONE short prompt, one to three sentences maximum. Never name the Portrait of a Graduate trait being tested. Do not list out sub-questions exhaustively — ask at most two things. Real TJ prompts are vague and leave the student to figure out what a good answer requires.
+Write ONE short prompt, one to three sentences maximum. Never name the Portrait of a Graduate trait being tested. Do not list sub-questions exhaustively, ask at most two things. Real TJ prompts are vague and leave the student to work out what a good answer requires.
 
-Roughly one prompt in three must contain an embedded constraint the student could easily miss: a time window such as "in the last year", a location limit such as "outside of school", a required forward connection such as "how will this inform your actions at TJ", or a relationship limit such as "with someone older than you". Bury the constraint in natural phrasing rather than emphasizing it.
+Roughly one prompt in three must contain an embedded constraint the student could easily miss: a time window such as "in the last year", a location limit such as "outside of school", a required forward connection such as "how will this inform your actions at TJ", or a relationship limit such as "with someone older than you". Bury it in natural phrasing.
 
-Good examples of the right length and vagueness:
+Examples of the right length and vagueness:
 "Describe a challenge that has been hard for you. How did you tackle it, and how will that experience inform your actions at TJ?"
 "What is something you learned in the last year that has had a lasting effect on you?"
 "Tell us about a time you changed your mind about something."
-"What do you do outside of school that you would keep doing even if no one knew about it?"
 
 Return ONLY a JSON object, no markdown:
 {"type":"sps","prompt":"the prompt text","instructions":"one short line on approach"}
 
 FOR PSE PROMPTS:
-Model the real 2016 TJHSST prompt, which described a helicopter rescue with seven separate numbers woven into narrative prose and asked a single ambiguous question.
 
-Requirements: the scenario runs five to eight sentences. Embed five to eight numbers inside the prose rather than listing them. Ask exactly ONE question at the end — never numbered parts, never sub-steps. Word the question ambiguously so the student must state an interpretation. Include at least one constraint that makes the intuitive first approach fail, so a student who rushes gets a wrong answer.
+Here is a real TJHSST prompt from 2016. Match this difficulty exactly.
 
-Solvable with arithmetic, ratios, rates and basic algebra only. No calculus, no memorized physics formulas.
+"It is 5:30 AM and you, a helicopter pilot, have just been told there is an injured man on a boat you need to get to a hospital. The boat is travelling toward you at 10 mph but is currently 400 miles away. You need to reach him as soon as possible, but you have only 6600 lb of fuel, which burns at 1200 lb per hour, and the helicopter always travels at 150 mph. You must also account for 30 minutes of fuel spent hovering over the boat to load the man, and one extra hour of fuel reserve due to helicopter standards. Under these circumstances, when should you depart your station to reach the man as soon as possible?"
+
+Study why that is hard. Seven numbers buried in prose. A target that is itself moving. A fuel ceiling that makes the obvious answer, leaving immediately, physically impossible, forcing the counterintuitive answer of waiting eight hours. A question vague enough that the student must state their interpretation.
+
+BEFORE WRITING THE PROMPT, solve your own problem internally and check all of the following. If any check fails, discard it and design a harder one.
+- The solution takes at least four distinct steps that cannot be collapsed
+- At least two different relationships must be combined
+- A constraint rules out the approach a rushing student would take first
+- The answer is not obtainable by plugging numbers into one formula
+
+HARD REQUIREMENTS:
+- Six to eight distinct numbers, embedded in sentences, never listed
+- Five to eight sentences of scenario
+- Exactly ONE question at the end, worded ambiguously. Never numbered parts. Never state what to calculate.
+
+FORBIDDEN, these are textbook-standard and far too easy:
+- Any problem solved by multiplying quantities by unit prices and summing
+- Two-item or three-item pricing systems
+- Budget problems where you total the costs and subtract from a given amount
+- Single distance equals rate times time with no complication
+- Questions phrased as "how much will it cost in total" or "determine how many of each"
+
+No calculus and no memorized physics formulas, but the reasoning should take a strong eighth grader a full twenty-five minutes.
 
 Return ONLY a JSON object, no markdown:
 {"type":"pse","prompt":"the prompt text","instructions":"one short line on approach"}`;
 
-  const GRADE_SYSTEM = `You are a TJHSST admissions evaluator. Evaluate the way real TJ admissions staff would, slightly stricter, but your goal is to help the student improve.
+  const GRADE_SYSTEM = `You are a TJHSST admissions evaluator. Evaluate as real TJ admissions staff would, slightly stricter, but your goal is to help the student improve.
 
-FIRST, before anything else: check whether the response respected every constraint in the prompt. Time windows, location limits, required connections, reserved quantities, what is included versus excluded. A response that ignores a stated constraint has not answered the prompt, however well written it is. Say so explicitly and weight it heavily.
+FIRST, before anything else: check whether the response respected every constraint in the prompt. Time windows, location limits, required connections, reserved quantities, what is included versus excluded. A response that ignores a stated constraint has not answered the prompt however well written it is. Say so explicitly and weight it heavily.
 
-For SPS: evaluate story structure across three paragraphs, a specific real moment rather than a general habit, the student's own actions rather than the group's, a result, and a reflection that says what changed in how they think rather than a generic lesson.
+For SPS: evaluate structure across three paragraphs, a specific real moment rather than a general habit, the student's own actions rather than the group's, a result, and a reflection saying what changed in how they think rather than a generic lesson.
 
 For PSE: evaluate whether the final answer is correct, whether every step is shown in essay prose, whether units appear throughout, whether the answer was verified, and whether the student stated an interpretation when the question was ambiguous.
 
@@ -73,7 +93,7 @@ Be honest. Never give empty praise. Use bold headers: **Score**, **Constraints**
 
   const CONCEPT_SYSTEM = `You are a TJ admissions prep quiz master. Generate exactly 5 multiple choice concept check questions.
 
-Mix three areas: math concepts (rates, ratios, proportions, area and volume, algebra, unit conversion, probability), SPS writing structure (story structure, Portrait of a Graduate traits, what makes a strong response, common mistakes), and TJ application knowledge (character limits, number of prompts, timing, what TJ looks for, key dates).
+Mix three areas: math concepts, SPS writing structure, and TJ application knowledge.
 
 Return ONLY a JSON array, no markdown:
 [{"area":"Math","question":"text","options":["A. one","B. two","C. three","D. four"],"answer":"A. one","explanation":"why"}]
@@ -113,7 +133,7 @@ The answer field must exactly match one of the options.`;
   }
 
   if (mode === 'sim') {
-    const simSystem = 'You are writing practice prompts for the TJHSST SPS. Generate exactly 4 prompts, each one to three sentences, each testing a different Portrait of a Graduate trait without naming it. Keep them vague like real TJ prompts. At least one must contain an embedded constraint the student could miss. Return ONLY a JSON array: [{"trait":"name","prompt":"text"}]';
+    const simSystem = 'You are writing TJHSST SPS practice prompts. Generate exactly 4, each one to three sentences, each testing a different Portrait of a Graduate trait without naming it. Keep them vague like real TJ prompts. At least one must contain an embedded constraint the student could miss. Return ONLY a JSON array: [{"trait":"name","prompt":"text"}]';
     const text = stripFences(await callClaude(simSystem, 'Generate 4 simulation prompts. Seed: ' + Date.now(), 1500));
     try {
       return res.status(200).json({ prompts: JSON.parse(text) });
@@ -126,12 +146,12 @@ The answer field must exactly match one of the options.`;
     let userContent;
     if (type === 'pse') {
       const topic = PSE_TOPICS[Math.floor(Math.random() * PSE_TOPICS.length)];
-      userContent = 'Generate a PSE prompt about: ' + topic + '. Seed: ' + Date.now() + '. Follow the helicopter-prompt model exactly: long narrative scenario, numbers buried in prose, one ambiguous question, and a constraint that defeats the obvious approach.';
+      userContent = 'Generate a PSE prompt about: ' + topic + '. Seed: ' + Date.now() + '. Solve it yourself first and confirm it passes all four difficulty checks before writing it. Match the helicopter prompt exactly in length, number density, ambiguity and trap.';
     } else {
       const idx = parseInt((type || 'sps-0').split('-')[1] || '0', 10) % SPS_SLOTS.length;
-      userContent = 'Generate an SPS prompt for this slot: ' + SPS_SLOTS[idx] + '. Seed: ' + Date.now() + '. Keep it to one to three sentences and do not name the trait.';
+      userContent = 'Generate an SPS prompt for this slot: ' + SPS_SLOTS[idx] + '. Seed: ' + Date.now() + '. One to three sentences, do not name the trait.';
     }
-    const text = stripFences(await callClaude(PROMPT_SYSTEM, userContent, 900));
+    const text = stripFences(await callClaude(PROMPT_SYSTEM, userContent, 1200));
     try {
       return res.status(200).json(JSON.parse(text));
     } catch (e) {
