@@ -5,66 +5,83 @@ export default async function handler(req, res) {
 
   const { mode, type, response: userResponse } = req.body;
 
-  const PROMPT_SYSTEM = `You are a TJHSST admissions coach. Generate one realistic practice prompt for a student preparing for the TJHSST application.
+  const SPS_SLOTS = [
+    'Communicator',
+    'Collaborator',
+    'Goal-Directed and Resilient Individual',
+    'Creative and Critical Thinker',
+    'Ethical and Global Citizen',
+    'why TJHSST / future goals',
+    'personality and interests outside school'
+  ];
 
-If type is "sps", generate ONE Student Portrait Sheet prompt — a short essay question asking the student to demonstrate one of these skills: critical thinking, problem solving, leadership, collaboration, resilience, or STEM passion. Make it specific and reflective, similar to what TJ actually asks. If type is "sps-sim", generate FOUR different Student Portrait Sheet prompts, each testing a DIFFERENT Portrait of a Graduate trait. Return them as a JSON array of 4 objects, each with fields: prompt and trait.
+  const PSE_TOPICS = [
+    'rate, distance and time with a moving target',
+    'fuel, supply or resource budgeting under a hard limit',
+    'unit conversion across several steps',
+    'geometry and volume in a real-world setting',
+    'cost, budget and purchasing decisions',
+    'mixtures and concentrations',
+    'population or ecological reasoning',
+    'genetics and inheritance probability',
+    'work rates with competing forces',
+    'number patterns and growth over time'
+  ];
 
-If type is "pse", generate a Problem-Solving Essay prompt at a realistic TJHSST difficulty level. Use a random seed to alternate between MATH and SCIENCE topics — approximately half should be science and half should be math.
+  const PROMPT_SYSTEM = `You are writing practice prompts for the TJHSST admissions test.
 
-MATH topics (use logic and multi-step reasoning, NOT formula memorization): unit conversions, rate/distance/time, ratios and proportions, percentages, geometry (area, volume, perimeter), number patterns, budget and cost problems, mixture problems. Avoid advanced physics formulas like F=ma or calculus.
+FOR SPS PROMPTS:
+Write ONE short prompt, one to three sentences maximum. Never name the Portrait of a Graduate trait being tested. Do not list out sub-questions exhaustively — ask at most two things. Real TJ prompts are vague and leave the student to figure out what a good answer requires.
 
-SCIENCE topics (use reasoning and logic, NOT memorized formulas): genetics and Punnett squares (dominant/recessive traits, probability of outcomes), ecology and population reasoning (food chains, carrying capacity, predator-prey), environmental science (carbon footprint, energy use, water usage), basic chemistry reasoning (concentrations, dilutions described in plain language), biology reasoning (cell division described logically, disease spread rates). Keep science accessible to an 8th grader who hasn't taken formal physics or chemistry yet.
+Roughly one prompt in three must contain an embedded constraint the student could easily miss: a time window such as "in the last year", a location limit such as "outside of school", a required forward connection such as "how will this inform your actions at TJ", or a relationship limit such as "with someone older than you". Bury the constraint in natural phrasing rather than emphasizing it.
 
-Model after real TJ PSE style: the 2022 prompt was genetics/Punnett squares. The 2024 prompt combined driving speed, unit conversion, and asked "do you think this method is effective?" — so include a judgment or opinion question at the end of some prompts.
+Good examples of the right length and vagueness:
+"Describe a challenge that has been hard for you. How did you tackle it, and how will that experience inform your actions at TJ?"
+"What is something you learned in the last year that has had a lasting effect on you?"
+"Tell us about a time you changed your mind about something."
+"What do you do outside of school that you would keep doing even if no one knew about it?"
 
-Every prompt must: require multiple steps, be solvable without advanced formula knowledge, ask for a written explanation of reasoning in essay prose format, and have a clear final answer to reach.
+Return ONLY a JSON object, no markdown:
+{"type":"sps","prompt":"the prompt text","instructions":"one short line on approach"}
 
-Return ONLY a JSON object with no other text:
-{
-  "type": "sps" or "pse",
-  "prompt": "the full prompt text here",
-  "instructions": "brief instructions for the student on how to approach this"
-}`;
+FOR PSE PROMPTS:
+Model the real 2016 TJHSST prompt, which described a helicopter rescue with seven separate numbers woven into narrative prose and asked a single ambiguous question.
 
-  const GRADE_SYSTEM = `You are a TJHSST admissions evaluator. When given a Student Portrait Sheet response or problem-solving essay, you evaluate it the way real TJ admissions staff would — perhaps even slightly stricter — but your goal is to help the student genuinely improve.
+Requirements: the scenario runs five to eight sentences. Embed five to eight numbers inside the prose rather than listing them. Ask exactly ONE question at the end — never numbered parts, never sub-steps. Word the question ambiguously so the student must state an interpretation. Include at least one constraint that makes the intuitive first approach fail, so a student who rushes gets a wrong answer.
 
-For SPS responses, evaluate for: STAR method structure (Situation, Task, Action, Result), evidence of critical thinking and problem-solving, STEM passion shown through specific examples, grammar and writing clarity, and connection to TJ's mission and values.
+Solvable with arithmetic, ratios, rates and basic algebra only. No calculus, no memorized physics formulas.
 
-For Problem-Solving Essays, evaluate for: correct solution, clarity of reasoning and step-by-step explanation, mathematical or scientific accuracy, and quality of written explanation.
+Return ONLY a JSON object, no markdown:
+{"type":"pse","prompt":"the prompt text","instructions":"one short line on approach"}`;
+
+  const GRADE_SYSTEM = `You are a TJHSST admissions evaluator. Evaluate the way real TJ admissions staff would, slightly stricter, but your goal is to help the student improve.
+
+FIRST, before anything else: check whether the response respected every constraint in the prompt. Time windows, location limits, required connections, reserved quantities, what is included versus excluded. A response that ignores a stated constraint has not answered the prompt, however well written it is. Say so explicitly and weight it heavily.
+
+For SPS: evaluate story structure across three paragraphs, a specific real moment rather than a general habit, the student's own actions rather than the group's, a result, and a reflection that says what changed in how they think rather than a generic lesson.
+
+For PSE: evaluate whether the final answer is correct, whether every step is shown in essay prose, whether units appear throughout, whether the answer was verified, and whether the student stated an interpretation when the question was ambiguous.
 
 Your feedback must include:
 1. A score out of 10
-2. What the response did well (be specific — quote or reference specific parts)
-3. What needs improvement and exactly how to fix it
-4. A brief description of what an ideal response to this prompt would look like
+2. Whether any prompt constraint was missed, named explicitly
+3. What the response did well, with specifics
+4. What needs improvement and exactly how to fix it
+5. What an ideal response would look like
 
-Be honest. If a response is weak, say so clearly and directly — but always explain how to fix it. Never give empty praise. The student wants to learn, not feel good.
+Be honest. Never give empty praise. Use bold headers: **Score**, **Constraints**, **What You Did Well**, **What To Improve**, **What An Ideal Response Looks Like**`;
 
-Format your response with clear bold headers: **Score**, **What You Did Well**, **What To Improve**, **What An Ideal Response Looks Like**`;
+  const CONCEPT_SYSTEM = `You are a TJ admissions prep quiz master. Generate exactly 5 multiple choice concept check questions.
 
+Mix three areas: math concepts (rates, ratios, proportions, area and volume, algebra, unit conversion, probability), SPS writing structure (story structure, Portrait of a Graduate traits, what makes a strong response, common mistakes), and TJ application knowledge (character limits, number of prompts, timing, what TJ looks for, key dates).
 
-  const CONCEPT_SYSTEM = `You are a TJ admissions prep quiz master. Generate exactly 5 multiple choice concept check questions for a student preparing for TJHSST.
+Return ONLY a JSON array, no markdown:
+[{"area":"Math","question":"text","options":["A. one","B. two","C. three","D. four"],"answer":"A. one","explanation":"why"}]
 
-Mix questions from these three areas:
-- Math concepts (rate problems, ratios, proportions, area/volume formulas, algebra basics, unit conversions, probability)
-- SPS writing structure (STAR method, Portrait of a Graduate traits, what makes a strong SPS response, common mistakes)
-- TJ application knowledge (character limits, number of prompts, PSE time limit, what TJ looks for, key dates)
+The answer field must exactly match one of the options.`;
 
-Return ONLY a JSON array with no other text, no markdown, no code blocks:
-[
-  {
-    "area": "Math" or "SPS Writing" or "TJ Knowledge",
-    "question": "question text here",
-    "options": ["A. option one", "B. option two", "C. option three", "D. option four"],
-    "answer": "A. option one",
-    "explanation": "brief explanation of why this is correct"
-  }
-]
-
-Make questions genuinely useful for TJ prep. Not too easy, not too hard. The answer field must exactly match one of the options.`;
-
-  if (mode === 'concept') {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+  async function callClaude(system, userContent, maxTokens) {
+    const r = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -73,91 +90,61 @@ Make questions genuinely useful for TJ prep. Not too easy, not too hard. The ans
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
-        max_tokens: 1500,
-        system: CONCEPT_SYSTEM,
-        messages: [{ role: 'user', content: 'Generate 5 concept check questions.' }]
+        max_tokens: maxTokens,
+        system: system,
+        messages: [{ role: 'user', content: userContent }]
       }),
     });
-    const data = await response.json();
-    let text = data.content?.[0]?.text || '[]';
-    text = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    const data = await r.json();
+    return data.content?.[0]?.text || '';
+  }
+
+  function stripFences(t) {
+    return t.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+  }
+
+  if (mode === 'concept') {
+    const text = stripFences(await callClaude(CONCEPT_SYSTEM, 'Generate 5 concept check questions. Seed: ' + Date.now(), 1500));
     try {
-      const questions = JSON.parse(text);
-      return res.status(200).json({ questions });
-    } catch(e) {
+      return res.status(200).json({ questions: JSON.parse(text) });
+    } catch (e) {
       return res.status(500).json({ error: 'Failed to generate questions' });
     }
   }
 
   if (mode === 'sim') {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1500,
-        system: `You are a TJHSST admissions coach. Generate exactly 4 different Student Portrait Sheet prompts for a full simulation test. Each prompt must test a DIFFERENT Portrait of a Graduate trait: Communicator, Collaborator, Creative and Critical Thinker, Ethical and Global Citizen, or Goal-Directed and Resilient Individual. Each prompt should be specific, reflective, and similar to what TJ actually asks. Return ONLY a JSON array with no other text, no markdown: [{"trait": "trait name", "prompt": "full prompt text"}]`,
-        messages: [{ role: 'user', content: 'Generate 4 SPS simulation prompts now.' }]
-      }),
-    });
-    const data = await response.json();
-    let text = data.content?.[0]?.text || '[]';
-    text = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    const simSystem = 'You are writing practice prompts for the TJHSST SPS. Generate exactly 4 prompts, each one to three sentences, each testing a different Portrait of a Graduate trait without naming it. Keep them vague like real TJ prompts. At least one must contain an embedded constraint the student could miss. Return ONLY a JSON array: [{"trait":"name","prompt":"text"}]';
+    const text = stripFences(await callClaude(simSystem, 'Generate 4 simulation prompts. Seed: ' + Date.now(), 1500));
     try {
-      const prompts = JSON.parse(text);
-      return res.status(200).json({ prompts });
-    } catch(e) {
+      return res.status(200).json({ prompts: JSON.parse(text) });
+    } catch (e) {
       return res.status(500).json({ error: 'Failed to generate simulation prompts' });
     }
   }
 
   if (mode === 'prompt') {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 800,
-        system: PROMPT_SYSTEM,
-        messages: [{ role: 'user', content: type === 'pse' ? (() => { const mathTopics = ["unit conversions and rate problems", "geometry (area, volume, perimeter of real-world shapes)", "ratios, proportions, and percentages", "number patterns and sequences", "budget and cost problems with multiple items", "mixture problems", "multi-step algebra word problems"]; const scienceTopics = ["genetics and Punnett squares (dominant/recessive traits)", "ecology and population reasoning (food chains or predator-prey)", "environmental science (energy use or water conservation)", "biology reasoning (disease spread rates or population growth)", "basic chemistry reasoning (concentrations or dilutions in plain language)"]; const useScience = Math.random() > 0.6; const topicList = useScience ? scienceTopics : mathTopics; const topic = topicList[Math.floor(Math.random() * topicList.length)]; return `Generate a SHORT realistic TJHSST PSE prompt about: ${topic}. Seed: ${Math.random()}. STRICT LENGTH RULE: The scenario must be 3-5 sentences maximum. Then ask 1-2 open questions — do NOT number every sub-step or tell the student exactly what to calculate. The student should figure out the steps themselves. Model the real TJ PSE style: brief setup, then open questions requiring multi-step reasoning. No bullet points, no numbered parts, no sub-steps listed out.`; })() : type === 'sps-sim' ? `Generate 4 SPS prompts for a full simulation. Seed: ${Math.random()}. Each must test a different Portrait of a Graduate trait. Return JSON array of 4 objects with fields: prompt and trait.` : `Generate an SPS prompt specifically testing this Portrait of a Graduate trait: ${['Communicator','Collaborator','Goal-Directed and Resilient Individual','Creative and Critical Thinker','Ethical and Global Citizen'][parseInt(type.split('-')[1]) % 5]}. Make the prompt specific and reflective, similar to what TJ actually asks. Do not name the trait explicitly in the prompt.` }]
-      }),
-    });
-    const data = await response.json();
-    let text = data.content?.[0]?.text || '{}';
-    text = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    let userContent;
+    if (type === 'pse') {
+      const topic = PSE_TOPICS[Math.floor(Math.random() * PSE_TOPICS.length)];
+      userContent = 'Generate a PSE prompt about: ' + topic + '. Seed: ' + Date.now() + '. Follow the helicopter-prompt model exactly: long narrative scenario, numbers buried in prose, one ambiguous question, and a constraint that defeats the obvious approach.';
+    } else {
+      const idx = parseInt((type || 'sps-0').split('-')[1] || '0', 10) % SPS_SLOTS.length;
+      userContent = 'Generate an SPS prompt for this slot: ' + SPS_SLOTS[idx] + '. Seed: ' + Date.now() + '. Keep it to one to three sentences and do not name the trait.';
+    }
+    const text = stripFences(await callClaude(PROMPT_SYSTEM, userContent, 900));
     try {
-      const parsed = JSON.parse(text);
-      return res.status(200).json(parsed);
-    } catch(e) {
+      return res.status(200).json(JSON.parse(text));
+    } catch (e) {
       return res.status(500).json({ error: 'Failed to generate prompt' });
     }
   }
 
   if (mode === 'grade') {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1200,
-        system: GRADE_SYSTEM,
-        messages: [{ role: 'user', content: `Here is the prompt:\n\n${req.body.prompt}\n\nHere is the student's response:\n\n${userResponse}\n\nPlease evaluate this response.` }]
-      }),
-    });
-    const data = await response.json();
-    const text = data.content?.[0]?.text || 'Something went wrong.';
+    const text = await callClaude(
+      GRADE_SYSTEM,
+      'Here is the prompt:\n\n' + req.body.prompt + '\n\nHere is the student response:\n\n' + userResponse + '\n\nEvaluate it.',
+      1400
+    );
     return res.status(200).json({ feedback: text });
   }
 
