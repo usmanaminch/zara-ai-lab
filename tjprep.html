@@ -365,7 +365,7 @@
         } else {
           currentPrompt = data.prompt;
           if(selectedType === 'sps' && spsMode !== 'sim'){
-            spsIndex = (spsIndex + 1) % 7;
+            spsIndex = (spsIndex + 1) % 12;
             localStorage.setItem('spsIndex', spsIndex);
           }
           document.getElementById('promptLabel').textContent = selectedType === 'sps' ? '📝 SPS Practice Prompt' : '🔢 Problem-Solving Practice Prompt';
