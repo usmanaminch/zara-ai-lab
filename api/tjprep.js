@@ -23,7 +23,7 @@ export default async function handler(req, res) {
   const PSE_ARCHETYPES = [
     {
       name: 'rate or resource under a hard constraint',
-      spec: `Two things move relative to each other, or a resource is consumed over time, and a hard limit governs the whole situation. The prompt must carve out overhead from the budget (reserve fuel, required hover or setup time, a mandatory stop) so that a student who uses the full budget gets the wrong answer. Ask for a decision — when to depart, whether it can be done, what the latest possible start is — not simply for a distance or a total.
+      spec: `Two things move relative to each other, or a resource is consumed over time, and a hard limit governs the whole situation. The prompt must carve out overhead from the budget (reserve fuel, required hover or setup time, a mandatory stop) so that a student who uses the full budget gets the wrong answer. Ask for a decision - when to depart, whether it can be done, what the latest possible start is - not simply for a distance or a total.
 MODEL: the 2016 TJ helicopter prompt. An injured man on a boat moving toward the pilot at 10 mph from 400 miles away; 6600 lbs of fuel burning at 1200 lbs/hour; cruise 150 mph; 30 minutes of hovering; one extra hour of fuel held in reserve. When should the pilot depart?`
     },
     {
@@ -86,6 +86,25 @@ MODEL: Principia's Pluto and Charon prompt. The three criteria for planethood ar
 
   const baseType = typeof type === 'string' ? type.split('-')[0] : type;
 
+  const stripFences = (t) =>
+    t.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+
+  const safeParse = (raw) => {
+    const t = stripFences(raw);
+    try { return JSON.parse(t); } catch (e) {}
+    let out = '', inStr = false, esc = false;
+    for (const ch of t) {
+      if (esc) { out += ch; esc = false; continue; }
+      if (ch === '\\') { out += ch; esc = true; continue; }
+      if (ch === '"') { inStr = !inStr; out += ch; continue; }
+      if (inStr && ch === '\n') { out += '\\n'; continue; }
+      if (inStr && ch === '\r') { continue; }
+      if (inStr && ch === '\t') { out += '\\t'; continue; }
+      out += ch;
+    }
+    return JSON.parse(out);
+  };
+
   const PROMPT_SYSTEM = `You are writing practice prompts for the TJHSST admissions writing test. Your prompts must be indistinguishable from real ones.
 
 === PROBLEM-SOLVING ESSAY (PSE) ===
@@ -117,11 +136,14 @@ Write ONE short reflective prompt on the assigned subject. Real SPS prompts are 
 
 For type "sps-sim", produce FOUR prompts of DIFFERENT subjects as a JSON array of 4 objects with fields: prompt, trait.
 
-=== OUTPUT ===
-Return ONLY a JSON object, no markdown, no code fences:
+=== OUTPUT FORMAT - READ THIS TWICE ===
+Return ONLY a JSON object. No markdown. No code fences. No text before or after.
+
+CRITICAL: JSON strings cannot contain real line breaks. If your prompt has multiple paragraphs or labelled parts, write the line breaks as the two characters backslash-n inside the string. A literal newline inside a JSON string makes the response unparseable and the whole generation fails.
+
 {
   "type": "sps" or "pse",
-  "prompt": "the full prompt text",
+  "prompt": "the full prompt text, with \\n for any line breaks",
   "instructions": "one or two sentences on how to approach this"
 }`;
 
@@ -169,7 +191,7 @@ Draw from:
 - SPS structure: hooks, three-paragraph form, reflection quality, prompt compliance
 - TJ application facts: character limits, number of prompts, timing
 
-Return ONLY a JSON array, no markdown, no code fences:
+Return ONLY a JSON array. No markdown, no code fences. Use \\n for any line break inside a string; never a literal newline.
 [
   {
     "area": "Math" or "Science" or "PSE Structure" or "SPS Writing" or "TJ Knowledge",
@@ -198,16 +220,17 @@ The answer field must exactly match one of the options.`;
       }),
     });
     const data = await r.json();
-    return data.content?.[0]?.text || '';
+    if (data.error) return { text: '', err: data.error.message || 'api error' };
+    return { text: data.content?.[0]?.text || '', err: null };
   };
 
   if (mode === 'concept') {
-    let text = await callClaude(CONCEPT_SYSTEM, 'Generate 5 concept check questions.', 1500);
-    text = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    const { text, err } = await callClaude(CONCEPT_SYSTEM, 'Generate 5 concept check questions.', 2000);
+    if (err) return res.status(500).json({ error: 'API error: ' + err });
     try {
-      return res.status(200).json({ questions: JSON.parse(text) });
+      return res.status(200).json({ questions: safeParse(text) });
     } catch (e) {
-      return res.status(500).json({ error: 'Failed to generate questions' });
+      return res.status(500).json({ error: 'Parse failed: ' + e.message, raw: text.slice(0, 500) });
     }
   }
 
@@ -227,9 +250,9 @@ ${arch.spec}
 
 TOPIC to build it around: ${topic}
 
-Match the archetype's shape and the model prompt's LENGTH. Short. Run your four-point self-check before returning it. Seed: ${Math.random()}`;
+Match the archetype's shape and the model prompt's LENGTH. Short. Run your four-point self-check before returning it. Remember: no literal newlines inside the JSON string. Seed: ${Math.random()}`;
 
-    } else if (baseType === 'sps' && type === 'sps-sim') {
+    } else if (type === 'sps-sim') {
       userMsg = `Generate 4 SPS prompts for a full simulation, each on a different subject drawn from this list: ${SPS_SLOTS.join('; ')}. Return a JSON array of 4 objects with fields: prompt and trait. Seed: ${Math.random()}`;
 
     } else {
@@ -239,22 +262,23 @@ Match the archetype's shape and the model prompt's LENGTH. Short. Run your four-
 Two to four sentences. It may ask more than one thing. Do not name a Portrait of a Graduate trait. Seed: ${Math.random()}`;
     }
 
-    let text = await callClaude(PROMPT_SYSTEM, userMsg, 900);
-    text = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    const { text, err } = await callClaude(PROMPT_SYSTEM, userMsg, 1500);
+    if (err) return res.status(500).json({ error: 'API error: ' + err });
     try {
-      return res.status(200).json(JSON.parse(text));
+      return res.status(200).json(safeParse(text));
     } catch (e) {
-      return res.status(500).json({ error: 'Failed to generate prompt' });
+      return res.status(500).json({ error: 'Parse failed: ' + e.message, raw: text.slice(0, 500) });
     }
   }
 
   if (mode === 'grade') {
-    const feedback = await callClaude(
+    const { text, err } = await callClaude(
       GRADE_SYSTEM,
       `Here is the prompt:\n\n${req.body.prompt}\n\nHere is the student's response:\n\n${userResponse}\n\nEvaluate it.`,
-      1600
+      1800
     );
-    return res.status(200).json({ feedback: feedback || 'Something went wrong.' });
+    if (err) return res.status(500).json({ error: 'API error: ' + err });
+    return res.status(200).json({ feedback: text || 'Something went wrong.' });
   }
 
   return res.status(400).json({ error: 'Invalid mode' });
